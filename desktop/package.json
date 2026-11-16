@@ -30,6 +30,7 @@
     "files": [
       "main.cjs",
       "server.cjs",
+      "backup.cjs",
       "wrangler-run.cjs",
       "loading.html",
       "build/icon.png",
