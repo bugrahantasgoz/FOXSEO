@@ -18,7 +18,7 @@ export const requestCategories = [
 
 export type LighthouseStrategy = "mobile" | "desktop";
 
-const lighthouseResponseSchema = z.object({
+export const lighthouseResponseSchema = z.object({
   requestedUrl: z.string().optional(),
   finalUrl: z.string().optional(),
   lighthouseVersion: z.string().optional(),
@@ -90,6 +90,29 @@ export function parseDataforseoLighthousePayload(
     throw new Error("DataForSEO Lighthouse response missing result");
   }
 
+  return buildStoredLighthousePayload(result, {
+    ...input,
+    source: "dataforseo-lighthouse",
+    providerLabel: "DataForSEO Lighthouse",
+    taskId: task.id ?? null,
+    cost: task.cost ?? null,
+  });
+}
+
+type LighthouseReport = z.infer<typeof lighthouseResponseSchema>;
+
+/** Reduce a raw Lighthouse report (any provider) to the compact stored payload. */
+export function buildStoredLighthousePayload(
+  result: LighthouseReport,
+  meta: {
+    url: string;
+    strategy: LighthouseStrategy;
+    source: StoredLighthousePayload["source"];
+    providerLabel: string;
+    taskId: string | null;
+    cost: number | null;
+  },
+): StoredLighthousePayload {
   const fetchedAt = new Date().toISOString();
   const categories = result.categories ?? {};
   const audits = result.audits ?? {};
@@ -97,16 +120,16 @@ export function parseDataforseoLighthousePayload(
   const metrics = buildStoredLighthouseMetrics({ audits });
   const storedPayload: StoredLighthousePayload = {
     version: 2,
-    source: "dataforseo-lighthouse",
+    source: meta.source,
     hasIssueDetails: issueReport.hasIssueDetails,
     metadata: {
-      requestedUrl: result.requestedUrl ?? input.url,
-      finalUrl: result.finalUrl ?? input.url,
-      strategy: input.strategy,
+      requestedUrl: result.requestedUrl ?? meta.url,
+      finalUrl: result.finalUrl ?? meta.url,
+      strategy: meta.strategy,
       fetchedAt,
       lighthouseVersion: result.lighthouseVersion ?? null,
-      taskId: task.id ?? null,
-      cost: task.cost ?? null,
+      taskId: meta.taskId,
+      cost: meta.cost,
     },
     scores: {
       performance: scoreToPercent(categories.performance?.score),
@@ -123,7 +146,7 @@ export function parseDataforseoLighthousePayload(
   );
   if (allScoresMissing) {
     throw new Error(
-      `DataForSEO Lighthouse returned no category scores for ${storedPayload.metadata.finalUrl}`,
+      `${meta.providerLabel} returned no category scores for ${storedPayload.metadata.finalUrl}`,
     );
   }
 
@@ -133,7 +156,7 @@ export function parseDataforseoLighthousePayload(
   const validated = storedLighthousePayloadSchema.safeParse(storedPayload);
   if (!validated.success) {
     throw new Error(
-      `DataForSEO Lighthouse returned an invalid report: ${summarizeZodIssues(validated.error)}`,
+      `${meta.providerLabel} returned an invalid report: ${summarizeZodIssues(validated.error)}`,
     );
   }
 

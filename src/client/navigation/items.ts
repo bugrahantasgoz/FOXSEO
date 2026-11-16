@@ -130,30 +130,17 @@ export function getProjectNavGroups(projectId: string) {
       label: "Overview",
       items: [byPath("/p/$projectId")],
     },
-    {
-      label: "Research",
-      items: [
-        byPath("/p/$projectId/keywords"),
-        byPath("/p/$projectId/domain"),
-        byPath("/p/$projectId/backlinks"),
-      ],
-    },
-    {
-      label: "AI Visibility",
-      items: [
-        byPath("/p/$projectId/ai-visibility/research"),
-        byPath("/p/$projectId/prompt-explorer"),
-        byPath("/p/$projectId/ai-visibility"),
-      ],
-    },
+    // FOXSEO shows only features that run on free data sources. Domain
+    // overview, AI visibility, local SEO and paid rank checks need DataForSEO,
+    // so they are left out of the menu.
     {
       label: "My Site",
       items: [
-        byPath("/p/$projectId/search-performance"),
-        byPath("/p/$projectId/rank-tracking"),
-        byPath("/p/$projectId/local-seo"),
-        byPath("/p/$projectId/saved"),
         byPath("/p/$projectId/audit"),
+        byPath("/p/$projectId/search-performance"),
+        byPath("/p/$projectId/keywords"),
+        byPath("/p/$projectId/backlinks"),
+        byPath("/p/$projectId/saved"),
       ],
     },
     {
