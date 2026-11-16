@@ -1,18 +1,13 @@
-## FOXSEO 0.1.1 – Demo
+## FOXSEO 0.1.2 – Demo
 
 ### Yenilikler
 
-- **Türkçe arayüz:** Menüler, sayfalar, düğmeler, hata mesajları ve site denetimi sorunlarının açıklamaları Türkçe.
-- **"?" yardım düğmeleri:** Her sayfanın başlığının yanında. Tıklayınca sayfanın ne işe yaradığı, nasıl kullanılacağı ve SEO terimlerinin anlamları açılır.
-- **Güncelleme programı:** Kurulum klasöründe artık **FOXSEO-Guncelle.exe** var. Çalıştırınca en yeni sürümü bulur, indirir ve kurar. Uygulama içinden **Yardım → Güncellemeleri denetle** ile de açılır.
+- **Yeni kurumsal kimlik:** Büyüteçli tilki logosu, yeni uygulama simgesi, mor renk paleti (Derin Mor, Tilki Moru, Lavanta, Gece) ve Inter yazı tipi.
+- Açık ve koyu tema yeni renklerle güncellendi.
 
-### Düzeltmeler
+### Nasıl güncellenir?
 
-- **FOXSEO → Ayarlar (API anahtarları)** artık Not Defteri'nde açılıyor. Ayar dosyasının adı `ayarlar.txt` oldu; eski `ayarlar.env` içindekiler otomatik taşınır.
+- **0.1.1 kullanıyorsan:** Kurulum klasöründeki **FOXSEO-Guncelle.exe** dosyasını çalıştır ya da uygulamada **Yardım → Güncellemeleri denetle** de.
+- **0.1.0 kullanıyorsan:** Aşağıdan **FOXSEO-Kurulum-0.1.2.exe** dosyasını indirip eskisinin üzerine kur. Verilerin ve ayarların korunur.
 
-### Kurulum
-
-1. Aşağıdan **FOXSEO-Kurulum-0.1.1.exe** dosyasını indir ve çalıştır (0.1.0'ın üzerine kurabilirsin, verilerin korunur).
-2. Windows "bilgisayarınız korundu" derse **Ek bilgi → Yine de çalıştır** (uygulama imzasız olduğu için).
-
-Bundan sonraki sürümler için kurulum klasöründeki **FOXSEO-Guncelle.exe** yeterli.
+Windows "bilgisayarınız korundu" derse **Ek bilgi → Yine de çalıştır** (uygulama imzasız olduğu için).
