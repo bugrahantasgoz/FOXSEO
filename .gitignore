@@ -57,3 +57,4 @@ deploy/stripe-app/.build/
 # Desktop app lockfile is committed.
 !desktop/package-lock.json
 desktop/release/
+desktop/build/FOXSEO-Guncelle.exe

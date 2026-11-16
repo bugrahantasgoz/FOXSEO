@@ -1,7 +1,7 @@
 {
   "name": "foxseo-desktop",
   "productName": "FOXSEO",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "FOXSEO - ücretsiz kişisel SEO aracı",
   "author": "FOXSEO",
   "license": "MIT",
@@ -68,6 +68,12 @@
         "tr_TR"
       ],
       "language": "1055"
-    }
+    },
+    "extraFiles": [
+      {
+        "from": "build/FOXSEO-Guncelle.exe",
+        "to": "FOXSEO-Guncelle.exe"
+      }
+    ]
   }
 }

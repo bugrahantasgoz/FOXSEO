@@ -131,6 +131,7 @@ Sonra Claude'a örneğin "FOXSEO ile sitemi denetle ve en önemli 5 sorunu söyl
 
 ## Güncelleme
 
+- **Masaüstü uygulaması (FOXSEO-Kurulum.exe ile kurduysan)**: Kurulum klasöründeki **FOXSEO-Guncelle.exe** dosyasını çalıştır ya da uygulamada **Yardım → Güncellemeleri denetle** de. En yeni sürüm indirilip kurulur, verilerin ve ayarların korunur.
 - **ZIP ile indirdiysen**: GitHub'dan yeni ZIP'i indir, yeni bir klasöre çıkar ve eski klasördeki `.env.local` dosyası ile `.wrangler` klasörünü (verilerin burada) yeni klasöre kopyala. Sonra `FOXSEO-Baslat.bat`.
 - **Git ile indirdiysen**: `FOXSEO-Guncelle.bat` dosyasına çift tıkla.
 

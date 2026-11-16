@@ -154,6 +154,19 @@ function openSettings() {
   shell.openPath(file);
 }
 
+// FOXSEO-Guncelle.exe sits next to FOXSEO.exe in the install folder.
+function runUpdater() {
+  const updater = path.join(
+    path.dirname(process.execPath),
+    "FOXSEO-Guncelle.exe",
+  );
+  if (!app.isPackaged || !fs.existsSync(updater)) {
+    shell.openExternal(RELEASES_URL);
+    return;
+  }
+  spawn(updater, [], { detached: true, stdio: "ignore" }).unref();
+}
+
 function buildMenu() {
   Menu.setApplicationMenu(
     Menu.buildFromTemplate([
@@ -195,6 +208,10 @@ function buildMenu() {
           {
             label: "Kurulum rehberi",
             click: () => shell.openExternal(GUIDE_URL),
+          },
+          {
+            label: "Güncellemeleri denetle",
+            click: () => runUpdater(),
           },
           {
             label: "Yeni sürümler",
