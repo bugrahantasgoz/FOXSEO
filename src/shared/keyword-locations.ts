@@ -1,3 +1,4 @@
+import { sort } from "remeda";
 /* eslint-disable max-lines -- country data table */
 /**
  * Supported keyword-data countries and their data provider.
@@ -65,7 +66,7 @@ type LocationOption = {
   googleAdsOnly?: true;
 };
 
-export const LOCATION_OPTIONS: readonly LocationOption[] = [
+const RAW_LOCATION_OPTIONS: readonly LocationOption[] = [
   {
     code: 2004,
     label: "Afghanistan",
@@ -1005,6 +1006,24 @@ export const LOCATION_OPTIONS: readonly LocationOption[] = [
     googleAdsOnly: true,
   },
 ] as const;
+
+// FOXSEO shows country names in Turkish; the ISO code (shortLabel) is unchanged.
+const turkishRegionNames = (() => {
+  try {
+    return new Intl.DisplayNames(["tr"], { type: "region" });
+  } catch {
+    return null;
+  }
+})();
+
+export const LOCATION_OPTIONS: readonly LocationOption[] = sort(
+  RAW_LOCATION_OPTIONS.map((option): LocationOption => {
+    const iso = ISO_COUNTRY_OVERRIDES[option.shortLabel] ?? option.shortLabel;
+    const label = turkishRegionNames?.of(iso);
+    return label && label !== iso ? { ...option, label } : option;
+  }),
+  (a, b) => a.label.localeCompare(b.label, "tr"),
+);
 
 /**
  * Languages selectable for rank tracking, which runs against the DataForSEO

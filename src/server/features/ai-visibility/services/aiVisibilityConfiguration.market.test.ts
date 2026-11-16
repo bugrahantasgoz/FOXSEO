@@ -31,17 +31,17 @@ describe("AI tracker market", () => {
   });
   it("rejects markets the selected engines cannot collect in", () => {
     expect(() => project({ locationCode: 2100, languageCode: "en" })).toThrow(
-      /Bulgaria supports languageCode bg/,
+      /Bulgaristan supports languageCode bg/,
     );
     expect(() => project({ locationCode: 2275 })).toThrow(
-      /ChatGPT cannot collect answers in Palestine/,
+      /ChatGPT cannot collect answers in Filistin/,
     );
     expect(() =>
       project(
         { engines: ["chatgpt"] },
         project({ engines: ["gemini"], locationCode: 2275 }).rows,
       ),
-    ).toThrow(/ChatGPT cannot collect answers in Palestine/);
+    ).toThrow(/ChatGPT cannot collect answers in Filistin/);
   });
   it("starts in the US when the project market is not collectable and none was chosen", () => {
     const palestine = { locationCode: 2275, languageCode: "ar" };

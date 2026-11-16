@@ -38,7 +38,6 @@ import {
   type SearchPerformanceTableDimension,
 } from "@/types/schemas/search-performance";
 import { saveKeywords } from "@/serverFunctions/keywords";
-import { TrackRankingsMenu } from "./TrackRankingsMenu";
 
 export type ExportTarget = "csv" | "sheets";
 
@@ -402,11 +401,6 @@ export function StrikingDistanceTable({
             >
               Kelime olarak kaydet
             </TableBulkActionButton>
-            <TrackRankingsMenu
-              projectId={projectId}
-              queries={selectedQueries}
-              onAdded={() => setRowSelection({})}
-            />
           </div>
         }
       />
