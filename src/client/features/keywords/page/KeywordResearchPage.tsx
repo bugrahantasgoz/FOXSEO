@@ -201,7 +201,7 @@ export function KeywordResearchPage(input: Props) {
   return (
     <div className="px-4 py-4 md:px-6 md:py-6 pb-24 md:pb-8">
       <div className="mx-auto flex max-w-7xl flex-col gap-4">
-        <PageHeader
+        <PageHeader help="keywords"
           title="Keyword Research"
           description={
             controller.hasSearched

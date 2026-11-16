@@ -1,4 +1,5 @@
 import { Link } from "@tanstack/react-router";
+import { PageHelpButton } from "@/client/features/help/PageHelpButton";
 import { Link2, Settings } from "lucide-react";
 import { EmptyState } from "@/client/components/EmptyState";
 import { Button } from "@/client/components/ui/button";
@@ -99,9 +100,12 @@ export function DashboardPage({
       <div className="mx-auto flex max-w-7xl flex-col gap-5">
         <div className="flex flex-wrap items-end justify-between gap-3">
           <div>
-            <h1 className="text-2xl font-semibold">
-              {activation.domain || "Dashboard"}
-            </h1>
+            <div className="flex items-center gap-1.5">
+              <h1 className="text-2xl font-semibold">
+                {activation.domain || "Dashboard"}
+              </h1>
+              <PageHelpButton topic="dashboard" />
+            </div>
             <p className="mt-1 text-sm text-muted-foreground">
               Search visibility, links and site health in one place.
             </p>

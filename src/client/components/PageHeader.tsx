@@ -2,6 +2,8 @@ import type { ComponentProps, ReactNode } from "react";
 import { createLink } from "@tanstack/react-router";
 import { ChevronLeft } from "lucide-react";
 import { cn } from "cn";
+import { PageHelpButton } from "@/client/features/help/PageHelpButton";
+import type { PageHelpTopic } from "@/client/features/help/pageHelpContent";
 
 /**
  * The page title, with an optional subtitle and actions on the right. A
@@ -12,17 +14,23 @@ export function PageHeader({
   description,
   actions,
   backLink,
+  help,
 }: {
   title: ReactNode;
   /** A subtitle, or metadata such as a `<dl>`. */
   description?: ReactNode;
   actions?: ReactNode;
   backLink?: ReactNode;
+  /** Shows a "?" next to the title that explains the page. */
+  help?: PageHelpTopic;
 }) {
   const header = (
     <div className="flex flex-wrap items-start justify-between gap-3">
       <div className="min-w-0 flex-1 basis-64 space-y-1">
-        <h1 className="text-2xl font-semibold tracking-tight">{title}</h1>
+        <div className="flex items-center gap-1.5">
+          <h1 className="text-2xl font-semibold tracking-tight">{title}</h1>
+          {help ? <PageHelpButton topic={help} /> : null}
+        </div>
         {description ? (
           <div className="text-sm text-muted-foreground">{description}</div>
         ) : null}

@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
+import { PageHelpButton } from "@/client/features/help/PageHelpButton";
 import { Link } from "@tanstack/react-router";
 import {
   keepPreviousData,
@@ -245,7 +246,10 @@ export function SearchPerformancePage({
       <div className="mx-auto max-w-7xl space-y-4">
         <div className="flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between">
           <div>
-            <h1 className="text-2xl font-semibold">Search Performance</h1>
+            <div className="flex items-center gap-1.5">
+              <h1 className="text-2xl font-semibold">Search Performance</h1>
+              <PageHelpButton topic="gsc" />
+            </div>
             <p className="text-sm text-muted-foreground">
               See your site&apos;s clicks, impressions, CTR, and position from
               Google Search Console.

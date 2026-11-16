@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { PageHelpButton } from "@/client/features/help/PageHelpButton";
 import { useQuery } from "@tanstack/react-query";
 import { Link2 } from "lucide-react";
 import { Card } from "@/client/components/ui/card";
@@ -29,7 +30,10 @@ export function BingBacklinksPage({ projectId }: { projectId: string }) {
   return (
     <div className="mx-auto w-full max-w-6xl space-y-4 p-4 md:p-6">
       <div>
-        <h1 className="text-2xl font-semibold">Backlinks</h1>
+        <div className="flex items-center gap-1.5">
+          <h1 className="text-2xl font-semibold">Backlinks</h1>
+          <PageHelpButton topic="backlinks" />
+        </div>
         <p className="text-sm text-muted-foreground">
           Links to your site that Bing has found. Free, from Bing Webmaster
           Tools.

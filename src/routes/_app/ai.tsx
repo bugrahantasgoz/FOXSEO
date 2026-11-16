@@ -89,7 +89,7 @@ function AiPage() {
   return (
     <div className="h-full overflow-auto px-4 py-4 pb-24 md:px-6 md:py-6 md:pb-8">
       <div className="mx-auto max-w-7xl">
-        <PageHeader
+        <PageHeader help="agent"
           title="Agent setup"
           description="The most powerful way to use FOXSEO is through the AI agent you already use. Set it up once, then ask it anything."
         />

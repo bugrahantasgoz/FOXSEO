@@ -28,7 +28,7 @@ export function SavedKeywordsHeader({
 
   return (
     <>
-      <PageHeader
+      <PageHeader help="saved"
         title="Saved Keywords"
         description="Save keyword ideas from research, organize them with tags, and revisit when you're ready to act."
         actions={

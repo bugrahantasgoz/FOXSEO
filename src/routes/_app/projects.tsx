@@ -37,7 +37,7 @@ function ProjectsPage() {
   return (
     <div className="h-full overflow-auto px-4 py-4 pb-24 md:px-6 md:py-6 md:pb-8">
       <div className="mx-auto max-w-7xl space-y-6">
-        <PageHeader
+        <PageHeader help="projects"
           title="Projects"
           description="Each project has its own Search Console, rank tracking, and audits."
           actions={

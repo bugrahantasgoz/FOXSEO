@@ -1,4 +1,5 @@
 import { AlertCircle } from "lucide-react";
+import { PageHelpButton } from "@/client/features/help/PageHelpButton";
 import { BackButton } from "@/client/components/PageHeader";
 import { useQuery } from "@tanstack/react-query";
 import { QueryError, QueryState } from "@/client/components/QueryState";
@@ -125,6 +126,7 @@ export function AuditDetail({
               <h1 className="text-2xl font-semibold tracking-tight">
                 {extractHostname(status.startUrl)}
               </h1>
+              <PageHelpButton topic="audit" />
               {!isRunning && <StatusBadge status={status.status} />}
             </div>
             <p className="text-sm text-muted-foreground">
