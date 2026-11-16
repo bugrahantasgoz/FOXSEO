@@ -17,32 +17,40 @@ FOXSEO, [OpenSEO](https://github.com/every-app/open-seo) temel alınarak yapılm
 
 ---
 
-## 1. Programları kur (bir kere)
+## Hızlı başlangıç (5 dakika)
 
-1. **Node.js 22 LTS**: https://nodejs.org adresinden "LTS" sürümünü indir ve kur. Kurulumda varsayılan seçenekleri bırak.
-2. **Git**: https://git-scm.com/download/win adresinden indir ve kur.
+1. **Node.js'i kur**: https://nodejs.org adresinden **LTS** sürümünü indir, varsayılan seçeneklerle kur.
+2. **PowerShell'i yönetici olarak aç** (Başlat → "PowerShell" yaz → sağ tık → "Yönetici olarak çalıştır") ve bir kere şunu çalıştır, sonra pencereyi kapat:
 
-Kurulumdan sonra **PowerShell'i yönetici olarak** aç (Başlat → "PowerShell" yaz → sağ tık → "Yönetici olarak çalıştır") ve şunu çalıştır:
+   ```powershell
+   corepack enable
+   ```
 
-```powershell
-corepack enable
-```
+3. **FOXSEO'yu indir**: https://github.com/bugrahantasgoz/FOXSEO adresinde yeşil **Code** düğmesi → **Download ZIP**. ZIP'e sağ tık → **Tümünü ayıkla** → örneğin `Belgeler\FOXSEO` klasörüne çıkar.
+4. **Çalıştır**: Klasördeki **`FOXSEO-Baslat.bat`** dosyasına çift tıkla.
+   - İlk açılışta gerekli dosyaları indirir, birkaç dakika sürebilir.
+   - Windows "bilgisayarınız korundu" derse **Ek bilgi → Yine de çalıştır**.
+   - Tarayıcın kendiliğinden **http://localhost:3001** adresini açar.
+   - Siyah pencere açık kaldığı sürece FOXSEO çalışır. Kapatınca FOXSEO da kapanır.
 
-## 2. FOXSEO'yu indir ve hazırla
+### Masaüstü uygulaması gibi kullanmak
 
-Normal bir PowerShell penceresi aç ve sırayla çalıştır:
+FOXSEO açıkken tarayıcıdan "uygulama olarak yükle" dersen tilki simgeli, kendi penceresinde açılan bir uygulama olur:
 
-```powershell
-cd $HOME\Documents
-git clone https://github.com/bugrahantasgoz/FOXSEO.git
-cd FOXSEO
-pnpm install
-pnpm run db:migrate:local
-```
+- **Edge**: sağ üstte **⋯ → Uygulamalar → Bu siteyi uygulama olarak yükle**
+- **Chrome**: sağ üstte **⋮ → Yayınla, kaydet ve paylaş → Sayfayı uygulama olarak yükle** (bazı sürümlerde "Kaydet ve paylaş")
 
-## 3. Ayar dosyasını oluştur
+Sonra Başlat menüsünde ve görev çubuğunda **FOXSEO** simgesi olur. Kullanmadan önce yine `FOXSEO-Baslat.bat` ile çalıştırman gerekir.
 
-`FOXSEO` klasöründe `.env.local` adında bir dosya oluştur (Not Defteri ile, "Farklı kaydet" → dosya türü "Tüm dosyalar"). İçine şunu yaz:
+İstersen `FOXSEO-Baslat.bat` dosyasına sağ tık → **Kısayol oluştur**, kısayolu masaüstüne taşı.
+
+> Geliştiriciler için: ZIP yerine `git clone https://github.com/bugrahantasgoz/FOXSEO.git` de kullanabilirsin. Git ile indirirsen `FOXSEO-Guncelle.bat` güncellemeyi tek tıkla yapar.
+
+Buraya kadarki adımlarla **site denetimi** hemen çalışır. Diğer özellikler için aşağıdaki ücretsiz anahtarları ekle.
+
+## 3. Ayar dosyasını düzenle
+
+İlk çalıştırmada FOXSEO klasöründe `.env.local` adında bir ayar dosyası oluşur. Bu dosyaya sağ tık → **Birlikte aç → Not Defteri** ile aç ve içeriğini şununla değiştir:
 
 ```
 AUTH_MODE=local_noauth
@@ -90,14 +98,9 @@ Siten Search Console'da kayıtlı değilse önce https://search.google.com/searc
 3. Sağ üstteki **Ayarlar (dişli) → API Access → API Key → Generate API Key**.
 4. Anahtarı `.env.local` dosyasında `BING_WEBMASTER_API_KEY=` satırına yapıştır.
 
-## 6. FOXSEO'yu çalıştır
+## 6. Anahtarları ekledikten sonra
 
-```powershell
-cd $HOME\Documents\FOXSEO
-pnpm dev
-```
-
-Tarayıcıda **http://localhost:3001** adresini aç. Kapatmak için PowerShell penceresinde `Ctrl + C`.
+`.env.local` dosyasını kaydet, FOXSEO'nun siyah penceresini kapat ve `FOXSEO-Baslat.bat` ile yeniden aç.
 
 İlk iş: **Project settings** bölümünden sitenin adresini yaz, sonra **GSC Insights** sayfasından Google hesabını bağla.
 
@@ -128,16 +131,14 @@ Sonra Claude'a örneğin "FOXSEO ile sitemi denetle ve en önemli 5 sorunu söyl
 
 ## Güncelleme
 
-```powershell
-cd $HOME\Documents\FOXSEO
-git pull
-pnpm install
-pnpm run db:migrate:local
-```
+- **ZIP ile indirdiysen**: GitHub'dan yeni ZIP'i indir, yeni bir klasöre çıkar ve eski klasördeki `.env.local` dosyası ile `.wrangler` klasörünü (verilerin burada) yeni klasöre kopyala. Sonra `FOXSEO-Baslat.bat`.
+- **Git ile indirdiysen**: `FOXSEO-Guncelle.bat` dosyasına çift tıkla.
 
 ## Sorun giderme
 
-- **`pnpm` bulunamadı**: 1. adımdaki `corepack enable` komutunu yönetici PowerShell'de çalıştır, sonra pencereyi kapatıp yeniden aç.
+- **"pnpm kurulamadı" hatası**: Hızlı başlangıç 2. adımdaki `corepack enable` komutunu yönetici PowerShell'de çalıştır, sonra `FOXSEO-Baslat.bat`'ı tekrar aç.
+- **Tarayıcı açıldı ama sayfa yüklenmedi**: İlk açılış uzun sürebilir. 30 saniye bekleyip sayfayı yenile (F5).
+- **`.env.local` dosyasını göremiyorum**: Dosya Gezgini → **Görünüm → Göster → Dosya adı uzantıları** ve **Gizli öğeler**'i aç.
 - **Hız ölçümü "429" hatası veriyor**: `PAGESPEED_API_KEY` boş. Anahtarsız Google çok az istek kabul ediyor.
 - **Google bağlanırken "access blocked"**: E-postanı 4. adımdaki **Test users** listesine eklemeyi unutma.
 - **Bing "site not verified" diyor**: Project settings'teki site adresi Bing'de doğruladığın adresle aynı olmalı (`https://` ve `www` dahil).

@@ -18,3 +18,4 @@
 *.ttf binary
 *.otf binary
 *.pdf binary
+*.bat text eol=crlf
