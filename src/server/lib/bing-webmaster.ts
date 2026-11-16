@@ -10,7 +10,7 @@ const BASE_URL = "https://ssl.bing.com/webmaster/api.svc/json";
 const REQUEST_TIMEOUT_MS = 30_000;
 
 const BING_NOT_SET_UP_MESSAGE =
-  "Bing Webmaster API key is missing. Add BING_WEBMASTER_API_KEY to .env.local (see the FOXSEO setup guide).";
+  "Bing Webmaster API anahtarı eksik. FOXSEO → Ayarlar (API anahtarları) ile BING_WEBMASTER_API_KEY ekle.";
 
 export async function hasBingWebmasterKey(): Promise<boolean> {
   return Boolean(await getOptionalEnvValue("BING_WEBMASTER_API_KEY"));
@@ -25,20 +25,93 @@ async function bingGet(
     throw new AppError("BING_NOT_CONFIGURED", BING_NOT_SET_UP_MESSAGE);
   }
   const query = new URLSearchParams({ ...params, apikey: apiKey });
-  const response = await fetch(`${BASE_URL}/${method}?${query}`, {
-    headers: { "Content-Type": "application/json; charset=utf-8" },
-    signal: AbortSignal.timeout(REQUEST_TIMEOUT_MS),
-  });
-  const text = await response.text();
+  let response: Response;
+  let text: string;
+  try {
+    response = await fetch(`${BASE_URL}/${method}?${query}`, {
+      headers: { "Content-Type": "application/json; charset=utf-8" },
+      signal: AbortSignal.timeout(REQUEST_TIMEOUT_MS),
+    });
+    text = await response.text();
+  } catch (error) {
+    throw bingFailure(
+      method,
+      error instanceof Error ? error.message : String(error),
+    );
+  }
   if (!response.ok) {
     // Bing returns an ApiFault with a Message; never echo the key back.
     const message = /"Message"\s*:\s*"([^"]+)"/.exec(text)?.[1];
-    const detail = `Bing Webmaster API ${method} failed: ${message ?? `HTTP ${response.status}`}`;
-    console.warn(detail);
-    throw new AppError("BING_REQUEST_FAILED", detail);
+    throw bingFailure(method, message ?? `HTTP ${response.status}`);
   }
-  const body: unknown = JSON.parse(text);
-  return z.object({ d: z.unknown() }).parse(body).d;
+  let body: unknown;
+  try {
+    body = JSON.parse(text);
+  } catch {
+    throw bingFailure(method, "yanıt JSON değil");
+  }
+  const parsed = z.object({ d: z.unknown() }).safeParse(body);
+  if (!parsed.success) throw bingFailure(method, "beklenmeyen yanıt");
+  return parsed.data.d;
+}
+
+function bingFailure(method: string, reason: string): AppError {
+  const detail = `Bing Webmaster API ${method} failed: ${reason}`;
+  console.warn(detail);
+  return new AppError("BING_REQUEST_FAILED", detail);
+}
+
+/** Parses a Bing payload; an unexpected shape is a Bing failure, not a crash. */
+function parseBing<T>(method: string, schema: z.ZodType<T>, data: unknown): T {
+  const parsed = schema.safeParse(data);
+  if (!parsed.success) {
+    throw bingFailure(
+      method,
+      `beklenmeyen veri: ${parsed.error.issues[0]?.message ?? ""}`,
+    );
+  }
+  return parsed.data;
+}
+
+function hostKey(url: string): string {
+  return url
+    .trim()
+    .toLowerCase()
+    .replace(/^https?:\/\//, "")
+    .replace(/\/.*$/, "")
+    .replace(/^www\./, "");
+}
+
+const userSitesSchema = z
+  .array(
+    z.object({
+      Url: z.string(),
+      IsVerified: z.boolean().optional(),
+    }),
+  )
+  .nullable();
+
+/**
+ * The site's address exactly as it is registered in the user's Bing
+ * Webmaster account (http/https and www must match for the link APIs).
+ */
+export async function findBingSiteUrl(domain: string): Promise<string> {
+  const sites =
+    parseBing(
+      "GetUserSites",
+      userSitesSchema,
+      await bingGet("GetUserSites", {}),
+    ) ?? [];
+  const wanted = hostKey(domain);
+  const matches = sites.filter((site) => hostKey(site.Url) === wanted);
+  const site = matches.find((m) => m.IsVerified !== false) ?? matches[0];
+  if (!site) {
+    throw new AppError(
+      "BING_SITE_NOT_FOUND",
+      `${domain} Bing Webmaster hesabında bulunamadı.`,
+    );
+  }
+  return site.Url;
 }
 
 function isoDate(date: Date): string {
@@ -75,43 +148,52 @@ export async function getBingRelatedKeywords(input: {
     bingGet("GetRelatedKeywords", params),
     bingGet("GetKeyword", params).catch(() => null),
   ]);
-  const rows = z.array(keywordSchema).parse(related ?? []);
+  const rows =
+    parseBing(
+      "GetRelatedKeywords",
+      z.array(keywordSchema).nullable(),
+      related,
+    ) ?? [];
   const seedRow = keywordSchema.safeParse(seed);
   return seedRow.success ? [seedRow.data, ...rows] : rows;
 }
 
-const linkCountsSchema = z.object({
-  Links: z
-    .array(z.object({ Url: z.string(), Count: z.number() }))
-    .nullable()
-    .optional(),
-  TotalPages: z.number().optional(),
-});
+const linkCountsSchema = z
+  .object({
+    Links: z
+      .array(z.object({ Url: z.string(), Count: z.number() }))
+      .nullable()
+      .optional(),
+    TotalPages: z.number().optional(),
+  })
+  .nullable();
 
 /** Pages of a verified site with how many inbound links Bing knows for each. */
 export async function getBingLinkCounts(siteUrl: string, page = 0) {
-  const data = linkCountsSchema.parse(
+  const data = parseBing(
+    "GetLinkCounts",
+    linkCountsSchema,
     await bingGet("GetLinkCounts", { siteUrl, page: String(page) }),
   );
-  return { links: data.Links ?? [], totalPages: data.TotalPages ?? 0 };
+  return { links: data?.Links ?? [], totalPages: data?.TotalPages ?? 0 };
 }
 
-const linkDetailsSchema = z.object({
-  Details: z
-    .array(z.object({ Url: z.string(), AnchorText: z.string().nullable() }))
-    .nullable()
-    .optional(),
-  TotalPages: z.number().optional(),
-});
+const linkDetailsSchema = z
+  .object({
+    Details: z
+      .array(z.object({ Url: z.string(), AnchorText: z.string().nullable() }))
+      .nullable()
+      .optional(),
+    TotalPages: z.number().optional(),
+  })
+  .nullable();
 
 /** Linking pages (with anchor text) for one URL of a verified site. */
-export async function getBingUrlLinks(
-  siteUrl: string,
-  link: string,
-  page = 0,
-) {
-  const data = linkDetailsSchema.parse(
+export async function getBingUrlLinks(siteUrl: string, link: string, page = 0) {
+  const data = parseBing(
+    "GetUrlLinks",
+    linkDetailsSchema,
     await bingGet("GetUrlLinks", { siteUrl, link, page: String(page) }),
   );
-  return { details: data.Details ?? [], totalPages: data.TotalPages ?? 0 };
+  return { details: data?.Details ?? [], totalPages: data?.TotalPages ?? 0 };
 }

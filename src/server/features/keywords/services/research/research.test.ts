@@ -121,10 +121,11 @@ it("keeps shared-volume keywords independently filterable through research and c
 
   const fresh = await research(input, customer);
   const cached = await research(input, customer);
-  expect(mocks.fetchRows).toHaveBeenCalledTimes(2);
+  // FOXSEO runs its single free source once; the second search is cached.
+  expect(mocks.fetchRows).toHaveBeenCalledTimes(1);
   expect(cached).toEqual(fresh);
   expect(fresh.rows).toContainEqual(opportunity);
-  expect(fresh.source).toBe("blended");
+  expect(fresh.source).toBe("ideas");
   expect(mocks.upsertKeywordMetric).toHaveBeenCalledWith(
     expect.objectContaining({
       keyword: "caregiver",
@@ -139,21 +140,20 @@ it("keeps shared-volume keywords independently filterable through research and c
     sortDir: "asc",
   });
   expect(filtered).toEqual([opportunity]);
-  for (const params of mocks.fetchRows.mock.calls.slice(0, 2)) {
-    expect(params[0]).toMatchObject({ ignoreSynonyms: false });
-  }
+  expect(mocks.fetchRows.mock.calls[0][0]).toMatchObject({
+    ignoreSynonyms: false,
+  });
   const coreOnly = await research({ ...input, groupKeywords: false }, customer);
-  // The thin core-only set also exercises the related-keywords fallback.
-  expect(mocks.fetchRows).toHaveBeenCalledTimes(5);
-  for (const params of mocks.fetchRows.mock.calls.slice(2)) {
-    expect(params[0]).toMatchObject({ ignoreSynonyms: true });
-  }
+  expect(mocks.fetchRows).toHaveBeenCalledTimes(2);
+  expect(mocks.fetchRows.mock.calls[1][0]).toMatchObject({
+    ignoreSynonyms: true,
+  });
   expect(coreOnly.rows).not.toContainEqual(opportunity);
   expect(await research({ ...input, groupKeywords: false }, customer)).toEqual(
     coreOnly,
   );
   expect(await research(input, customer)).toEqual(fresh);
-  expect(mocks.fetchRows).toHaveBeenCalledTimes(5);
+  expect(mocks.fetchRows).toHaveBeenCalledTimes(2);
 });
 
 const nationalPlumber: KeywordResearchRow = {

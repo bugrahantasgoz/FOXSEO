@@ -48,9 +48,11 @@ const STANDARD_MESSAGES: Record<ErrorCode, string> = {
     ? "DataForSEO henüz Every App gateway'inde kurulu değil ya da kayıtlı anahtarı reddetti. pnpm everyapp secret set DATAFORSEO_API_KEY komutuyla ayarlayabilirsin."
     : "DataForSEO kimlik bilgilerini reddetti. DATAFORSEO_API_KEY değerinin DataForSEO giriş:şifre bilgisinin base64 hali olduğunu ve hesabın doğrulanmış, API erişimi açık olduğunu kontrol et.",
   BING_NOT_CONFIGURED:
-    "Bing Webmaster Tools henüz bağlı değil. BING_WEBMASTER_API_KEY değerini .env.local dosyasına ekle ve FOXSEO'yu yeniden başlat (KURULUM.md, 5. adım).",
+    "Bing Webmaster Tools henüz bağlı değil. FOXSEO → Ayarlar (API anahtarları) ile BING_WEBMASTER_API_KEY ekle, sonra FOXSEO → Yeniden başlat.",
   BING_REQUEST_FAILED:
-    "Bing Webmaster Tools isteği reddetti. API anahtarını ve bu sitenin Bing'de Proje ayarlarındaki adresle aynı şekilde doğrulandığını kontrol et. Ayrıntılar sunucu kayıtlarında.",
+    "Bing Webmaster Tools isteği yanıtlamadı ya da reddetti. API anahtarını doğru yapıştırdığını kontrol et ve biraz sonra tekrar dene. Ayrıntılar FOXSEO → Kayıt klasörünü aç altındaki foxseo.log dosyasında.",
+  BING_SITE_NOT_FOUND:
+    "Bu site Bing Webmaster Tools hesabında bulunamadı. bing.com/webmasters adresinde siteni ekle (Google Search Console'dan içe aktarabilirsin) ve Proje ayarlarındaki site adresinin aynı olduğunu kontrol et. Yeni eklenen sitelerde Bing'in veri toplaması birkaç gün sürebilir.",
   RATE_LIMITED: "Çok fazla istek gönderildi. Biraz bekleyip tekrar dene.",
   UPSTREAM_UNAVAILABLE:
     "Veri sağlayıcısına şu anda ulaşılamıyor. Birazdan tekrar dene.",

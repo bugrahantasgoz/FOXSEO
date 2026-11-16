@@ -22,6 +22,7 @@ const ERROR_CODES = [
   "DATAFORSEO_AUTH_FAILED",
   "BING_NOT_CONFIGURED",
   "BING_REQUEST_FAILED",
+  "BING_SITE_NOT_FOUND",
   "RATE_LIMITED",
   "UPSTREAM_UNAVAILABLE",
   "CONFLICT",
@@ -58,6 +59,7 @@ const NON_REPORTABLE_ERROR_CODES = new Set<ErrorCode>([
   "UPSTREAM_UNAVAILABLE",
   "BING_NOT_CONFIGURED",
   "BING_REQUEST_FAILED",
+  "BING_SITE_NOT_FOUND",
 ]);
 
 export function isErrorCode(value: string): value is ErrorCode {

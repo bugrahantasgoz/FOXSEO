@@ -66,7 +66,8 @@ export function useKeywordSerpAnalysis(
     retry: false,
     refetchOnReconnect: false,
     refetchOnWindowFocus: false,
-    enabled: !!serpKeyword,
+    // FOXSEO has no free source for live Google results, so this stays off.
+    enabled: false,
   });
 
   const { refetch: refetchSerp } = serpQuery;

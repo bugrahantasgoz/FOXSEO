@@ -1,11 +1,6 @@
 import { FileDown, Save, Sheet } from "lucide-react";
-import {
-  KeywordOverviewCard,
-  SerpAnalysisCard,
-} from "@/client/features/keywords/components";
 import { ExportMenu } from "@/client/components/ExportMenu";
 import { Alert, AlertDescription } from "@/client/components/ui/alert";
-import { Tabs, TabsList, TabsTrigger } from "@/client/components/ui/tabs";
 import {
   DataTableFilterPanel,
   DataTableFilterToggle,
@@ -41,39 +36,16 @@ type Props = {
 export function KeywordResearchResults({ controller }: Props) {
   return (
     <div className="flex w-full min-w-0 flex-col">
-      <MobileTabs controller={controller} />
-      <div className="flex flex-col gap-4 xl:flex-row">
-        <KeywordPanel controller={controller} />
-        <KeywordDetailPanel controller={controller} />
-      </div>
+      <KeywordPanel controller={controller} />
     </div>
   );
 }
 
-function MobileTabs({ controller }: Props) {
-  return (
-    <Tabs
-      value={controller.mobileTab}
-      onValueChange={controller.setMobileTab}
-      className="mb-4 shrink-0 md:hidden"
-    >
-      <TabsList variant="line" className="w-full">
-        <TabsTrigger value="keywords">
-          Anahtar kelimeler ({controller.filteredRows.length})
-        </TabsTrigger>
-        <TabsTrigger value="serp">Arama sonuçları</TabsTrigger>
-      </TabsList>
-    </Tabs>
-  );
-}
-
 function KeywordPanel({ controller }: Props) {
-  const { mobileTab, searchedKeyword, showApproximateMatchNotice } = controller;
+  const { searchedKeyword, showApproximateMatchNotice } = controller;
 
   return (
-    <div
-      className={`${mobileTab === "keywords" ? "flex" : "hidden md:flex"} order-2 xl:order-1 flex-col min-w-0 gap-2 xl:basis-3/5 xl:min-h-[32rem]`}
-    >
+    <div className="flex min-w-0 flex-col gap-2 xl:min-h-[32rem]">
       {showApproximateMatchNotice ? (
         <Alert variant="warning" role="status">
           <AlertDescription className="text-foreground">
@@ -242,41 +214,5 @@ function TableFilters({ controller }: Props) {
 
       <FilterIntentSelect form={filtersForm} />
     </DataTableFilterPanel>
-  );
-}
-
-function KeywordDetailPanel({ controller }: Props) {
-  const { mobileTab, overviewKeyword } = controller;
-
-  return (
-    // Size containment stops this column's content from adding height, so the
-    // table alone decides how tall the row is.
-    <div
-      className={`${mobileTab === "serp" ? "block" : "hidden md:block"} order-1 min-w-0 xl:order-2 xl:basis-2/5 xl:[contain:size]`}
-    >
-      <div className="flex flex-col gap-2 xl:sticky xl:top-4 xl:h-full xl:max-h-[calc(100dvh-2.5rem)]">
-        {overviewKeyword ? (
-          <div className="hidden shrink-0 md:block">
-            <KeywordOverviewCard keyword={overviewKeyword} />
-          </div>
-        ) : null}
-
-        <SerpAnalysisCard
-          items={controller.serpResults}
-          keyword={controller.activeSerpKeyword}
-          loading={controller.serpLoading}
-          loadingMore={controller.serpLoadingMore}
-          canLoadMore={controller.canLoadMoreSerp}
-          error={controller.serpError}
-          outOfCredits={controller.serpOutOfCredits}
-          onRetry={controller.retrySerp}
-          retrying={controller.serpRetrying}
-          deepFetchFailed={controller.deepFetchFailed}
-          page={controller.serpPage}
-          pageSize={controller.SERP_PAGE_SIZE}
-          onPageChange={controller.setSerpPage}
-        />
-      </div>
-    </div>
   );
 }

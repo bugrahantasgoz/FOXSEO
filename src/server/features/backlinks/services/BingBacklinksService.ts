@@ -1,5 +1,6 @@
 import { AppError } from "@/server/lib/errors";
 import {
+  findBingSiteUrl,
   getBingLinkCounts,
   getBingUrlLinks,
   hasBingWebmasterKey,
@@ -10,25 +11,28 @@ import {
 // for any domain.
 const MAX_LINK_COUNT_PAGES = 5;
 
-function siteUrlFor(domain: string | null | undefined): string {
+async function siteUrlFor(domain: string | null | undefined): Promise<string> {
   if (!domain) {
     throw new AppError(
       "VALIDATION_ERROR",
-      "Add the project's website in Project settings first.",
+      "Önce Proje ayarları'ndan sitenin adresini ekle.",
     );
   }
-  const host = domain.replace(/^https?:\/\//, "").replace(/\/.*$/, "");
-  return `https://${host}/`;
+  return findBingSiteUrl(domain);
 }
 
 async function getOverview(project: { domain: string | null }) {
   if (!(await hasBingWebmasterKey())) {
     return { configured: false as const };
   }
-  const siteUrl = siteUrlFor(project.domain);
+  const siteUrl = await siteUrlFor(project.domain);
   const pages: { url: string; count: number }[] = [];
   let totalPages = 1;
-  for (let page = 0; page < Math.min(totalPages, MAX_LINK_COUNT_PAGES); page++) {
+  for (
+    let page = 0;
+    page < Math.min(totalPages, MAX_LINK_COUNT_PAGES);
+    page++
+  ) {
     const result = await getBingLinkCounts(siteUrl, page);
     totalPages = result.totalPages;
     pages.push(...result.links.map((l) => ({ url: l.Url, count: l.Count })));
@@ -47,7 +51,7 @@ async function getLinksToUrl(
   url: string,
   page: number,
 ) {
-  const siteUrl = siteUrlFor(project.domain);
+  const siteUrl = await siteUrlFor(project.domain);
   const result = await getBingUrlLinks(siteUrl, url, page);
   return {
     links: result.details.map((d) => ({

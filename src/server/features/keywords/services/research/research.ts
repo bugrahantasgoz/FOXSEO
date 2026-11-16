@@ -77,7 +77,8 @@ const cachedResultSchema = z.object({
 
 // v5: auto mode blends suggestions + ideas. v4 (collapsed close variants)
 // only ran in previews; skip it so those entries are never reused.
-const CACHE_VERSION = 5;
+// v6: FOXSEO free sources (Google suggestions + Bing volume).
+const CACHE_VERSION = 6;
 
 async function fetchRowsFromSource(
   source: KeywordSource,
@@ -330,7 +331,8 @@ export async function research(
       ? { ...input, mode: "auto", clickstream: false, groupKeywords: false }
       : {
           ...input,
-          mode: wildcard ? "suggestions" : input.mode,
+          // FOXSEO has one free source, so every mode runs it once.
+          mode: wildcard ? "suggestions" : "ideas",
           clickstream: input.locationName ? false : input.clickstream,
         };
   const mode = effectiveInput.mode ?? "auto";
