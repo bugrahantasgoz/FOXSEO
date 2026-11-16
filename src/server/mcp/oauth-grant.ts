@@ -55,7 +55,7 @@ export async function completeMcpGrant(input: {
     },
     scope: scopes,
     props,
-    // One client id can serve several installs of one OpenSEO user: ChatGPT
+    // One client id can serve several installs of one FOXSEO user: ChatGPT
     // reuses the client it registered for an app, and Claude can hold one for
     // a directory entry. Revoking the user's other grants for the client
     // (the library default) signed the earlier install out on every new

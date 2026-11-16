@@ -144,7 +144,7 @@ export function chatGptSignInPlugins(env: ChatGptEnv) {
               // the same email only when this is true.
               emailVerified: email_verified === true,
               // The same fallback the email sign-up form uses.
-              name: name || email?.split("@")[0] || "OpenSEO User",
+              name: name || email?.split("@")[0] || "FOXSEO User",
               image: picture,
             };
           },

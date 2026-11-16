@@ -62,7 +62,7 @@ export function McpConnectionsSettings() {
     <section className="space-y-3">
       <SectionHeader title="Connected agents" />
       <p className="text-sm">
-        AI clients signed in to OpenSEO with OAuth or added through Stripe
+        AI clients signed in to FOXSEO with OAuth or added through Stripe
         Projects.
       </p>
 
@@ -134,7 +134,7 @@ export function McpConnectionsSettings() {
           onConfirm={() => disconnectMutation.mutate(disconnecting)}
         >
           {disconnecting.kind === "oauth"
-            ? "It will have to sign in to OpenSEO again."
+            ? "It will have to sign in to FOXSEO again."
             : "Stripe can't create new keys, and the keys it created stop working. Run stripe projects add openseo/api to connect again."}
         </ConfirmDialog>
       ) : null}

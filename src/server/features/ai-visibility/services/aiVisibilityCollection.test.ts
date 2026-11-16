@@ -62,7 +62,7 @@ const pendingTask = {
 } as const;
 const liveAnswer = {
   status: "fulfilled",
-  value: { status: "completed", result: { markdown: "OpenSEO", sources: [] } },
+  value: { status: "completed", result: { markdown: "FOXSEO", sources: [] } },
 } as const;
 const providerFailure = {
   status: "failed",
@@ -115,7 +115,7 @@ describe("AI answer collection", () => {
       status: "completed",
       result: {
         markdown:
-          "Try **Ahrefs** or OpenSEO [1](https://openseo.so/pricing?utm_source=chatgpt)",
+          "Try **Ahrefs** or FOXSEO [1](https://openseo.so/pricing?utm_source=chatgpt)",
         sources: [
           {
             url: "https://openseo.so/pricing?utm_source=chatgpt",
@@ -257,9 +257,9 @@ describe("AI answer collection", () => {
               type: "message",
               sections: [
                 {
-                  text: "Try OpenSEO.",
+                  text: "Try FOXSEO.",
                   annotations: [
-                    { url: "https://openseo.so/", title: "OpenSEO" },
+                    { url: "https://openseo.so/", title: "FOXSEO" },
                   ],
                 },
               ],
@@ -286,7 +286,7 @@ describe("AI answer collection", () => {
     );
     expect(await repo.getObservation("answer-0")).toMatchObject({
       status: "completed",
-      answerMarkdown: "Try OpenSEO.",
+      answerMarkdown: "Try FOXSEO.",
     });
     expect((await repo.getEvidence(["answer-0"])).sources).toMatchObject([
       { url: "https://openseo.so/", domain: "openseo.so" },

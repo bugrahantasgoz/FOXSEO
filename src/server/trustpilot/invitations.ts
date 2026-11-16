@@ -24,7 +24,7 @@ const nextCheckAt = new Map<string, number>();
 const RECHECK_UNPAID_MS = 5 * 60 * 1000;
 
 /**
- * Invites the organization's owner to review OpenSEO on its first MCP tool
+ * Invites the organization's owner to review FOXSEO on its first MCP tool
  * call while paying, the point Trustpilot advised, once ever per
  * organization. Called on every successful external tool call; never throws,
  * so it can't fail one. Inert until the Trustpilot settings exist (hosted

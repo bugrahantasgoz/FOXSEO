@@ -36,7 +36,7 @@ export const setReportSharingTool = {
   config: {
     title: "Set report sharing",
     description:
-      "Turn public sharing on or off for one saved report. Anyone with shareUrl can read the latest saved version without an account, so enable sharing only when the user explicitly asks for it, in their prompt or in instructions for the skill. Repeating true preserves the existing link; false revokes it, and enabling again creates a new link. Public sharing is available only on hosted OpenSEO. Uses no credits. To retrieve an existing link without changing access, use get_report.",
+      "Turn public sharing on or off for one saved report. Anyone with shareUrl can read the latest saved version without an account, so enable sharing only when the user explicitly asks for it, in their prompt or in instructions for the skill. Repeating true preserves the existing link; false revokes it, and enabling again creates a new link. Public sharing is available only on hosted FOXSEO. Uses no credits. To retrieve an existing link without changing access, use get_report.",
     inputSchema: sharingInputSchema,
     outputSchema: z.looseObject({
       reportId: z.string(),

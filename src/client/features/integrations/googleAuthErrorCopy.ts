@@ -39,7 +39,7 @@ export function googleAuthErrorCopy(
       return {
         title: "Verify your email with ChatGPT first",
         description:
-          "OpenAI hasn't verified the email on your ChatGPT account, so we can't create an OpenSEO account from it. Verify it in ChatGPT, or sign up with Google or email.",
+          "OpenAI hasn't verified the email on your ChatGPT account, so we can't create an FOXSEO account from it. Verify it in ChatGPT, or sign up with Google or email.",
       };
     case "state_mismatch":
       return {
@@ -56,7 +56,7 @@ export function googleAuthErrorCopy(
     case "scope_not_granted":
       return {
         title: `${what} is missing a permission`,
-        description: `OpenSEO didn't get access to your ${providerLabel ?? "Google"} data because a box on Google's permission screen wasn't checked. Try again and check every box before you continue.`,
+        description: `FOXSEO didn't get access to your ${providerLabel ?? "Google"} data because a box on Google's permission screen wasn't checked. Try again and check every box before you continue.`,
       };
     case "connection_save_failed":
       return {

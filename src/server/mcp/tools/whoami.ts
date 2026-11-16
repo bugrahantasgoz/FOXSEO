@@ -17,7 +17,7 @@ export const whoamiTool = {
   config: {
     title: "Who am I",
     description:
-      "Show the connected OpenSEO account, server mode, token scopes, and remaining credits. Use it when the user asks to check their account, connection, or credit balance. Sets up billing on a new hosted account's first call. Uses no credits.",
+      "Show the connected FOXSEO account, server mode, token scopes, and remaining credits. Use it when the user asks to check their account, connection, or credit balance. Sets up billing on a new hosted account's first call. Uses no credits.",
     inputSchema: {} as Record<string, never>,
     outputSchema: z.looseObject({
       userEmail: z.string(),
@@ -71,7 +71,7 @@ export const whoamiTool = {
     }
     if (auth.guestClaimToken) {
       lines.push(
-        `Guest account: the user connected without signing up. To add credits, connect Google Search Console or Google Analytics, or use the OpenSEO web app, they need a full account. They can create one, or sign in to an existing one, at ${buildGuestSignUpUrl(auth.baseUrl)}. ${GUEST_SIGN_UP_NOTE}`,
+        `Guest account: the user connected without signing up. To add credits, connect Google Search Console or Google Analytics, or use the FOXSEO web app, they need a full account. They can create one, or sign in to an existing one, at ${buildGuestSignUpUrl(auth.baseUrl)}. ${GUEST_SIGN_UP_NOTE}`,
       );
     }
     return mcpResponse({

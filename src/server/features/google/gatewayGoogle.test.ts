@@ -57,7 +57,7 @@ describe("Google through the Every App gateway", () => {
 
     const status = await getGatewayGoogleStatus();
 
-    // The member's own connection to OpenSEO: there is no organization
+    // The member's own connection to FOXSEO: there is no organization
     // connection any more.
     expect(mocks.integrationStatus).toHaveBeenCalledWith({
       env: mocks.env,

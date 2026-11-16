@@ -13,8 +13,8 @@ import {
 } from "./repository";
 
 // Stripe Projects provider: `stripe projects add openseo/api` creates (or
-// links) an OpenSEO account for the developer's Stripe-verified email and
-// hands back an MCP API key. OpenSEO bills its own plans, so the catalog only
+// links) an FOXSEO account for the developer's Stripe-verified email and
+// hands back an MCP API key. FOXSEO bills its own plans, so the catalog only
 // lists the free service and paid plans stay on the billing page.
 
 export const API_SERVICE_ID = "api";
@@ -55,7 +55,7 @@ const codeIdentifier = async (code: string) =>
   `stripe-projects-code:${await sha256Hex(code)}`;
 
 // The same rule as Google sign-in: only an email the provider has verified,
-// and never an OpenSEO account that hasn't confirmed its own address. Stripe's
+// and never an FOXSEO account that hasn't confirmed its own address. Stripe's
 // word is the only proof the requester owns the address, so without it a
 // stranger could take a key to someone else's account, or pre-claim an
 // address and keep a grant into it after the real owner arrives.
@@ -81,7 +81,7 @@ export async function linkAccount(input: {
   if (existing && !existing.user.emailVerified) {
     throw new StripeProjectsError(
       "forbidden",
-      `The OpenSEO account for this email hasn't confirmed its address. Sign in at ${getHostedBaseUrl()} to confirm it, then try again.`,
+      `The FOXSEO account for this email hasn't confirmed its address. Sign in at ${getHostedBaseUrl()} to confirm it, then try again.`,
       403,
     );
   }
@@ -90,7 +90,7 @@ export async function linkAccount(input: {
     (await internalAdapter
       .createUser({
         email,
-        name: input.name?.trim() || email.split("@")[0] || "OpenSEO",
+        name: input.name?.trim() || email.split("@")[0] || "FOXSEO",
         emailVerified: true,
       })
       .catch((error: unknown) => {
@@ -174,7 +174,7 @@ export async function exchangeCode(input: {
     ...tokens.response,
     account: {
       id: scope.organizationId,
-      // OpenSEO bills its own plans; Stripe sends no payment tokens.
+      // FOXSEO bills its own plans; Stripe sends no payment tokens.
       payment_credentials: "provider",
     },
   };

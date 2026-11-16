@@ -135,7 +135,7 @@ function ConsentRequest({
         setError("Authorization response did not include a redirect URL.");
       }
     } catch {
-      setError("We couldn't reach OpenSEO. Please try again.");
+      setError("We couldn't reach FOXSEO. Please try again.");
     }
     setPendingAction(null);
   }
@@ -145,7 +145,7 @@ function ConsentRequest({
       <CardContent>
         <AuthPageCard
           className="max-w-none"
-          title={`Allow ${request.clientName ?? "this app"} to access your OpenSEO account?`}
+          title={`Allow ${request.clientName ?? "this app"} to access your FOXSEO account?`}
         >
           <div className="flex items-center gap-3 text-sm">
             <div className="flex size-7 shrink-0 items-center justify-center rounded-full border border-border bg-muted/50">

@@ -91,7 +91,7 @@ function AiPage() {
       <div className="mx-auto max-w-7xl">
         <PageHeader
           title="Agent setup"
-          description="The most powerful way to use OpenSEO is through the AI agent you already use. Set it up once, then ask it anything."
+          description="The most powerful way to use FOXSEO is through the AI agent you already use. Set it up once, then ask it anything."
         />
 
         <Tabs
@@ -121,7 +121,7 @@ function AiPage() {
                       </CardTitle>
                       <CardDescription>
                         Paste the setup prompt into your agent to connect
-                        OpenSEO and install its SEO skills. It will guide you
+                        FOXSEO and install its SEO skills. It will guide you
                         through any manual steps.
                       </CardDescription>
                     </CardHeader>
@@ -172,7 +172,7 @@ function AiPage() {
                       </CardTitle>
                       <CardDescription>
                         Already connected? Paste the update prompt into your
-                        agent to get the latest OpenSEO skills while preserving
+                        agent to get the latest FOXSEO skills while preserving
                         your connection settings and personal edits.
                       </CardDescription>
                     </CardHeader>
@@ -275,7 +275,7 @@ const EVERY_APP_SKILLS_COMMAND = "npx skills add every-app/open-seo";
 
 /**
  * Behind Every App the agent connects to the gateway's MCP address, which
- * covers every app on it; OpenSEO serves no MCP of its own here. The skills
+ * covers every app on it; FOXSEO serves no MCP of its own here. The skills
  * install on their own.
  */
 function EveryAppAgentSetup() {
@@ -288,7 +288,7 @@ function EveryAppAgentSetup() {
             <h2>Connect your agent to Every App</h2>
           </CardTitle>
           <CardDescription>
-            Every App has one address for your agent, and it covers OpenSEO and
+            Every App has one address for your agent, and it covers FOXSEO and
             your other apps. Connect it once.
           </CardDescription>
         </CardHeader>
@@ -309,8 +309,8 @@ function EveryAppAgentSetup() {
             <h2>Install the SEO skills</h2>
           </CardTitle>
           <CardDescription>
-            Run this in a terminal to add OpenSEO's skills to your agent. They
-            use OpenSEO through your Every App connection.
+            Run this in a terminal to add FOXSEO's skills to your agent. They
+            use FOXSEO through your Every App connection.
           </CardDescription>
         </CardHeader>
         <CardContent className="flex flex-wrap items-center gap-x-5 gap-y-3">

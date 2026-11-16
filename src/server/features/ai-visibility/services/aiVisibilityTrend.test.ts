@@ -38,7 +38,7 @@ function answer(
     branded: false,
     status: "completed",
     hasAnswer: 1,
-    brandName: "OpenSEO",
+    brandName: "FOXSEO",
     brandDomain: "openseo.so",
     mentioned,
     cited: false,

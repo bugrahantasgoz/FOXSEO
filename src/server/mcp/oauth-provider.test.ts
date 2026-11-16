@@ -150,7 +150,7 @@ async function invokeDefaultHandler(
   return rawResponse;
 }
 
-describe("OpenSEO OAuth provider configuration", () => {
+describe("FOXSEO OAuth provider configuration", () => {
   beforeEach(() => {
     mocks.options.length = 0;
     mocks.requests.length = 0;

@@ -46,7 +46,7 @@ export const explorePromptTool = {
   config: {
     title: "Explore an AI prompt",
     description:
-      "Ask one prompt in ChatGPT, or compare answers from ChatGPT, Claude, Gemini, and Perplexity. Returns answer text, citations, search queries, brand mentions, and per-model errors. Use it for a one-off look at how AI answers a question. Costs credits for actual model usage per uncached model, and web search may make one more paid attempt if the first answer did not search; cached answers are free for seven days. Requires a paid plan on hosted OpenSEO. For consumer-site observations and recurring monitoring, use the AI visibility tracking tools, starting with get_ai_visibility_tracker.",
+      "Ask one prompt in ChatGPT, or compare answers from ChatGPT, Claude, Gemini, and Perplexity. Returns answer text, citations, search queries, brand mentions, and per-model errors. Use it for a one-off look at how AI answers a question. Costs credits for actual model usage per uncached model, and web search may make one more paid attempt if the first answer did not search; cached answers are free for seven days. Requires a paid plan on hosted FOXSEO. For consumer-site observations and recurring monitoring, use the AI visibility tracking tools, starting with get_ai_visibility_tracker.",
     inputSchema: inputSchema.shape,
     outputSchema: promptExplorerResultSchema
       .extend({

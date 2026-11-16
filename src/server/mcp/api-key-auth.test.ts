@@ -195,11 +195,11 @@ describe("handleMcpApiKeyRequest", () => {
 
   it.each([
     [
-      "non-OpenSEO bearer tokens",
+      "non-FOXSEO bearer tokens",
       request({ Authorization: "Bearer oauth-access-token" }),
     ],
     [
-      "non-OpenSEO x-api-key values",
+      "non-FOXSEO x-api-key values",
       request({
         "x-api-key": "some-foreign-key",
         Authorization: "Bearer oauth-access-token",

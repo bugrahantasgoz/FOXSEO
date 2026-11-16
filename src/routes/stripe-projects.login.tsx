@@ -83,7 +83,7 @@ function StripeProjectsLoginPage() {
   return (
     <AuthPageShell>
       <AuthPageCard
-        title="Sign in to OpenSEO"
+        title="Sign in to FOXSEO"
         helperText={`You opened this from Stripe Projects. You'll be signed in as ${account.email}.`}
       >
         <Button className="w-full" disabled={pending} onClick={signIn}>

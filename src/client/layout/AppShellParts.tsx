@@ -43,7 +43,7 @@ function SeoApiStatusBanners({
             </>
           ) : (
             <>
-              Setup needed: add your DataForSEO API key to use OpenSEO features.
+              Setup needed: add your DataForSEO API key to use FOXSEO features.
               See the quick steps on the {helpLink}.
             </>
           )}
@@ -75,7 +75,7 @@ function LegacyDockerBanner() {
   }
   return (
     <AppBanner variant="info" icon={<Info className="size-4 shrink-0" />}>
-      A new OpenSEO Docker setup starts in seconds and supports accounts. This
+      A new FOXSEO Docker setup starts in seconds and supports accounts. This
       image keeps getting updates, and moving keeps your data.{" "}
       <a
         href={DOCKER_MOVE_URL}
@@ -125,7 +125,7 @@ function MissingSeoSetupModal({ onClose }: { onClose: () => void }) {
                   setup guide has the steps.
                 </>
               ) : (
-                "Add your DataForSEO API key to start using OpenSEO."
+                "Add your DataForSEO API key to start using FOXSEO."
               )}
             </DialogDescription>
           </div>

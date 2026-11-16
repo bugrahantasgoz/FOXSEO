@@ -29,7 +29,7 @@ const SERVICES = [
   {
     id: API_SERVICE_ID,
     description:
-      "OpenSEO MCP server and API key for SEO research: keyword data, SERPs, backlinks, rank tracking, site audits and AI visibility. New accounts start with free credits. Paid plans and credit top-ups are billed by OpenSEO at https://openseo.so/pricing.",
+      "FOXSEO MCP server and API key for SEO research: keyword data, SERPs, backlinks, rank tracking, site audits and AI visibility. New accounts start with free credits. Paid plans and credit top-ups are billed by FOXSEO at https://openseo.so/pricing.",
     categories: ["search", "analytics", "ai"],
     pricing: { type: "free" },
     kind: "deployable",

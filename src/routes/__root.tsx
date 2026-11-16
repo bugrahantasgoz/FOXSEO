@@ -30,7 +30,7 @@ export const Route = createRootRoute({
   head: () => ({
     meta: [
       {
-        title: "OpenSEO",
+        title: "FOXSEO",
       },
       {
         charSet: "utf-8",

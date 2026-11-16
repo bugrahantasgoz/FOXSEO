@@ -45,7 +45,7 @@ function AuthErrorPage() {
           variant="secondary"
           className="w-full"
         >
-          Back to OpenSEO
+          Back to FOXSEO
         </Button>
       </AuthPageCard>
     </AuthPageShell>

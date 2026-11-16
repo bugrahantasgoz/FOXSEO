@@ -249,7 +249,7 @@ function registerOpenSeoTool<Input extends ToolSchema>(
 }
 
 /**
- * Every OpenSEO tool, in order. Each caller registers them its own way: the
+ * Every FOXSEO tool, in order. Each caller registers them its own way: the
  * MCP server here, and the Every App gateway's tool catalog
  * (src/server/everyapp/tools.ts), so a new tool reaches both.
  */
@@ -350,8 +350,8 @@ export function createOpenSeoMcpServer(
 ) {
   const server = new McpServer(
     {
-      name: "OpenSEO MCP",
-      title: "OpenSEO",
+      name: "FOXSEO MCP",
+      title: "FOXSEO",
       version: "0.0.12",
       description:
         "SEO research tools for AI agents: keyword research and metrics, SERP and local SERP results, domain and backlink analysis, rank tracking, and Google Search Console performance.",
@@ -377,9 +377,9 @@ export function createOpenSeoMcpServer(
       // instructions until a change passes, and this is the approved text.
       // Edit it only alongside a planned review.
       instructions:
-        "OpenSEO research tools use credits. Proceed with normal focused research, but ask the user for confirmation before planned batches over 2,000 credits. OpenSEO cannot purchase credits or charge cards. Explain unsupported purchase requests without promoting subscriptions, upgrades or credit purchases, or directing users to checkout." +
+        "FOXSEO research tools use credits. Proceed with normal focused research, but ask the user for confirmation before planned batches over 2,000 credits. FOXSEO cannot purchase credits or charge cards. Explain unsupported purchase requests without promoting subscriptions, upgrades or credit purchases, or directing users to checkout." +
         (authProps[MCP_AUTH_CONTEXT_PROP].guestClaimToken
-          ? " This connection uses a guest OpenSEO account: the user connected without signing up. It has the same free credits as a new account. Adding credits, connecting Google Search Console or Google Analytics, and using the OpenSEO web app need a full account; whoami gives the link that creates one; signing up in the browser that connected OpenSEO keeps the user's projects and this connection."
+          ? " This connection uses a guest FOXSEO account: the user connected without signing up. It has the same free credits as a new account. Adding credits, connecting Google Search Console or Google Analytics, and using the FOXSEO web app need a full account; whoami gives the link that creates one; signing up in the browser that connected FOXSEO keeps the user's projects and this connection."
           : ""),
     },
   );

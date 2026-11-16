@@ -455,7 +455,7 @@ export const organizationActivationState = pgTable(
       .references(() => organization.id, { onDelete: "cascade" }),
     firstMcpAuthorizedAt: timestampColumn("first_mcp_authorized_at"),
     firstMcpToolCallAt: timestampColumn("first_mcp_tool_call_at"),
-    // When the owner was invited to review OpenSEO on Trustpilot (hosted).
+    // When the owner was invited to review FOXSEO on Trustpilot (hosted).
     trustpilotInvitedAt: timestampColumn("trustpilot_invited_at"),
     updatedAt: timestampColumn("updated_at").notNull().default(isoNow),
   },

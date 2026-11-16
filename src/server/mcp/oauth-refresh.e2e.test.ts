@@ -281,7 +281,7 @@ describe("Codex-style OAuth token refresh (real workers-oauth-provider)", () => 
 
   // ChatGPT reuses the client it registered for an app and Claude can hold one
   // for a directory entry, so two accounts or workspaces signed in to the same
-  // OpenSEO login can arrive with the same client id.
+  // FOXSEO login can arrive with the same client id.
   it("keeps an earlier connection signed in when the same client connects again", async () => {
     const { client, tokens: first } = await setupSession();
     const second = await connect(client.client_id);

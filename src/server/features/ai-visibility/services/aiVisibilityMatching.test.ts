@@ -7,7 +7,7 @@ import {
   ownedAiDomain,
 } from "./aiVisibilityMatching";
 
-const brand = { name: "OpenSEO", domain: "openseo.so", own: true };
+const brand = { name: "FOXSEO", domain: "openseo.so", own: true };
 function answer(text: string, citedHosts: string[] = []): ParsedAiAnswer {
   return {
     answerMarkdown: text,
@@ -24,12 +24,12 @@ function answer(text: string, citedHosts: string[] = []): ParsedAiAnswer {
 
 describe("brand mentions", () => {
   it.each([
-    ["OpenSEO is an open-source toolkit.", 0],
-    ["OpenSEO's MCP supports research.", 0],
+    ["FOXSEO is an open-source toolkit.", 0],
+    ["FOXSEO's MCP supports research.", 0],
     ["Try openseo.so for audits.", 4],
-    ["OpenSEOsomething and MyOpenSEO are different names.", null],
-    ["Links: https://openseo.so/OpenSEO and www.openseo.so/OpenSEO", null],
-    ["Email OpenSEO@example.com or help@openseo.so.", null],
+    ["FOXSEOsomething and MyFOXSEO are different names.", null],
+    ["Links: https://openseo.so/FOXSEO and www.openseo.so/FOXSEO", null],
+    ["Email FOXSEO@example.com or help@openseo.so.", null],
     ["An unrelated toolkit has similar features.", null],
   ])("%s", (text, firstMention) => {
     expect(matchAiBrand(answer(text), brand)).toMatchObject({
@@ -101,7 +101,7 @@ describe("brand citations", () => {
 
 describe("branded prompt cohort", () => {
   it.each([
-    "What is OpenSEO?",
+    "What is FOXSEO?",
     "Review https://openseo.so",
     "What does www.openseo.so offer?",
     "Review docs.openseo.so/mcp",

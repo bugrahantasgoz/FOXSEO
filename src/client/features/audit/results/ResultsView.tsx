@@ -135,7 +135,7 @@ export function ResultsView({
               target="_blank"
               rel="noreferrer"
             >
-              OpenSEO-Audit crawler
+              FOXSEO-Audit crawler
             </a>
             .
           </AlertDescription>

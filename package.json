@@ -1,5 +1,5 @@
 {
-  "name": "open-seo",
+  "name": "foxseo",
   "private": true,
   "sideEffects": [
     "./src/standalone-server.ts"

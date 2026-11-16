@@ -45,7 +45,7 @@ export const createProjectTool = {
   config: {
     title: "Create project",
     description:
-      "Create a project in the user's organization. Provide a name, and optionally a domain and a default market (locationCode and languageCode; a languageCode requires a locationCode). Pass the returned id as projectId to other OpenSEO tools. Uses no credits. Call list_projects first to avoid creating a duplicate.",
+      "Create a project in the user's organization. Provide a name, and optionally a domain and a default market (locationCode and languageCode; a languageCode requires a locationCode). Pass the returned id as projectId to other FOXSEO tools. Uses no credits. Call list_projects first to avoid creating a duplicate.",
     inputSchema,
     outputSchema: z.looseObject({
       project: z

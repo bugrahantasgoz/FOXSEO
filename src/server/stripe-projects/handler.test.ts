@@ -174,7 +174,7 @@ describe("handleStripeProjectsRequest", () => {
     expect(mocks.createUser).not.toHaveBeenCalled();
   });
 
-  it("refuses to link an OpenSEO account that never confirmed its email", async () => {
+  it("refuses to link an FOXSEO account that never confirmed its email", async () => {
     mocks.findUserByEmail.mockResolvedValue({
       user: { id: "user-1", emailVerified: false },
     });
