@@ -4,7 +4,8 @@
 const { app, BrowserWindow, Menu, shell, dialog } = require("electron");
 const fs = require("node:fs");
 const path = require("node:path");
-const { startServer, stopServer } = require("./server.cjs");
+const { spawn } = require("node:child_process");
+const { startServer, stopServer, ensureSettings } = require("./server.cjs");
 
 const GUIDE_URL =
   "https://github.com/bugrahantasgoz/FOXSEO/blob/main/KURULUM.md";
@@ -137,8 +138,23 @@ function keepExternalLinksInBrowser(win) {
   });
 }
 
+// Opens the API key settings in Notepad on Windows (the file is plain text),
+// or the system's default editor elsewhere.
+function openSettings() {
+  const file = ensureSettings(dataDir());
+  if (process.platform === "win32") {
+    const editor = spawn("notepad.exe", [file], {
+      detached: true,
+      stdio: "ignore",
+    });
+    editor.on("error", () => shell.openPath(file));
+    editor.unref();
+    return;
+  }
+  shell.openPath(file);
+}
+
 function buildMenu() {
-  const settingsFile = () => path.join(dataDir(), "ayarlar.env");
   Menu.setApplicationMenu(
     Menu.buildFromTemplate([
       {
@@ -146,7 +162,7 @@ function buildMenu() {
         submenu: [
           {
             label: "Ayarlar (API anahtarları)",
-            click: () => shell.openPath(settingsFile()),
+            click: () => openSettings(),
           },
           { label: "Yeniden başlat", click: () => restartServer() },
           { type: "separator" },

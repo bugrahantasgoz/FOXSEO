@@ -132,8 +132,18 @@ async function startServer(options) {
   return { process: child, url: `http://localhost:${PORT}` };
 }
 
+// A .txt file, so Windows opens it in Notepad on a double click (it has no
+// program for .env files). Version 0.1.0 used ayarlar.env; it is moved over.
+function settingsPath(dataDir) {
+  return path.join(dataDir, "ayarlar.txt");
+}
+
 function ensureSettings(dataDir) {
-  const file = path.join(dataDir, "ayarlar.env");
+  const file = settingsPath(dataDir);
+  const legacy = path.join(dataDir, "ayarlar.env");
+  if (!fs.existsSync(file) && fs.existsSync(legacy)) {
+    fs.renameSync(legacy, file);
+  }
   if (!fs.existsSync(file)) fs.writeFileSync(file, SETTINGS_TEMPLATE, "utf8");
   return file;
 }
@@ -161,7 +171,7 @@ function prepareRuntimeCopy(options) {
     );
     fs.writeFileSync(marker, new Date().toISOString());
   }
-  // Fixed settings for the desktop edition; the user's ayarlar.env is loaded
+  // Fixed settings for the desktop edition; the user's ayarlar.txt is loaded
   // after this file and can add to it.
   fs.writeFileSync(
     path.join(runtimeDir, "base.env"),
@@ -257,4 +267,4 @@ function stopServer(child) {
   }
 }
 
-module.exports = { startServer, stopServer, PORT };
+module.exports = { startServer, stopServer, ensureSettings, PORT };
