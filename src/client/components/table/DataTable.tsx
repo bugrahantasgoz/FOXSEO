@@ -78,7 +78,7 @@ export function useSelectionAnchor(): MutableRefObject<SelectionAnchor | null> {
 export function makeSelectionColumn<TData>(
   anchorRef: MutableRefObject<SelectionAnchor | null>,
   /** Names each row checkbox for screen readers. */
-  rowLabel: (row: Row<TData>) => string = () => "Select row",
+  rowLabel: (row: Row<TData>) => string = () => "Satırı seç",
 ): ColumnDef<TData> {
   return {
     id: "select",
@@ -93,7 +93,7 @@ export function makeSelectionColumn<TData>(
         }
         disabled={!table.getRowModel().rows.some((row) => row.getCanSelect())}
         onCheckedChange={(checked) => table.toggleAllRowsSelected(checked)}
-        aria-label="Select all rows"
+        aria-label="Tüm satırları seç"
       />
     ),
     cell: ({ row, table }) => (
@@ -263,8 +263,8 @@ export function DataTable<TData>({
                     <EmptyState
                       kind="filtered"
                       variant="plain"
-                      title="No rows match these filters"
-                      description="Change or clear the filters to see more rows."
+                      title="Bu filtrelere uyan satır yok"
+                      description="Daha fazla satır görmek için filtreleri değiştir veya temizle."
                       action={
                         onClearFilters ? (
                           <Button

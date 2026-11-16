@@ -24,21 +24,21 @@ type AccountsProps = {
 };
 
 export function accountLabel(account: GooglePickerAccount) {
-  return account.email ?? `Google account · ${account.accountId.slice(-6)}`;
+  return account.email ?? `Google hesabı · ${account.accountId.slice(-6)}`;
 }
 
 export function accountStatus(
   account: GooglePickerAccount,
   provider: "gsc" | "ga4",
 ) {
-  if (account.requiresReconnect) return "Connection expired";
+  if (account.requiresReconnect) return "Bağlantının süresi doldu";
   if (account.unavailable) {
     return account.apiDisabled
-      ? "Search Console API isn't enabled"
-      : "Couldn't load properties";
+      ? "Search Console API etkin değil"
+      : "Mülkler yüklenemedi";
   }
   if (account.properties.length === 0) {
-    return provider === "gsc" ? "No websites found" : "No properties found";
+    return provider === "gsc" ? "Site bulunamadı" : "Mülk bulunamadı";
   }
   return null;
 }
@@ -87,15 +87,15 @@ export function GoogleAccounts({
           <span className="truncate">
             {props.accounts.length === 1
               ? accountLabel(props.accounts[0])
-              : `${props.accounts.length} Google accounts`}
+              : `${props.accounts.length} Google hesabı`}
           </span>
           <ChevronDown className="size-3.5 shrink-0" />
         </PopoverTrigger>
         <PopoverContent align="start" className="w-80">
           <PopoverHeader>
-            <PopoverTitle>Google accounts</PopoverTitle>
+            <PopoverTitle>Google hesapları</PopoverTitle>
             <PopoverDescription>
-              Properties come from these accounts.
+              Mülkler bu hesaplardan gelir.
             </PopoverDescription>
           </PopoverHeader>
           <AccountList
@@ -143,7 +143,7 @@ function AddAccountButton({
         pending={linking}
       >
         {linking ? null : <Plus className="size-4" />}
-        {linking ? "Opening Google…" : "Add Google account"}
+        {linking ? "Google açılıyor…" : "Google hesabı ekle"}
       </Button>
     </div>
   );
@@ -180,7 +180,7 @@ function AccountRow({
               rel="noopener noreferrer"
               className="underline underline-offset-4"
             >
-              How to enable it ↗
+              Nasıl etkinleştirilir ↗
             </a>
           </>
         ) : null}
@@ -191,20 +191,20 @@ function AccountRow({
             variant="ghost"
             size="xs"
             onClick={onReconnect}
-            aria-label={`Reconnect ${label}`}
+            aria-label={`${label} yeniden bağla`}
             disabled={linking}
             aria-busy={linking}
           >
-            {linking ? "Opening Google…" : "Reconnect"}
+            {linking ? "Google açılıyor…" : "Yeniden bağla"}
           </Button>
         ) : account.unavailable ? (
           <Button
             variant="ghost"
             size="xs"
             onClick={onRetry}
-            aria-label={`Retry ${label}`}
+            aria-label={`${label} için tekrar dene`}
           >
-            Try again
+            Tekrar dene
           </Button>
         ) : null}
         {onRemove ? (
@@ -214,9 +214,9 @@ function AccountRow({
             className="text-muted-foreground hover:text-destructive"
             disabled={saving}
             onClick={onRemove}
-            aria-label={`Remove ${label}`}
+            aria-label={`${label} kaldır`}
           >
-            Remove
+            Kaldır
           </Button>
         ) : null}
       </span>

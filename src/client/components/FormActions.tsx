@@ -21,10 +21,10 @@ export function FormActions({
         onClick={onCancel}
         disabled={pending}
       >
-        Cancel
+        Vazgeç
       </Button>
       <Button type="submit" size={size} disabled={disabled} pending={pending}>
-        Save
+        Kaydet
       </Button>
     </div>
   );

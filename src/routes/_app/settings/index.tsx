@@ -26,9 +26,9 @@ function PersonalSettings() {
   return (
     <div className="space-y-10">
       <section className="space-y-3">
-        <SectionHeader title="Appearance" />
+        <SectionHeader title="Görünüm" />
         <div className="flex items-center justify-between gap-6">
-          <span className="text-sm">Theme</span>
+          <span className="text-sm">Tema</span>
           <ThemePreferenceRadio />
         </div>
       </section>
@@ -43,9 +43,9 @@ function PersonalSettings() {
         <PrivacySettings />
       ) : (
         <section className="space-y-3">
-          <SectionHeader title="About" />
+          <SectionHeader title="Hakkında" />
           <div className="flex items-center justify-between gap-6">
-            <span className="text-sm">Version</span>
+            <span className="text-sm">Sürüm</span>
             <span className="font-mono text-sm text-muted-foreground">
               v{version}
             </span>
@@ -66,14 +66,14 @@ function EveryAppSettings() {
     <section className="space-y-3">
       <SectionHeader title="Every App" />
       <p className="text-sm text-muted-foreground">
-        Your account, teammates and AI connections are managed on Every App.
+        Hesabın ve yapay zekâ bağlantıların Every App üzerinden yönetilir.
       </p>
       {account?.gatewayUrl ? (
         <a
           href={account.gatewayUrl}
           className="inline-block text-sm font-medium text-primary underline-offset-4 hover:underline"
         >
-          Open Every App →
+          Every App&apos;i aç →
         </a>
       ) : null}
     </section>

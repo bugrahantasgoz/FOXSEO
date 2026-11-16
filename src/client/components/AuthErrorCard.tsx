@@ -45,7 +45,7 @@ export function AuthErrorCard({
 
   const message = getStandardErrorMessage(
     error,
-    "Something went wrong. Please try again.",
+    "Bir şeyler ters gitti. Lütfen tekrar dene.",
   );
   return (
     <div className="flex h-full min-w-0 flex-1 items-center justify-center p-4">
@@ -68,7 +68,7 @@ function AuthConfigErrorCard({ message, onRetry }: CardProps) {
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
           <ShieldAlert className="size-5 text-destructive" />
-          Authentication setup required
+          Kimlik doğrulama kurulumu gerekli
         </CardTitle>
       </CardHeader>
       <CardContent className="space-y-4">
@@ -78,32 +78,33 @@ function AuthConfigErrorCard({ message, onRetry }: CardProps) {
 
         {clientAuthMode === "hosted" ? (
           <p className="text-muted-foreground">
-            Hosted mode requires{" "}
+            Barındırılan mod için kurulumda{" "}
             <code className="mx-1">BETTER_AUTH_SECRET</code>
-            (32+ characters), <code className="mx-1">BETTER_AUTH_URL</code>, and
-            Google OAuth credentials on the deployment.
+            (32+ karakter), <code className="mx-1">BETTER_AUTH_URL</code> ve
+            Google OAuth kimlik bilgileri gerekir.
           </p>
         ) : null}
         {clientAuthMode === "everyapp" ? (
           <p className="text-muted-foreground">
-            FOXSEO runs behind an Every App gateway, which signs people in.
-            Install it with <code className="mx-1">pnpm everyapp install</code>{" "}
-            so it gets the gateway&apos;s identity keys, and open it through the
-            gateway.
+            FOXSEO, oturum açmayı yöneten bir Every App gateway&apos;inin
+            arkasında çalışır. Gateway&apos;in kimlik anahtarlarını alması için{" "}
+            <code className="mx-1">pnpm everyapp install</code> ile kur ve
+            uygulamayı gateway üzerinden aç.
           </p>
         ) : null}
         {clientAuthMode === "cloudflare_access" ? (
           <p className="text-muted-foreground">
-            Cloudflare Access mode requires
-            <code className="mx-1">TEAM_DOMAIN</code> (a full https URL) and
-            <code className="mx-1">POLICY_AUD</code> set on the deployment, with
-            an Access application protecting this hostname.
+            Cloudflare Access modu için kurulumda
+            <code className="mx-1">TEAM_DOMAIN</code> (tam bir https URL&apos;si)
+            ve
+            <code className="mx-1">POLICY_AUD</code> ayarlı olmalı; ayrıca bu
+            alan adını koruyan bir Access uygulaması gerekir.
           </p>
         ) : null}
       </CardContent>
       <CardFooter className="justify-end gap-2">
         <Button variant="ghost" onClick={onRetry}>
-          Try Again
+          Tekrar dene
         </Button>
         <Button
           nativeButton={false}
@@ -115,7 +116,7 @@ function AuthConfigErrorCard({ message, onRetry }: CardProps) {
             />
           }
         >
-          Open Setup Guide
+          Kurulum rehberini aç
         </Button>
       </CardFooter>
     </Card>
@@ -145,17 +146,17 @@ function UnauthenticatedErrorCard({ message, onRetry }: CardProps) {
   return (
     <Card className="w-full max-w-md">
       <CardHeader>
-        <CardTitle>Authentication required</CardTitle>
+        <CardTitle>Oturum açman gerekiyor</CardTitle>
       </CardHeader>
       <CardContent className="space-y-4 text-muted-foreground">
         <p>{message}</p>
         <p>
-          This deployment uses external authentication. Refresh your access
-          session, then try again.
+          Bu kurulum harici kimlik doğrulama kullanıyor. Erişim oturumunu
+          yenile, sonra tekrar dene.
         </p>
       </CardContent>
       <CardFooter className="justify-end">
-        <Button onClick={onRetry}>Try Again</Button>
+        <Button onClick={onRetry}>Tekrar dene</Button>
       </CardFooter>
     </Card>
   );

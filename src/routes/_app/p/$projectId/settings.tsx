@@ -4,7 +4,7 @@ import { SettingsTabs } from "@/client/features/projects/SettingsTabs";
 import { pageHead } from "@/client/lib/pageHead";
 
 export const Route = createFileRoute("/_app/p/$projectId/settings")({
-  head: () => pageHead("Project settings"),
+  head: () => pageHead("Proje ayarları"),
   component: ProjectSettingsLayout,
 });
 
@@ -18,7 +18,7 @@ function ProjectSettingsLayout() {
           <ProjectPageHeader
             help="projectSettings"
             projectId={projectId}
-            title="Project settings"
+            title="Proje ayarları"
             showBackLink
           />
           <SettingsTabs projectId={projectId} />

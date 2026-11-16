@@ -32,16 +32,16 @@ import { createProject } from "@/serverFunctions/projects";
 import { isEveryAppClientAuthMode } from "@/lib/auth-mode";
 
 const createProjectSchema = z.object({
-  name: z.string().trim().min(1, "Project name is required"),
+  name: z.string().trim().min(1, "Proje adı gerekli"),
   domain: z.string(),
   market: z.object({ locationCode: z.number(), languageCode: z.string() }),
 });
 
 // The server sends only the error code, so the field messages live here.
 const SERVER_FIELD_ERRORS: Record<string, Record<string, string>> = {
-  VALIDATION_ERROR: { domain: "Enter a valid domain, like acme.com." },
+  VALIDATION_ERROR: { domain: "Geçerli bir alan adı gir, örneğin acme.com." },
   CONFLICT: {
-    name: 'A project named "Default" with no domain already exists. Pick a different name or add a domain.',
+    name: 'Alan adı olmayan "Default" adlı bir proje zaten var. Başka bir ad seç ya da bir alan adı ekle.',
   },
 };
 
@@ -74,7 +74,7 @@ export function CreateProjectModal({ onClose }: { onClose: () => void }) {
         queryKey: ["dashboardActivation"],
       });
       onClose();
-      toast.success("Project created");
+      toast.success("Proje oluşturuldu");
       toastInitialAudit(created.initialAudit);
       // Continue setup through the new project’s dashboard.
       void navigate({
@@ -122,13 +122,13 @@ export function CreateProjectModal({ onClose }: { onClose: () => void }) {
         <form.AppForm>
           <form.Form className="flex flex-col gap-4">
             <DialogHeader>
-              <DialogTitle>New project</DialogTitle>
+              <DialogTitle>Yeni proje</DialogTitle>
             </DialogHeader>
 
             <form.AppField name="name">
               {(field) => (
                 <field.TextField
-                  label="Name"
+                  label="Ad"
                   placeholder="Acme Inc."
                   maxLength={120}
                   required
@@ -138,21 +138,21 @@ export function CreateProjectModal({ onClose }: { onClose: () => void }) {
 
             <p className="text-sm text-muted-foreground">
               {isEveryAppClientAuthMode()
-                ? "Adding your website starts a 50-page site audit."
-                : "Adding your website starts a 50-page scan with JavaScript rendering. Rendering uses your credits."}
+                ? "Siteni eklediğinde 50 sayfalık bir site denetimi başlar."
+                : "Siteni eklediğinde 50 sayfalık bir tarama başlar."}
             </p>
             <form.AppField name="domain">
               {(field) => (
                 <field.TextField
                   label={
                     <>
-                      Domain{" "}
+                      Alan adı{" "}
                       <span className="font-normal text-muted-foreground">
-                        (optional)
+                        (isteğe bağlı)
                       </span>
                     </>
                   }
-                  description="You can connect Search Console and set up rank tracking after creating the project."
+                  description="Projeyi oluşturduktan sonra Google Search Console'u bağlayabilirsin."
                   placeholder="example.com"
                   maxLength={255}
                 />
@@ -169,9 +169,9 @@ export function CreateProjectModal({ onClose }: { onClose: () => void }) {
                 )}
               </form.Field>
               <FieldDescription>
-                Keyword, SERP, and domain data uses this country and language
-                unless a call asks for a different one. Change it later in
-                project settings.
+                Anahtar kelime ve arama sonucu verileri, aksi istenmedikçe bu
+                ülke ve dili kullanır. Bunu sonra Proje ayarları&apos;ndan
+                değiştirebilirsin.
               </FieldDescription>
             </div>
 
@@ -182,9 +182,9 @@ export function CreateProjectModal({ onClose }: { onClose: () => void }) {
                 onClick={onClose}
                 disabled={createMutation.isPending}
               >
-                Cancel
+                Vazgeç
               </Button>
-              <form.SubmitButton>Create project</form.SubmitButton>
+              <form.SubmitButton>Proje oluştur</form.SubmitButton>
             </DialogFooter>
           </form.Form>
         </form.AppForm>

@@ -19,9 +19,9 @@ export function MetricsTable({
     <Table>
       <TableHeader>
         <TableRow>
-          <TableHead>Metric</TableHead>
-          <TableHead className="text-right">Value</TableHead>
-          {showChange && <TableHead className="text-right">Change</TableHead>}
+          <TableHead>Metrik</TableHead>
+          <TableHead className="text-right">Değer</TableHead>
+          {showChange && <TableHead className="text-right">Değişim</TableHead>}
         </TableRow>
       </TableHeader>
       <TableBody>

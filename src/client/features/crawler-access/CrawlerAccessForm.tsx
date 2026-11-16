@@ -22,7 +22,7 @@ export function CrawlerAccessSetupHint() {
   if (isEveryAppClientAuthMode()) {
     return (
       <>
-        An admin sets <code>CRAWLER_ACCESS_SECRET</code> with{" "}
+        <code>CRAWLER_ACCESS_SECRET</code> değerini şu komutla ayarla:{" "}
         <code>
           pnpm everyapp secret set CRAWLER_ACCESS_SECRET --app openseo
         </code>
@@ -32,8 +32,8 @@ export function CrawlerAccessSetupHint() {
   }
   return (
     <>
-      An admin sets <code>CRAWLER_ACCESS_SECRET</code> to at least 32 random
-      characters in the deployment's environment, then redeploys.
+      Ortam değişkenlerinde <code>CRAWLER_ACCESS_SECRET</code> değerini en az
+      32 rastgele karakter olarak ayarla, sonra uygulamayı yeniden başlat.
     </>
   );
 }
@@ -44,16 +44,16 @@ export function useCrawlerAccessNeedsSetup(projectId: string) {
 }
 
 const signatureSchema = z.object({
-  host: z.string().trim().min(1, "Enter a domain."),
+  host: z.string().trim().min(1, "Bir alan adı gir."),
   signatureInput: z
     .string()
     .trim()
-    .min(1, "Enter Signature-Input.")
+    .min(1, "Signature-Input değerini gir.")
     .refine(
       (value) => !isCrawlerAccessExpired(parseSignatureExpiry(value)),
-      "This signature has already expired. Create a new one in Shopify admin.",
+      "Bu imzanın süresi dolmuş. Shopify yönetim panelinde yenisini oluştur.",
     ),
-  signature: z.string().trim().min(1, "Enter Signature."),
+  signature: z.string().trim().min(1, "Signature değerini gir."),
 });
 
 /**
@@ -85,7 +85,7 @@ export function CrawlerAccessForm({
       await queryClient.invalidateQueries({
         queryKey: crawlerCredentialsQueryKey,
       });
-      toast.success(`Crawler access saved for ${result.credential.host}`);
+      toast.success(`${result.credential.host} için tarayıcı erişimi kaydedildi`);
       onSaved?.();
     },
   });
@@ -103,8 +103,8 @@ export function CrawlerAccessForm({
             fields: {
               signatureInput:
                 problem.reason === "wrong_domain"
-                  ? `This signature was created for ${problem.signedHost}, not ${problem.host}. In Shopify admin, create a signature for ${problem.host}.`
-                  : `Shopify won't accept this signature for ${problem.host}. Check that you created it for ${problem.host} and copied both values in full.`,
+                  ? `Bu imza ${problem.host} için değil, ${problem.signedHost} için oluşturulmuş. Shopify yönetim panelinde ${problem.host} için bir imza oluştur.`
+                  : `Shopify bu imzayı ${problem.host} için kabul etmiyor. İmzayı ${problem.host} için oluşturduğunu ve iki değeri de eksiksiz kopyaladığını kontrol et.`,
             },
           },
         });
@@ -117,7 +117,7 @@ export function CrawlerAccessForm({
   if (useCrawlerAccessNeedsSetup(projectId)) {
     return (
       <p className="text-sm text-muted-foreground">
-        Crawler access isn't set up yet. <CrawlerAccessSetupHint />
+        Tarayıcı erişimi henüz kurulmadı. <CrawlerAccessSetupHint />
       </p>
     );
   }
@@ -129,7 +129,7 @@ export function CrawlerAccessForm({
           <form.AppField name="host">
             {(field) => (
               <field.TextField
-                label="Domain"
+                label="Alan adı"
                 placeholder="store.example.com"
                 className="font-mono"
                 required
@@ -154,7 +154,7 @@ export function CrawlerAccessForm({
           {(field) => (
             <field.TextField
               label="Signature"
-              description="Shopify also shows a Signature-Agent value. You don't need to paste it: FOXSEO sends it with every request."
+              description="Shopify bir de Signature-Agent değeri gösterir. Onu yapıştırmana gerek yok: FOXSEO her istekle bunu kendisi gönderir."
               type="password"
               autoComplete="off"
               data-ph-mask
@@ -165,7 +165,7 @@ export function CrawlerAccessForm({
           )}
         </form.AppField>
         <form.SubmitButton disabled={!projectId}>
-          Save signature
+          İmzayı kaydet
         </form.SubmitButton>
       </form.Form>
     </form.AppForm>

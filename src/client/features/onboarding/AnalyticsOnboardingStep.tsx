@@ -50,7 +50,7 @@ export function AnalyticsOnboardingStep({
     // A failed email sync shouldn't trap anyone in onboarding.
     onError: () =>
       toast.error(
-        "We couldn't save your email choice. You can change it in Settings.",
+        "E-posta tercihin kaydedilemedi. Ayarlar'dan değiştirebilirsin.",
       ),
     onSettled: onNext,
   });
@@ -64,45 +64,48 @@ export function AnalyticsOnboardingStep({
     <div className="space-y-6">
       <div>
         <h1 className="text-2xl font-semibold tracking-tight">
-          Help make FOXSEO better
+          FOXSEO&apos;yu geliştirmeye yardım et
         </h1>
         <p className="mt-3 text-sm text-muted-foreground">
-          You can change these anytime in Settings. See our{" "}
+          Bunları istediğin zaman Ayarlar&apos;dan değiştirebilirsin. Ayrıntılar
+          için{" "}
           <a
             href={PRIVACY_URL}
             target="_blank"
             rel="noreferrer"
             className="text-foreground underline underline-offset-2"
           >
-            Privacy Policy
+            Gizlilik Politikası
           </a>
-          .
+          &apos;na bak.
         </p>
       </div>
       <div className="flex items-start justify-between gap-6">
         <div>
-          <p className="text-sm">Usage analytics</p>
+          <p className="text-sm">Kullanım analizi</p>
           <p className="mt-1 text-sm text-muted-foreground">
-            Share usage analytics and session replays to help improve FOXSEO.
+            FOXSEO&apos;yu geliştirmeye yardım etmek için kullanım verilerini ve
+            oturum kayıtlarını paylaş.
           </p>
         </div>
         <Switch
           checked={analyticsOn}
           onCheckedChange={setAnalytics}
-          aria-label="Share usage analytics"
+          aria-label="Kullanım analizini paylaş"
         />
       </div>
       <div className="flex items-start justify-between gap-6">
         <div>
-          <p className="text-sm">Product updates</p>
+          <p className="text-sm">Ürün güncellemeleri</p>
           <p className="mt-1 text-sm text-muted-foreground">
-            Occasional emails about new features and tips. Unsubscribe anytime.
+            Yeni özellikler ve ipuçları hakkında ara sıra e-posta. İstediğin
+            zaman abonelikten çıkabilirsin.
           </p>
         </div>
         <Switch
           checked={productUpdatesOn}
           onCheckedChange={setProductUpdates}
-          aria-label="Get product update emails"
+          aria-label="Ürün güncellemesi e-postaları al"
         />
       </div>
       <WizardFooter
@@ -119,7 +122,7 @@ export function AnalyticsOnboardingStep({
               })
             }
           >
-            Continue
+            Devam et
             <ArrowRight className="size-4" />
           </Button>
         }

@@ -36,10 +36,10 @@ export function PostSignupOnboarding({
       <OnboardingCard
         step={step + 1}
         steps={[
-          "Website",
+          "Site",
           "Google Search Console",
-          "Preferences",
-          "Agent setup",
+          "Tercihler",
+          "Yapay zekâ ajanı kurulumu",
         ]}
         onStepChange={onStepChange}
         disabled={isSaving}

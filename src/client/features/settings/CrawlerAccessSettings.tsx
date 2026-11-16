@@ -29,7 +29,8 @@ import {
   CardTitle,
 } from "@/client/components/ui/card";
 
-const formatDate = (value: string) => new Date(value).toLocaleDateString();
+const formatDate = (value: string) =>
+  new Date(value).toLocaleDateString("tr-TR");
 
 /**
  * Shopify crawler-access signatures saved on this project. The audit crawler
@@ -52,7 +53,7 @@ export function CrawlerAccessSettings({ projectId }: { projectId: string }) {
       await queryClient.invalidateQueries({
         queryKey: crawlerCredentialsQueryKey,
       });
-      toast.success("Crawler access removed");
+      toast.success("Tarayıcı erişimi kaldırıldı");
     },
   });
 
@@ -70,17 +71,17 @@ export function CrawlerAccessSettings({ projectId }: { projectId: string }) {
             size="sm"
             onClick={() => setIsAdding((value) => !value)}
           >
-            {isAdding ? "Cancel" : "Connect"}
+            {isAdding ? "Vazgeç" : "Bağla"}
           </Button>
         </CardAction>
       </CardHeader>
       {isAdding ? (
         <CardContent className="space-y-4">
           <p className="text-muted-foreground">
-            Let the audit crawler through Shopify. Paste the signature you
-            created in Shopify admin under Online Store &rarr; Preferences
-            &rarr; Crawler access. Every audit of that domain in your
-            organization sends it with each request.
+            Denetim tarayıcısının Shopify&apos;dan geçmesine izin ver. Shopify
+            yönetim panelinde Online Store &rarr; Preferences &rarr; Crawler
+            access altında oluşturduğun imzayı yapıştır. O alan adının her
+            denetimi bu imzayı her istekle gönderir.
           </p>
           <CrawlerAccessForm
             projectId={projectId}
@@ -93,17 +94,17 @@ export function CrawlerAccessSettings({ projectId }: { projectId: string }) {
         <CardContent>
           {credentialsQuery.isError ? (
             <p className="text-sm text-destructive">
-              We couldn't load your crawler access.
+              Tarayıcı erişim bilgilerin yüklenemedi.
             </p>
           ) : credentials.length > 0 ? (
             <TableCard>
               <Table>
                 <TableHeader>
                   <TableRow>
-                    <TableHead>Domain</TableHead>
-                    <TableHead>Type</TableHead>
-                    <TableHead>Added</TableHead>
-                    <TableHead>Expires</TableHead>
+                    <TableHead>Alan adı</TableHead>
+                    <TableHead>Tür</TableHead>
+                    <TableHead>Eklenme</TableHead>
+                    <TableHead>Bitiş</TableHead>
                     <TableHead className="w-10" />
                   </TableRow>
                 </TableHeader>
@@ -114,7 +115,7 @@ export function CrawlerAccessSettings({ projectId }: { projectId: string }) {
                         {credential.host}
                       </TableCell>
                       <TableCell className="text-muted-foreground">
-                        Shopify signature
+                        Shopify imzası
                       </TableCell>
                       <TableCell className="text-muted-foreground">
                         {formatDate(credential.createdAt)}
@@ -122,16 +123,16 @@ export function CrawlerAccessSettings({ projectId }: { projectId: string }) {
                       <TableCell className="text-muted-foreground">
                         {credential.expiresAt
                           ? formatDate(credential.expiresAt)
-                          : "Unknown"}
+                          : "Bilinmiyor"}
                         {isCrawlerAccessExpired(credential.expiresAt) && (
-                          <span className="ml-2 text-destructive">Expired</span>
+                          <span className="ml-2 text-destructive">Süresi doldu</span>
                         )}
                       </TableCell>
                       <TableCell>
                         <Button
                           variant="ghost"
                           size="icon-xs"
-                          aria-label={`Remove crawler access for ${credential.host}`}
+                          aria-label={`${credential.host} için tarayıcı erişimini kaldır`}
                           disabled={deleteMutation.isPending}
                           onClick={() => deleteMutation.mutate(credential.id)}
                         >

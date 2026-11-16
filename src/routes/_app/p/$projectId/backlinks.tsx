@@ -3,7 +3,7 @@ import { BingBacklinksPage } from "@/client/features/backlinks/BingBacklinksPage
 import { pageHead } from "@/client/lib/pageHead";
 
 export const Route = createFileRoute("/_app/p/$projectId/backlinks")({
-  head: () => pageHead("Backlinks"),
+  head: () => pageHead("Backlinkler"),
   component: BacklinksRoute,
 });
 

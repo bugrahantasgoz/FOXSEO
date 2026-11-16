@@ -16,58 +16,58 @@ export function googleAuthErrorCopy(
   code: string,
   providerLabel?: string,
 ): { title: string; description: string } {
-  const what = providerLabel ? `${providerLabel} connection` : "Sign-in";
-  const provider = providerLabel ? "Google" : "the sign-in provider";
+  const what = providerLabel ? `${providerLabel} bağlantısı` : "Oturum açma";
+  const provider = providerLabel ? "Google" : "oturum açma sağlayıcısı";
 
   switch (code) {
     case ACCOUNT_DELETION_SCHEDULED_ERROR:
       return {
-        title: "This account is being deleted",
+        title: "Bu hesap siliniyor",
         description:
-          "You asked us to delete this account, so it can't be signed in to. To keep it, email support@openseo.so before the deletion date.",
+          "Bu hesabın silinmesini istedin, bu yüzden hesaba giriş yapılamıyor.",
       };
     // Sign-in with Google or ChatGPT reached an existing account it may not
     // be attached to: the provider hasn't verified the email, or the account
     // never confirmed its own.
     case "account_not_linked":
       return {
-        title: "This email already has an account",
+        title: "Bu e-postayla zaten bir hesap var",
         description:
-          "Sign in the way you did before. If that was email and password and you never confirmed your email, confirm it first.",
+          "Daha önce nasıl giriş yaptıysan öyle giriş yap. E-posta ve şifreyle giriş yaptıysan ve e-postanı hiç onaylamadıysan önce onu onayla.",
       };
     case CHATGPT_EMAIL_NOT_VERIFIED_CODE:
       return {
-        title: "Verify your email with ChatGPT first",
+        title: "Önce e-postanı ChatGPT'de doğrula",
         description:
-          "OpenAI hasn't verified the email on your ChatGPT account, so we can't create an FOXSEO account from it. Verify it in ChatGPT, or sign up with Google or email.",
+          "OpenAI, ChatGPT hesabındaki e-postayı doğrulamamış; bu yüzden bundan FOXSEO hesabı oluşturamıyoruz. E-postanı ChatGPT'de doğrula ya da Google veya e-postayla kaydol.",
       };
     case "state_mismatch":
       return {
-        title: `${what} didn't finish`,
+        title: `${what} tamamlanmadı`,
         description:
-          "The attempt expired or was interrupted. Try again in a single browser tab and finish the steps within 10 minutes. If it keeps happening, make sure your browser allows cookies for this site.",
+          "Deneme zaman aşımına uğradı ya da yarıda kaldı. Tek bir tarayıcı sekmesinde tekrar dene ve adımları 10 dakika içinde bitir. Sorun sürerse tarayıcının bu site için çerezlere izin verdiğinden emin ol.",
       };
     case "access_denied":
       return {
-        title: `${what} was canceled`,
+        title: `${what} iptal edildi`,
         description:
-          "The permission screen was closed or declined. Try again whenever you're ready.",
+          "İzin ekranı kapatıldı ya da reddedildi. Hazır olduğunda tekrar dene.",
       };
     case "scope_not_granted":
       return {
-        title: `${what} is missing a permission`,
-        description: `FOXSEO didn't get access to your ${providerLabel ?? "Google"} data because a box on Google's permission screen wasn't checked. Try again and check every box before you continue.`,
+        title: `${what} için bir izin eksik`,
+        description: `Google'ın izin ekranındaki kutulardan biri işaretlenmediği için FOXSEO ${providerLabel ?? "Google"} verilerine erişemedi. Tekrar dene ve devam etmeden önce tüm kutuları işaretle.`,
       };
     case "connection_save_failed":
       return {
-        title: `${what} didn't finish`,
+        title: `${what} tamamlanmadı`,
         description:
-          "We couldn't save the connection. Please try again — if it keeps failing, contact support.",
+          "Bağlantı kaydedilemedi. Lütfen tekrar dene; sorun sürerse sunucu kayıtlarına bak.",
       };
     default:
       return {
-        title: `${what} didn't finish`,
-        description: `Something went wrong while talking to ${provider}. Please try again — if it keeps failing, contact support.`,
+        title: `${what} tamamlanmadı`,
+        description: `${provider} ile iletişimde bir sorun oluştu. Lütfen tekrar dene; sorun sürerse sunucu kayıtlarına bak.`,
       };
   }
 }

@@ -37,7 +37,7 @@ import { authClient } from "@/lib/auth-client";
 const MAX_KEY_NAME_LENGTH = 32;
 
 const createKeySchema = z.object({
-  name: z.string().trim().min(1, "Name is required"),
+  name: z.string().trim().min(1, "Ad gerekli"),
 });
 
 // Stamped server-side when the key is created (see the /api-key/create hook
@@ -70,7 +70,7 @@ export function ApiKeySettings() {
     queryFn: async () => {
       const result = await authClient.apiKey.list();
       if (result.error) {
-        throw new Error(result.error.message ?? "Failed to load API keys");
+        throw new Error(result.error.message ?? "API anahtarları yüklenemedi");
       }
       return result.data.apiKeys.map((key) => ({
         id: key.id,
@@ -89,7 +89,7 @@ export function ApiKeySettings() {
     mutationFn: async (keyName: string) => {
       const result = await authClient.apiKey.create({ name: keyName });
       if (result.error || !result.data?.key) {
-        throw new Error(result.error?.message ?? "Failed to create the key");
+        throw new Error(result.error?.message ?? "Anahtar oluşturulamadı");
       }
       return result.data.key;
     },
@@ -104,12 +104,12 @@ export function ApiKeySettings() {
     mutationFn: async (keyId: string) => {
       const result = await authClient.apiKey.delete({ keyId });
       if (result.error) {
-        throw new Error(result.error.message ?? "Failed to revoke the key");
+        throw new Error(result.error.message ?? "Anahtar iptal edilemedi");
       }
     },
     onSuccess: () => {
       captureClientEvent("mcp:api_key_revoked");
-      toast.success("API key revoked");
+      toast.success("API anahtarı iptal edildi");
       setRevoking(null);
       void queryClient.invalidateQueries({ queryKey: ["apiKeys"] });
     },
@@ -132,15 +132,15 @@ export function ApiKeySettings() {
 
   return (
     <section className="space-y-3">
-      <SectionHeader title="API keys" />
+      <SectionHeader title="API anahtarları" />
       <div className="flex items-start justify-between gap-6">
         <div>
           <p className="text-sm">
-            Authenticate MCP clients when OAuth doesn't work
+            OAuth çalışmadığında MCP istemcilerini doğrula
           </p>
           <p className="mt-1 text-sm text-muted-foreground">
-            Use this for remote agents like Hermes where the normal login flow
-            doesn't work.
+            Normal giriş akışının çalışmadığı Hermes gibi uzak ajanlar için
+            kullan.
           </p>
           <p className="mt-1 text-sm">
             <a
@@ -149,34 +149,34 @@ export function ApiKeySettings() {
               target="_blank"
               rel="noreferrer"
             >
-              Setup guide
+              Kurulum rehberi
             </a>
           </p>
         </div>
         <Button size="sm" onClick={() => setIsCreateOpen(true)}>
-          Create API key
+          API anahtarı oluştur
         </Button>
       </div>
 
       <QueryState
         query={apiKeysQuery}
-        errorFallback="We couldn't load your API keys."
+        errorFallback="API anahtarların yüklenemedi."
       >
         {(apiKeys) =>
           apiKeys.length === 0 ? (
-            <p className="text-sm text-muted-foreground">No API keys yet.</p>
+            <p className="text-sm text-muted-foreground">Henüz API anahtarı yok.</p>
           ) : (
             <TableCard>
               <Table>
                 <TableHeader>
                   <TableRow>
-                    <TableHead>Name</TableHead>
-                    <TableHead>Key</TableHead>
+                    <TableHead>Ad</TableHead>
+                    <TableHead>Anahtar</TableHead>
                     {showOrganization ? (
-                      <TableHead>Organization</TableHead>
+                      <TableHead>Organizasyon</TableHead>
                     ) : null}
-                    <TableHead>Created</TableHead>
-                    <TableHead>Last used</TableHead>
+                    <TableHead>Oluşturulma</TableHead>
+                    <TableHead>Son kullanım</TableHead>
                     <TableHead className="w-10" />
                   </TableRow>
                 </TableHeader>
@@ -184,7 +184,7 @@ export function ApiKeySettings() {
                   {apiKeys.map((key) => (
                     <TableRow key={key.id}>
                       <TableCell className="max-w-[220px] truncate font-medium">
-                        {key.name || "Unnamed key"}
+                        {key.name || "Adsız anahtar"}
                       </TableCell>
                       <TableCell
                         className="font-mono text-xs text-muted-foreground"
@@ -198,28 +198,28 @@ export function ApiKeySettings() {
                         </TableCell>
                       ) : null}
                       <TableCell className="text-xs text-muted-foreground">
-                        {key.createdAt.toLocaleDateString()}
+                        {key.createdAt.toLocaleDateString("tr-TR")}
                       </TableCell>
                       <TableCell className="text-xs text-muted-foreground">
                         {key.lastRequest
-                          ? key.lastRequest.toLocaleDateString()
-                          : "Never"}
+                          ? key.lastRequest.toLocaleDateString("tr-TR")
+                          : "Hiç"}
                       </TableCell>
                       <TableCell>
                         <RowActionsMenu
-                          label={`Actions for ${key.name || "API key"}`}
+                          label={`${key.name || "API anahtarı"} için işlemler`}
                         >
                           <DropdownMenuItem
                             variant="destructive"
                             onClick={() =>
                               setRevoking({
                                 id: key.id,
-                                name: key.name || "Unnamed key",
+                                name: key.name || "Adsız anahtar",
                               })
                             }
                           >
                             <Trash2 />
-                            Revoke key
+                            Anahtarı iptal et
                           </DropdownMenuItem>
                         </RowActionsMenu>
                       </TableCell>
@@ -234,14 +234,14 @@ export function ApiKeySettings() {
 
       {revoking ? (
         <ConfirmDialog
-          title={`Revoke \u201c${revoking.name}\u201d?`}
-          confirmLabel="Revoke key"
+          title={`\u201c${revoking.name}\u201d iptal edilsin mi?`}
+          confirmLabel="Anahtar\u0131 iptal et"
           destructive
           pending={revokeMutation.isPending}
           onClose={() => setRevoking(null)}
           onConfirm={() => revokeMutation.mutate(revoking.id)}
         >
-          Clients using it will stop working.
+          Bu anahtarı kullanan istemciler çalışmayı bırakır.
         </ConfirmDialog>
       ) : null}
 
@@ -262,14 +262,15 @@ export function ApiKeySettings() {
           {createdKey ? (
             <>
               <DialogHeader>
-                <DialogTitle>Copy your new API key</DialogTitle>
+                <DialogTitle>Yeni API anahtarını kopyala</DialogTitle>
                 <DialogDescription>
-                  It won't be shown again. Send it as{" "}
+                  Bir daha gösterilmeyecek. Bunu{" "}
+                  <span className="font-mono text-xs break-all">{mcpUrl}</span>{" "}
+                  adresine{" "}
                   <span className="font-mono text-xs">
                     Authorization: Bearer
                   </span>{" "}
-                  to{" "}
-                  <span className="font-mono text-xs break-all">{mcpUrl}</span>.
+                  olarak gönder.
                 </DialogDescription>
               </DialogHeader>
               <div className="flex items-center gap-2">
@@ -281,27 +282,27 @@ export function ApiKeySettings() {
                 </code>
                 <CopyButton
                   value={createdKey}
-                  successMessage="API key copied"
-                  label="Copy API key"
+                  successMessage="API anahtarı kopyalandı"
+                  label="API anahtarını kopyala"
                   variant="ghost"
                   size="icon-sm"
                 />
               </div>
               <DialogFooter>
-                <Button onClick={closeCreateModal}>Done</Button>
+                <Button onClick={closeCreateModal}>Tamam</Button>
               </DialogFooter>
             </>
           ) : (
             <form.AppForm>
               <form.Form className="grid gap-4">
                 <DialogHeader>
-                  <DialogTitle>Create API key</DialogTitle>
+                  <DialogTitle>API anahtarı oluştur</DialogTitle>
                 </DialogHeader>
                 <form.AppField name="name">
                   {(field) => (
                     <field.TextField
-                      label="Name"
-                      placeholder="Claude Code on laptop"
+                      label="Ad"
+                      placeholder="Dizüstünde Claude Code"
                       maxLength={MAX_KEY_NAME_LENGTH}
                       required
                       autoFocus
@@ -310,14 +311,14 @@ export function ApiKeySettings() {
                 </form.AppField>
                 {showOrganization ? (
                   <p className="text-sm text-muted-foreground">
-                    This key works in {activeOrganizationName}.
+                    Bu anahtar {activeOrganizationName} içinde çalışır.
                   </p>
                 ) : null}
                 <DialogFooter>
                   <Button variant="ghost" onClick={closeCreateModal}>
-                    Cancel
+                    Vazgeç
                   </Button>
-                  <form.SubmitButton>Create</form.SubmitButton>
+                  <form.SubmitButton>Oluştur</form.SubmitButton>
                 </DialogFooter>
               </form.Form>
             </form.AppForm>

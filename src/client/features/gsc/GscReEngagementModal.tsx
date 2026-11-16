@@ -114,11 +114,11 @@ export function GscReEngagementModal({
       <DialogContent className="sm:max-w-lg" initialFocus={connectRef}>
         <DialogHeader>
           <DialogTitle className="text-lg">
-            Connect Google Search Console
+            Google Search Console&apos;u bağla
           </DialogTitle>
           <DialogDescription>
-            Bring your real clicks, impressions, and rankings into FOXSEO and
-            query them from Claude or Codex over MCP. It never uses credits.
+            Gerçek tıklama, gösterim ve sıralama verilerini FOXSEO&apos;ya getir
+            ve MCP üzerinden Claude veya Codex ile sorgula. Ücretsizdir.
           </DialogDescription>
         </DialogHeader>
         <DialogFooter>
@@ -127,14 +127,14 @@ export function GscReEngagementModal({
             className="px-2 text-sm text-muted-foreground outline-none hover:text-foreground focus-visible:underline"
             onClick={handleDismiss}
           >
-            Maybe later
+            Belki sonra
           </button>
           <Button ref={connectRef} onClick={handleConnect}>
             {/* Google's mark needs a white tile to stay legible on a colored button. */}
             <span className="flex size-6 items-center justify-center rounded bg-white">
               <GoogleGlyph className="size-[16px]" />
             </span>
-            Connect with Google
+            Google ile bağla
           </Button>
         </DialogFooter>
       </DialogContent>

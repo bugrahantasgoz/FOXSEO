@@ -11,53 +11,50 @@ import {
  * they get support; a self-hoster runs the server and can.
  */
 export const UNEXPECTED_ERROR_MESSAGE = isHostedClientAuthMode()
-  ? "Something went wrong on our end. Please try again, and contact support if it keeps happening."
-  : "Something went wrong. Please try again, or check the server logs for details.";
+  ? "Bir şeyler ters gitti. Lütfen tekrar dene; sorun sürerse sunucu kayıtlarına bak."
+  : "Bir şeyler ters gitti. Lütfen tekrar dene; ayrıntılar için sunucu kayıtlarına bakabilirsin.";
 
 const STANDARD_MESSAGES: Record<ErrorCode, string> = {
-  UNAUTHENTICATED: "Please sign in and try again.",
+  UNAUTHENTICATED: "Lütfen oturum aç ve tekrar dene.",
   AUTH_CONFIG_MISSING: isEveryAppClientAuthMode()
-    ? "FOXSEO can't reach your Every App gateway for this right now. An owner or admin can check its setup with pnpm everyapp status."
-    : "FOXSEO auth is not configured. Follow the README setup steps for Cloudflare Access.",
-  PAYMENT_REQUIRED:
-    "An active hosted subscription is required before you can use FOXSEO.",
+    ? "FOXSEO şu anda Every App gateway'ine ulaşamıyor. Kurulumu pnpm everyapp status komutuyla kontrol edebilirsin."
+    : "FOXSEO kimlik doğrulaması ayarlanmamış. README'deki Cloudflare Access kurulum adımlarını izle.",
+  PAYMENT_REQUIRED: "Bu özellik bu kurulumda kullanılamıyor.",
   INSUFFICIENT_CREDITS:
-    "You don't have enough credits for this. Upgrade your plan or buy more credits to keep going.",
-  PAYMENT_METHOD_REQUIRED:
-    "We couldn't charge a card on file. Add or update your card in the billing portal, then try again.",
-  PAYMENT_ACTION_REQUIRED:
-    "Your bank needs more time or a confirmation for this charge. Check your balance in a minute; if nothing arrived, buy your first top-up with the Buy credits button, then turn on auto-reload.",
+    "Bu işlem için veri sağlayıcısının kullanım hakkı yetmiyor.",
+  PAYMENT_METHOD_REQUIRED: "Bu özellik bu kurulumda kullanılamıyor.",
+  PAYMENT_ACTION_REQUIRED: "Bu özellik bu kurulumda kullanılamıyor.",
   AUDIT_RENDERING_UNAVAILABLE: isEveryAppClientAuthMode()
     ? GATEWAY_RENDERING_NOT_SET_UP_MESSAGE
-    : "JavaScript rendering is not configured on this deployment. Ask your administrator to enable a renderer.",
-  FORBIDDEN: "You do not have access to this resource.",
-  NOT_FOUND: "The requested resource was not found.",
+    : "Bu kurulumda JavaScript ile sayfa oluşturma (rendering) ayarlı değil. Kullanmak için bir renderer etkinleştir.",
+  FORBIDDEN: "Bu içeriğe erişim iznin yok.",
+  NOT_FOUND: "İstenen içerik bulunamadı.",
   AUDIT_CAPACITY_REACHED:
-    "You've reached audit capacity for your account. Delete old audits from your projects to start a new one.",
-  AUDIT_PAGE_LIMIT_EXCEEDED: `Free plan audits are limited to ${FREE_MAX_AUDIT_PAGES} pages. Upgrade to run larger audits.`,
+    "Denetim kapasitesi doldu. Yeni bir denetim başlatmak için projelerindeki eski denetimleri sil.",
+  AUDIT_PAGE_LIMIT_EXCEEDED: `Denetimler en fazla ${FREE_MAX_AUDIT_PAGES} sayfayla sınırlı. Daha az sayfayla tekrar dene.`,
   AUDIT_ALREADY_RUNNING:
-    "You've reached the limit of audits running at once. Wait for one to finish or delete it before starting another.",
-  VALIDATION_ERROR: "Please check your input and try again.",
+    "Aynı anda çalışabilecek denetim sınırına ulaştın. Yenisini başlatmadan önce birinin bitmesini bekle ya da birini sil.",
+  VALIDATION_ERROR: "Lütfen girdiğin bilgileri kontrol edip tekrar dene.",
   UNKNOWN_LOCATION:
-    "We couldn't find that city, county, or region. Pick a location from the list, or clear the field to search the whole country.",
-  CRAWL_TARGET_BLOCKED: "This crawl target is blocked by security policy.",
+    "Bu şehir, ilçe veya bölge bulunamadı. Listeden bir konum seç ya da tüm ülkede aramak için alanı temizle.",
+  CRAWL_TARGET_BLOCKED: "Bu adres güvenlik kuralları nedeniyle taranamıyor.",
   BACKLINKS_BILLING_ISSUE:
-    "The connected DataForSEO account has a billing or balance issue.",
+    "Bağlı DataForSEO hesabında bakiye veya ödeme sorunu var.",
   AI_SEARCH_BILLING_ISSUE:
-    "The connected DataForSEO account has a billing or balance issue.",
+    "Bağlı DataForSEO hesabında bakiye veya ödeme sorunu var.",
   AI_VISIBILITY_ERROR:
-    "The AI visibility request could not be completed. Review the tracking settings and try again.",
+    "Yapay zekâ görünürlüğü isteği tamamlanamadı. Takip ayarlarını kontrol edip tekrar dene.",
   DATAFORSEO_AUTH_FAILED: isEveryAppClientAuthMode()
-    ? "DataForSEO isn't set up on your Every App gateway yet, or rejected the key it holds. An owner or admin sets it with pnpm everyapp secret set DATAFORSEO_API_KEY."
-    : "DataForSEO rejected the credentials. Check that DATAFORSEO_API_KEY is the base64 of your DataForSEO login:password, and that the DataForSEO account is verified and has API access.",
+    ? "DataForSEO henüz Every App gateway'inde kurulu değil ya da kayıtlı anahtarı reddetti. pnpm everyapp secret set DATAFORSEO_API_KEY komutuyla ayarlayabilirsin."
+    : "DataForSEO kimlik bilgilerini reddetti. DATAFORSEO_API_KEY değerinin DataForSEO giriş:şifre bilgisinin base64 hali olduğunu ve hesabın doğrulanmış, API erişimi açık olduğunu kontrol et.",
   BING_NOT_CONFIGURED:
-    "Bing Webmaster Tools is not connected yet. Add BING_WEBMASTER_API_KEY to .env.local and restart FOXSEO (see KURULUM.md, step 5).",
+    "Bing Webmaster Tools henüz bağlı değil. BING_WEBMASTER_API_KEY değerini .env.local dosyasına ekle ve FOXSEO'yu yeniden başlat (KURULUM.md, 5. adım).",
   BING_REQUEST_FAILED:
-    "Bing Webmaster Tools rejected the request. Check your API key, and that this site is verified in Bing with the same address as in Project settings. Details are in the server logs.",
-  RATE_LIMITED: "Too many requests. Please wait and try again.",
+    "Bing Webmaster Tools isteği reddetti. API anahtarını ve bu sitenin Bing'de Proje ayarlarındaki adresle aynı şekilde doğrulandığını kontrol et. Ayrıntılar sunucu kayıtlarında.",
+  RATE_LIMITED: "Çok fazla istek gönderildi. Biraz bekleyip tekrar dene.",
   UPSTREAM_UNAVAILABLE:
-    "The data provider is temporarily unavailable. Please retry in a moment.",
-  CONFLICT: "This request conflicts with existing data.",
+    "Veri sağlayıcısına şu anda ulaşılamıyor. Birazdan tekrar dene.",
+  CONFLICT: "Bu istek mevcut verilerle çakışıyor.",
   INTERNAL_ERROR: UNEXPECTED_ERROR_MESSAGE,
 };
 

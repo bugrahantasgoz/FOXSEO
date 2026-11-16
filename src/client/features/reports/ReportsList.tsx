@@ -30,8 +30,8 @@ export function ReportsList({
     return (
       <EmptyState
         icon={FileText}
-        title="No reports yet"
-        description="Run an FOXSEO skill such as seo-audit from Claude Code or Codex and the report will appear here."
+        title="Henüz rapor yok"
+        description="Claude Code veya Codex'ten seo-audit gibi bir FOXSEO becerisi çalıştır; rapor burada görünür."
       />
     );
   }
@@ -42,10 +42,10 @@ export function ReportsList({
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead>Title</TableHead>
-              <TableHead>Created by</TableHead>
-              <TableHead>Type</TableHead>
-              <TableHead>Updated</TableHead>
+              <TableHead>Başlık</TableHead>
+              <TableHead>Oluşturan</TableHead>
+              <TableHead>Tür</TableHead>
+              <TableHead>Güncellenme</TableHead>
               <TableHead />
             </TableRow>
           </TableHeader>
@@ -74,13 +74,13 @@ export function ReportsList({
                   {formatRelativeTime(report.updatedAt)}
                 </TableCell>
                 <TableCell className="w-10 text-right">
-                  <RowActionsMenu label={`Actions for ${report.title}`}>
+                  <RowActionsMenu label={`${report.title} için işlemler`}>
                     <DropdownMenuItem
                       variant="destructive"
                       onClick={() => onDelete(report)}
                     >
                       <Trash2 />
-                      Delete
+                      Sil
                     </DropdownMenuItem>
                   </RowActionsMenu>
                 </TableCell>
@@ -91,7 +91,7 @@ export function ReportsList({
       </TableCard>
       {reports.length === REPORT_APP_LIST_LIMIT ? (
         <p className="text-xs text-muted-foreground">
-          Showing the {REPORT_APP_LIST_LIMIT} most recent reports.
+          En son {REPORT_APP_LIST_LIMIT} rapor gösteriliyor.
         </p>
       ) : null}
     </div>

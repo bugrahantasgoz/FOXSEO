@@ -53,12 +53,7 @@ function IndexRedirect() {
     const errorCode = getErrorCode(error);
 
     if (errorCode === "PAYMENT_REQUIRED") {
-      return (
-        <StatusScreen
-          pending
-          description="Redirecting you to billing so you can start a hosted subscription."
-        />
-      );
+      return <StatusScreen pending description="Yönlendiriliyorsun…" />;
     }
 
     return (

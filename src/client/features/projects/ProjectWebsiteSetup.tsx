@@ -55,7 +55,7 @@ export function ProjectWebsiteSetup({ projectId }: { projectId: string }) {
           queryKey: ["aiVisibility", projectId],
         }),
       ]);
-      toast.success("Project context saved");
+      toast.success("Proje bağlamı kaydedildi");
     },
   });
   if (research)
@@ -98,33 +98,32 @@ export function ProjectWebsiteSetup({ projectId }: { projectId: string }) {
               <Sparkles className="size-5" />
             </div>
             <h1 className="text-2xl font-semibold tracking-tight">
-              Set up AI visibility
+              Yapay zekâ görünürlüğünü kur
             </h1>
             <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
-              We’ll research your brand and find the most relevant topics to
-              monitor.
+              Markanı inceleyip takip edilecek en uygun konuları bulacağız.
             </p>
           </div>
           <Field>
-            <FieldLabel htmlFor="project-website">Website URL</FieldLabel>
+            <FieldLabel htmlFor="project-website">Site URL&apos;si</FieldLabel>
             <Input
               id="project-website"
               inputMode="url"
               autoComplete="url"
-              placeholder="Enter your website URL"
+              placeholder="Sitenin URL'sini gir"
               value={website}
               onChange={(event) => setWebsite(event.target.value)}
               required
             />
           </Field>
           {getErrorCode(researchMutation.error) === "INSUFFICIENT_CREDITS" ? (
-            <InsufficientCreditsError title="We couldn’t research this website" />
+            <InsufficientCreditsError title="Bu site incelenemedi" />
           ) : (
             researchMutation.isError && (
               <Alert variant="destructive">
                 <AlertDescription>
-                  We couldn’t research this website. Check the URL and provider
-                  settings, then try again.
+                  Bu site incelenemedi. URL&apos;yi ve sağlayıcı ayarlarını
+                  kontrol edip tekrar dene.
                 </AlertDescription>
               </Alert>
             )
@@ -136,12 +135,12 @@ export function ProjectWebsiteSetup({ projectId }: { projectId: string }) {
               disabled={!website.trim()}
               className="w-full"
             >
-              Start research
+              İncelemeyi başlat
             </Button>
             <p className="text-xs leading-relaxed text-muted-foreground">
               {isEveryAppClientAuthMode()
-                ? "Research and a first run of your prompts use the DataForSEO and OpenRouter keys on your Every App gateway."
-                : "Research and a first run of your prompts use a small amount of usage credits."}
+                ? "İnceleme ve promptlarının ilk çalıştırması Every App gateway'indeki DataForSEO ve OpenRouter anahtarlarını kullanır."
+                : "İnceleme ve promptlarının ilk çalıştırması, bağlı veri sağlayıcılarının kullanım hakkından biraz harcar."}
             </p>
           </div>
         </form>

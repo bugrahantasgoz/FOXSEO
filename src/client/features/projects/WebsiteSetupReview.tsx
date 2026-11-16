@@ -77,24 +77,23 @@ export function WebsiteSetupReview({
           <div>
             <h1 className="text-2xl font-semibold tracking-tight">
               {research.preserveCompetitors
-                ? "Complete project setup"
-                : "Edit your brand and competitors"}
+                ? "Proje kurulumunu tamamla"
+                : "Markanı ve rakiplerini düzenle"}
             </h1>
             <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
-              You can edit your{" "}
               <Link
                 to="/p/$projectId/context"
                 params={{ projectId }}
                 className="text-foreground underline underline-offset-4"
               >
-                project context
+                Proje bağlamını
               </Link>{" "}
-              at any time.
+              istediğin zaman düzenleyebilirsin.
             </p>
           </div>
           <fieldset disabled={saving} className="min-w-0 space-y-5">
             <Field>
-              <FieldLabel htmlFor="setup-brand-name">Brand name</FieldLabel>
+              <FieldLabel htmlFor="setup-brand-name">Marka adı</FieldLabel>
               <Input
                 id="setup-brand-name"
                 value={brandName}
@@ -103,22 +102,22 @@ export function WebsiteSetupReview({
                 required
               />
               <FieldDescription>
-                We look for this name in AI answers.
+                Yapay zekâ yanıtlarında bu adı ararız.
               </FieldDescription>
             </Field>
             {research.preserveCompetitors ? (
               <p className="text-sm text-muted-foreground">
-                We’ll use the competitors already saved in your project context.
+                Proje bağlamında kayıtlı rakipleri kullanacağız.
               </p>
             ) : (
               <div className="overflow-hidden rounded-lg border border-border">
                 <Table>
                   <TableHeader>
                     <TableRow>
-                      <TableHead>Name</TableHead>
-                      <TableHead>Website</TableHead>
+                      <TableHead>Ad</TableHead>
+                      <TableHead>Site</TableHead>
                       <TableHead>
-                        <span className="sr-only">Actions</span>
+                        <span className="sr-only">İşlemler</span>
                       </TableHead>
                     </TableRow>
                   </TableHeader>
@@ -166,7 +165,7 @@ export function WebsiteSetupReview({
                             setEditing(id);
                           }}
                         >
-                          <Plus className="size-4" /> Add competitor
+                          <Plus className="size-4" /> Rakip ekle
                         </Button>
                       </TableCell>
                     </TableRow>
@@ -177,15 +176,15 @@ export function WebsiteSetupReview({
             {error && (
               <Alert variant="destructive">
                 <AlertDescription>
-                  We couldn’t save your project. Check the competitor names and
-                  websites, then try again.
+                  Projen kaydedilemedi. Rakip adlarını ve sitelerini kontrol
+                  edip tekrar dene.
                 </AlertDescription>
               </Alert>
             )}
             <div className="flex items-center justify-between gap-3">
               {onBack ? (
                 <Button type="button" variant="outline" onClick={onBack}>
-                  Back
+                  Geri
                 </Button>
               ) : (
                 <span />
@@ -200,7 +199,7 @@ export function WebsiteSetupReview({
                 }
               >
                 {saving && <LoaderCircle className="size-4 animate-spin" />}{" "}
-                Continue
+                Devam et
               </Button>
             </div>
           </fieldset>

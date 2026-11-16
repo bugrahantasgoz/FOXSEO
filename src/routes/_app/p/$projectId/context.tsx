@@ -4,7 +4,7 @@ import { ProjectContextPage } from "@/client/features/projects/project-context/P
 import { pageHead } from "@/client/lib/pageHead";
 
 export const Route = createFileRoute("/_app/p/$projectId/context")({
-  head: () => pageHead("Context"),
+  head: () => pageHead("Bağlam"),
   component: ProjectContextRoute,
 });
 
@@ -16,7 +16,7 @@ function ProjectContextRoute() {
         <ProjectPageHeader
           help="context"
           projectId={projectId}
-          title="Context"
+          title="Bağlam"
         />
 
         <ProjectContextPage projectId={projectId} />

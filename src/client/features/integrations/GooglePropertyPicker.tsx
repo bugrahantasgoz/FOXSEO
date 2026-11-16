@@ -68,7 +68,7 @@ export function GooglePropertyPicker({
   onSelect,
   onSave,
   saving,
-  saveLabel = "Save property",
+  saveLabel = "Mülkü kaydet",
   onRetry,
   onReconnect,
   secondaryAction,
@@ -141,15 +141,15 @@ export function GooglePropertyPicker({
       {!emptyGsc || readOnly ? (
         <div className="space-y-4">
           {readOnly ? (
-            <p className="text-sm font-medium">Manage Google accounts</p>
+            <p className="text-sm font-medium">Google hesaplarını yönet</p>
           ) : (
             <div>
-              <p className="mb-2 text-sm font-medium">Choose property</p>
+              <p className="mb-2 text-sm font-medium">Mülk seç</p>
               {loading ? (
-                <Spinner size="sm" label="Loading properties…" />
+                <Spinner size="sm" label="Mülkler yükleniyor…" />
               ) : error ? (
                 <QueryError
-                  fallback="Couldn't load properties."
+                  fallback="Mülkler yüklenemedi."
                   onRetry={onRetry}
                 />
               ) : (
@@ -174,15 +174,15 @@ export function GooglePropertyPicker({
                 >
                   <ComboboxInput
                     className="w-full"
-                    placeholder="Select a property…"
-                    aria-label="Search properties"
+                    placeholder="Bir mülk seç…"
+                    aria-label="Mülklerde ara"
                     disabled={saving}
                   />
                   <ComboboxContent>
                     <ComboboxEmpty>
                       {options.length > 0
-                        ? "No matching properties."
-                        : "No properties available. Check the Google accounts below."}
+                        ? "Eşleşen mülk yok."
+                        : "Kullanılabilir mülk yok. Aşağıdaki Google hesaplarını kontrol et."}
                     </ComboboxEmpty>
                     <ComboboxList>
                       {(group: PropertyGroup) => (
@@ -212,8 +212,8 @@ export function GooglePropertyPicker({
                                   {!option.selectable ? (
                                     <span className="block text-xs">
                                       {provider === "gsc"
-                                        ? "Ask the property owner for Full access, or verify ownership in Search Console."
-                                        : "No verified access"}
+                                        ? "Mülk sahibinden Tam erişim iste ya da sahipliği Search Console'da doğrula."
+                                        : "Doğrulanmış erişim yok"}
                                     </span>
                                   ) : null}
                                 </span>
@@ -246,14 +246,14 @@ export function GooglePropertyPicker({
             (account) => accountStatus(account, provider) !== null,
           ) ? (
             <p className="text-xs text-muted-foreground">
-              Having trouble?{" "}
+              Sorun mu yaşıyorsun?{" "}
               <a
                 href={GSC_SETUP_GUIDE_URL}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="underline underline-offset-4"
               >
-                Setup guide ↗
+                Kurulum rehberi ↗
               </a>
             </p>
           ) : null}
@@ -265,7 +265,7 @@ export function GooglePropertyPicker({
         <div className="flex flex-wrap items-center gap-1">
           {readOnly ? null : (
             <Button size="sm" onClick={onSave} disabled={!canSave || saving}>
-              {saving ? "Saving…" : saveLabel}
+              {saving ? "Kaydediliyor…" : saveLabel}
             </Button>
           )}
           {secondaryAction ? (
