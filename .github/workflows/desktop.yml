@@ -3,12 +3,13 @@ name: Desktop (Windows)
 # Builds FOXSEO-Kurulum-<version>.exe on Windows and tests it:
 #  1. the server starts and a real site audit completes (smoke-test.cjs),
 #  2. the installer installs silently, and the installed app opens FOXSEO.
-# A pushed tag v* also publishes the installer as a GitHub release.
+# On main, a version that has no release yet is published as release
+# v<version>: bump the version in package.json and desktop/package.json to
+# release.
 
 on:
   push:
     branches: [main]
-    tags: ["v*"]
   pull_request:
   workflow_dispatch:
 
@@ -46,9 +47,7 @@ jobs:
           $app = (Get-Content package.json | ConvertFrom-Json).version
           $desktop = (Get-Content desktop/package.json | ConvertFrom-Json).version
           if ($app -ne $desktop) { throw "package.json ($app) and desktop/package.json ($desktop) versions differ" }
-          if ("${{ github.ref_type }}" -eq "tag" -and "${{ github.ref_name }}" -ne "v$desktop") {
-            throw "Tag ${{ github.ref_name }} does not match version v$desktop"
-          }
+          "FOXSEO_VERSION=$desktop" >> $env:GITHUB_ENV
 
       - name: Install app dependencies
         run: pnpm install --frozen-lockfile
@@ -97,14 +96,22 @@ jobs:
           retention-days: 14
 
       - name: Publish release
-        if: github.ref_type == 'tag'
+        if: github.ref == 'refs/heads/main'
         shell: pwsh
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
+          $tag = "v$env:FOXSEO_VERSION"
+          gh release view $tag --repo "${{ github.repository }}" 2>$null
+          if ($LASTEXITCODE -eq 0) {
+            Write-Host "Release $tag already exists; bump the version to publish a new one."
+            exit 0
+          }
           $installer = Get-ChildItem desktop/release/FOXSEO-Kurulum-*.exe | Select-Object -First 1
-          gh release create "${{ github.ref_name }}" $installer.FullName `
+          gh release create $tag $installer.FullName `
             --repo "${{ github.repository }}" `
-            --title "FOXSEO ${{ github.ref_name }} (Demo)" `
+            --target "${{ github.sha }}" `
+            --title "FOXSEO $tag (Demo)" `
             --notes-file desktop/RELEASE_NOTES.md `
             --prerelease
+          if ($LASTEXITCODE -ne 0) { throw "gh release create failed" }
