@@ -18,8 +18,8 @@ export function DashboardAgentCard({ projectId }: { projectId: string }) {
     <AgentCard
       projectId={projectId}
       icons={ONE_CLICK_INSTALLS.map(({ Icon }) => Icon)}
-      title="Use FOXSEO in ChatGPT or Claude"
-      description="Research keywords and audit your site from the chatbot you already use."
+      title="FOXSEO'yu ChatGPT ya da Claude'da kullan"
+      description="Zaten kullandığın sohbet asistanından kelime araştır ve siteni tara."
     >
       {ONE_CLICK_INSTALLS.map(({ agent, name, href, Icon }) => (
         <Button
@@ -36,7 +36,7 @@ export function DashboardAgentCard({ projectId }: { projectId: string }) {
           }
         >
           <Icon data-icon="inline-start" />
-          Add to {name}
+          Ekle: {name}
         </Button>
       ))}
     </AgentCard>
@@ -65,14 +65,14 @@ export function DashboardAgentPromptCard({
     ({ agent }) =>
       grants.length === 0 || grants.some((grant) => grant.webChat === agent),
   );
-  const prompt = `Use FOXSEO to audit ${domain ?? "my website"} and tell me the 3 most important next steps.`;
+  const prompt = `FOXSEO ile ${domain ?? "sitemi"} tara ve atmam gereken en önemli 3 adımı söyle.`;
 
   return (
     <AgentCard
       projectId={projectId}
       icons={chats.length > 0 ? chats.map(({ Icon }) => Icon) : [Bot]}
-      title={`Ask ${chats.length === 1 ? chats[0].name : "your agent"} about your site`}
-      description={`Try: “${prompt}”`}
+      title={`Siten hakkında ${chats.length === 1 ? `${chats[0].name} ile` : "asistanınla"} konuş`}
+      description={`Şunu dene: “${prompt}”`}
     >
       {chats.map(({ agent, name, newChatUrl, Icon }) => (
         <Button
@@ -88,13 +88,13 @@ export function DashboardAgentPromptCard({
           }
         >
           <Icon data-icon="inline-start" />
-          Open in {name}
+          {name} ile aç
         </Button>
       ))}
       <CopyButton
         value={prompt}
-        successMessage="Prompt copied"
-        label="Copy prompt"
+        successMessage="Komut kopyalandı"
+        label="Komutu kopyala"
         size="default"
         className={actionClassName}
         onCopy={() => captureClientEvent("dashboard:agent_prompt_copy")}
@@ -159,7 +159,7 @@ function AgentCard({
         variant="ghost"
         size="icon-xs"
         className="absolute right-1 top-1 text-muted-foreground"
-        aria-label="Dismiss chatbot card"
+        aria-label="Asistan kartını kapat"
         disabled={dismiss.isPending}
         onClick={() => dismiss.mutate()}
       >

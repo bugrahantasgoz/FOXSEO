@@ -16,9 +16,9 @@ import {
 } from "@/client/components/ui/select";
 
 const RANGE_LABELS: Record<SearchPerformanceDateRange, string> = {
-  last_7_days: "Last 7 days",
-  last_28_days: "Last 28 days",
-  last_3_months: "Last 3 months",
+  last_7_days: "Son 7 gün",
+  last_28_days: "Son 28 gün",
+  last_3_months: "Son 3 ay",
 };
 const RANGE_OPTIONS = SEARCH_PERFORMANCE_RANGES.map((value) => ({
   value,
@@ -26,7 +26,7 @@ const RANGE_OPTIONS = SEARCH_PERFORMANCE_RANGES.map((value) => ({
 }));
 
 const TYPE_LABELS: Record<SearchPerformanceType, string> = {
-  web: "Web search",
+  web: "Web araması",
   discover: "Discover",
   googleNews: "Google News",
 };
@@ -40,8 +40,8 @@ function isSearchType(value: string): value is SearchPerformanceType {
 }
 
 const DEVICE_LABELS: Record<SearchPerformanceDevice, string> = {
-  DESKTOP: "Desktop",
-  MOBILE: "Mobile",
+  DESKTOP: "Masaüstü",
+  MOBILE: "Mobil",
   TABLET: "Tablet",
 };
 const DEVICE_OPTIONS = GSC_DEVICES.map((value) => ({
@@ -51,7 +51,7 @@ const DEVICE_OPTIONS = GSC_DEVICES.map((value) => ({
 
 // Sentinel for "no filter" in the selects; never written to the URL.
 const ALL = "ALL";
-const DEVICE_ITEMS = [{ value: ALL, label: "All devices" }, ...DEVICE_OPTIONS];
+const DEVICE_ITEMS = [{ value: ALL, label: "Tüm cihazlar" }, ...DEVICE_OPTIONS];
 
 function isDateRange(value: string): value is SearchPerformanceDateRange {
   return SEARCH_PERFORMANCE_RANGES.some((option) => option === value);
@@ -75,7 +75,7 @@ export function SearchPerformanceSelects({
   const country = search.country ?? ALL;
   const range = search.range ?? "last_28_days";
   const countryItems = [
-    { value: ALL, label: "All countries" },
+    { value: ALL, label: "Tüm ülkeler" },
     ...(country !== ALL && !countries.some((row) => row.key === country)
       ? [{ value: country, label: country.toUpperCase() }]
       : []),
@@ -102,7 +102,7 @@ export function SearchPerformanceSelects({
           });
         }}
       >
-        <SelectTrigger size="sm" className="w-36" aria-label="Search type">
+        <SelectTrigger size="sm" className="w-36" aria-label="Arama türü">
           <SelectValue />
         </SelectTrigger>
         <SelectContent>
@@ -124,7 +124,7 @@ export function SearchPerformanceSelects({
           });
         }}
       >
-        <SelectTrigger size="sm" className="w-36" aria-label="Device filter">
+        <SelectTrigger size="sm" className="w-36" aria-label="Cihaz filtresi">
           <SelectValue />
         </SelectTrigger>
         <SelectContent>
@@ -146,7 +146,7 @@ export function SearchPerformanceSelects({
           });
         }}
       >
-        <SelectTrigger size="sm" className="w-36" aria-label="Country filter">
+        <SelectTrigger size="sm" className="w-36" aria-label="Ülke filtresi">
           <SelectValue />
         </SelectTrigger>
         <SelectContent>
@@ -186,7 +186,7 @@ export function DateRangeSelect({
       <SelectTrigger
         size="sm"
         className={triggerClassName}
-        aria-label="Date range"
+        aria-label="Tarih aralığı"
       >
         <SelectValue />
       </SelectTrigger>

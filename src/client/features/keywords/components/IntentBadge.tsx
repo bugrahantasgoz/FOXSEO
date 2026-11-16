@@ -18,20 +18,20 @@ const VARIANTS: Record<
 };
 
 const SHORT_LABELS: Record<KeywordIntent, string> = {
-  informational: "Info",
-  commercial: "Comm",
-  transactional: "Trans",
-  navigational: "Nav",
+  informational: "Bilgi",
+  commercial: "Ticari",
+  transactional: "İşlem",
+  navigational: "Yön",
   unknown: "?",
 };
 
 /** Full intent labels, shared with the keyword filters so both stay in sync. */
 export const INTENT_LABELS: Record<KeywordIntent, string> = {
-  informational: "Informational",
-  commercial: "Commercial",
-  transactional: "Transactional",
-  navigational: "Navigational",
-  unknown: "Unknown",
+  informational: "Bilgi amaçlı",
+  commercial: "Ticari araştırma",
+  transactional: "İşlem amaçlı",
+  navigational: "Yönlendirme amaçlı",
+  unknown: "Bilinmiyor",
 };
 
 const DESCRIPTIONS: Record<
@@ -41,27 +41,27 @@ const DESCRIPTIONS: Record<
   informational: {
     label: INTENT_LABELS.informational,
     description:
-      "The searcher wants information or answers. Use this for educational content, guides, and comparison-light explainers.",
+      "Arayan kişi bilgi ya da cevap istiyor. Eğitici içerikler, rehberler ve açıklayıcı yazılar için uygun.",
   },
   commercial: {
     label: INTENT_LABELS.commercial,
     description:
-      "The searcher is researching options before a purchase. Treat this as buying intent for comparisons, alternatives, and product-led pages.",
+      "Arayan kişi satın almadan önce seçenekleri araştırıyor. Karşılaştırmalar, alternatifler ve ürün odaklı sayfalar için uygun.",
   },
   transactional: {
     label: INTENT_LABELS.transactional,
     description:
-      "The searcher is ready to complete an action, often a purchase. Prioritize clear offers, pricing, trials, or conversion paths.",
+      "Arayan kişi bir işlem yapmaya, genelde satın almaya hazır. Net teklifler, fiyatlar, denemeler ve dönüşüm adımlarına öncelik ver.",
   },
   navigational: {
     label: INTENT_LABELS.navigational,
     description:
-      "The searcher is looking for a specific site, brand, or page. These queries usually reward matching the expected destination.",
+      "Arayan kişi belirli bir siteyi, markayı ya da sayfayı arıyor. Bu aramalarda genelde beklenen sayfaya ulaştırmak kazandırır.",
   },
   unknown: {
     label: INTENT_LABELS.unknown,
     description:
-      "Intent was not available for this keyword, so avoid making content strategy decisions from this badge alone.",
+      "Bu kelimenin arama amacı bilinmiyor; içerik kararlarını sadece bu etikete göre verme.",
   },
 };
 
@@ -79,7 +79,7 @@ export function IntentBadge({ intent }: { intent: KeywordIntent }) {
             className="h-6 min-w-11 cursor-help font-semibold"
           />
         }
-        aria-label={`${details.label} search intent`}
+        aria-label={`Arama amacı: ${details.label}`}
       >
         {SHORT_LABELS[intent]}
       </TooltipTrigger>

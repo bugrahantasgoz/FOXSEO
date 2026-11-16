@@ -12,32 +12,34 @@ export const setupSteps: {
 }[] = [
   {
     id: "keywords",
-    label: "Get keyword ideas",
-    detail: "Start from one keyword and see what people search for.",
+    label: "Anahtar kelime fikirleri bul",
+    detail: "Tek bir kelimeyle başla ve insanların neler aradığını gör.",
     icon: Lightbulb,
-    skipLabel: "Skip for now",
+    skipLabel: "Şimdilik atla",
   },
   {
     id: "audit",
-    label: "Audit your site",
-    detail: "Crawl for broken links, missing tags, and indexability problems.",
+    label: "Siteni tara",
+    detail:
+      "Kırık linkleri, eksik etiketleri ve dizine eklenme sorunlarını bul.",
     icon: ClipboardCheck,
-    skipLabel: "Skip for now",
+    skipLabel: "Şimdilik atla",
   },
   {
     id: "mcp",
-    label: "Connect your AI agent",
-    detail: "Use FOXSEO inside Claude or your favorite agent.",
+    label: "Yapay zekâ asistanını bağla",
+    detail:
+      "FOXSEO'yu Claude ya da sevdiğin başka bir asistanın içinde kullan.",
     icon: Bot,
-    skipLabel: "Skip for now",
+    skipLabel: "Şimdilik atla",
   },
   {
     id: "project",
-    label: "Working on multiple websites?",
+    label: "Birden fazla site mi yönetiyorsun?",
     detail:
-      "Create another project, or let your AI agent set up a list of sites.",
+      "Yeni bir proje oluştur ya da site listeni yapay zekâ asistanına kurdur.",
     icon: FolderPlus,
-    skipLabel: "I only need one project",
+    skipLabel: "Tek proje yeterli",
   },
 ];
 

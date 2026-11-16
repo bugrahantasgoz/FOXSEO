@@ -14,8 +14,8 @@ import {
 import type { searchPerformanceInputSchema } from "@/types/schemas/search-performance";
 
 const MATCH_ITEMS = [
-  { value: "contains", label: "Contains" },
-  { value: "equals", label: "Exactly matches" },
+  { value: "contains", label: "İçerir" },
+  { value: "equals", label: "Tam eşleşir" },
 ];
 
 export type TextFilters = Pick<
@@ -82,13 +82,13 @@ export function SearchPerformanceTextFilters({
     >
       <div className="flex flex-wrap items-center justify-between gap-2">
         <div className="flex items-center gap-2">
-          <p className="text-sm font-semibold">Refine table results</p>
+          <p className="text-sm font-semibold">Tablo sonuçlarını daralt</p>
           {activeFilterCount > 0 ? (
-            <Badge size="sm">{activeFilterCount} active</Badge>
+            <Badge size="sm">{activeFilterCount} etkin</Badge>
           ) : null}
           {dirtyCount > 0 ? (
             <Badge variant="warning" size="sm">
-              {dirtyCount} unapplied
+              {dirtyCount} uygulanmadı
             </Badge>
           ) : null}
         </div>
@@ -106,13 +106,13 @@ export function SearchPerformanceTextFilters({
           }}
         >
           <RotateCcw data-icon="inline-start" />
-          Clear all
+          Tümünü temizle
         </Button>
       </div>
       <div className="grid gap-3 md:grid-cols-2">
         <div className="space-y-1.5">
           <span className="text-[11px] font-semibold uppercase tracking-wide text-muted-foreground">
-            Page URL
+            Sayfa URL'si
           </span>
           <div className="flex flex-col gap-2 sm:flex-row">
             <Select
@@ -125,7 +125,7 @@ export function SearchPerformanceTextFilters({
               <SelectTrigger
                 size="sm"
                 className="w-full sm:w-44 sm:shrink-0"
-                aria-label="Page match"
+                aria-label="Sayfa eşleşme türü"
               >
                 <SelectValue />
               </SelectTrigger>
@@ -139,17 +139,17 @@ export function SearchPerformanceTextFilters({
             </Select>
             <Input
               className="h-7 w-full min-w-0 sm:flex-1"
-              aria-label="Page URL filter"
+              aria-label="Sayfa URL filtresi"
               value={page}
               maxLength={4096}
               onChange={(event) => setPage(event.target.value)}
-              placeholder="URL or subfolder"
+              placeholder="URL ya da alt klasör"
             />
           </div>
         </div>
         <div className={showQuery ? "space-y-1.5" : "hidden"}>
           <span className="text-[11px] font-semibold uppercase tracking-wide text-muted-foreground">
-            Query
+            Sorgu
           </span>
           <div className="flex flex-col gap-2 sm:flex-row">
             <Select
@@ -162,7 +162,7 @@ export function SearchPerformanceTextFilters({
               <SelectTrigger
                 size="sm"
                 className="w-full sm:w-44 sm:shrink-0"
-                aria-label="Query match"
+                aria-label="Sorgu eşleşme türü"
               >
                 <SelectValue />
               </SelectTrigger>
@@ -176,19 +176,19 @@ export function SearchPerformanceTextFilters({
             </Select>
             <Input
               className="h-7 w-full min-w-0 sm:flex-1"
-              aria-label="Query filter"
+              aria-label="Sorgu filtresi"
               value={query}
               maxLength={4096}
               onChange={(event) => setQuery(event.target.value)}
-              placeholder="Search term"
+              placeholder="Arama terimi"
             />
           </div>
         </div>
       </div>
       <p className="text-xs text-muted-foreground">
-        All filters must match. Contains ignores case and matches text anywhere,
-        including a subfolder. Exactly matches compares the full URL or query,
-        including case.
+        Tüm filtreler birlikte uygulanır. "İçerir" büyük/küçük harfe bakmaz ve
+        metni her yerde (alt klasörler dahil) arar. "Tam eşleşir" URL'nin ya da
+        sorgunun tamamını, büyük/küçük harf dahil karşılaştırır.
       </p>
       <div className="flex items-center justify-end gap-2 pt-1">
         <Button
@@ -198,10 +198,10 @@ export function SearchPerformanceTextFilters({
           onClick={cancel}
           disabled={dirtyCount === 0}
         >
-          Cancel
+          Vazgeç
         </Button>
         <Button size="sm" type="submit" disabled={dirtyCount === 0}>
-          Apply filters
+          Filtreleri uygula
           {dirtyCount > 0 ? (
             <Badge variant="secondary" size="sm" className="ml-1">
               {dirtyCount}

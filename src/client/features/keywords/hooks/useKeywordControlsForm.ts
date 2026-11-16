@@ -41,7 +41,7 @@ function getKeywordSearchValidationErrors(
     if (!validateEmptyKeyword) return null;
     return createFormValidationErrors({
       fields: {
-        keyword: "Please enter at least one keyword.",
+        keyword: "En az bir anahtar kelime yaz.",
       },
     });
   }
@@ -51,7 +51,7 @@ function getKeywordSearchValidationErrors(
   if (keywords.length > MAX_KEYWORDS_PER_SUBMIT) {
     return createFormValidationErrors({
       fields: {
-        keyword: `Please enter no more than ${MAX_KEYWORDS_PER_SUBMIT} keywords (one per line).`,
+        keyword: `En fazla ${MAX_KEYWORDS_PER_SUBMIT} anahtar kelime yazabilirsin (her satıra bir tane).`,
       },
     });
   }

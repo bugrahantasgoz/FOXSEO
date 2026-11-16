@@ -27,7 +27,7 @@ export type SortDir = "asc" | "desc";
 
 export function AreaTrendChart({
   trend,
-  label = "Search volume",
+  label = "Arama hacmi",
   className = "h-[210px]",
 }: {
   trend: MonthlySearch[];
@@ -51,7 +51,7 @@ export function AreaTrendChart({
         } satisfies ChartConfig
       }
       className={className}
-      aria-label={`${label} trend chart`}
+      aria-label={`${label} trend grafiği`}
     >
       <AreaChart
         data={data}

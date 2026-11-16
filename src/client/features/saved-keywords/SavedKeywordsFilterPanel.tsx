@@ -23,23 +23,23 @@ export function SavedKeywordsFilterPanel({
         <TermsTokenInput
           form={form}
           name="include"
-          label="Include"
+          label="İçersin"
           variant="include"
-          placeholder="Must contain… e.g. audit"
+          placeholder="İçermesi gereken… örn. analiz"
         />
         <TermsTokenInput
           form={form}
           name="exclude"
-          label="Exclude"
+          label="İçermesin"
           variant="exclude"
-          placeholder="Must not contain… e.g. jobs"
+          placeholder="İçermemesi gereken… örn. iş ilanı"
         />
       </div>
 
       <div className="grid grid-cols-1 gap-2 lg:grid-cols-3">
         <FilterRangeInputs
           form={form}
-          title="Search Volume"
+          title="Arama hacmi"
           minName="minVol"
           maxName="maxVol"
           min={0}
@@ -54,7 +54,7 @@ export function SavedKeywordsFilterPanel({
         />
         <FilterRangeInputs
           form={form}
-          title="Difficulty"
+          title="Zorluk"
           minName="minKd"
           maxName="maxKd"
           min={0}
@@ -158,7 +158,7 @@ function TermsTokenInput({
                   <button
                     type="button"
                     className="opacity-70 hover:opacity-100"
-                    aria-label={`Remove ${term}`}
+                    aria-label={`${term} terimini kaldır`}
                     onClick={() =>
                       commit(terms.filter((existing) => existing !== term))
                     }

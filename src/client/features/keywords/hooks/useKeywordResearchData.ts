@@ -196,7 +196,10 @@ export function useKeywordResearchData(
   const rows = hasSearched ? (researchQuery.data?.rows ?? []) : [];
   const researchError =
     hasSearched && researchQuery.isError
-      ? getStandardErrorMessage(researchQuery.error, "Research failed.")
+      ? getStandardErrorMessage(
+          researchQuery.error,
+          "Araştırma başarısız oldu.",
+        )
       : null;
 
   return {

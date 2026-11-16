@@ -31,12 +31,12 @@ export function BingBacklinksPage({ projectId }: { projectId: string }) {
     <div className="mx-auto w-full max-w-6xl space-y-4 p-4 md:p-6">
       <div>
         <div className="flex items-center gap-1.5">
-          <h1 className="text-2xl font-semibold">Backlinks</h1>
+          <h1 className="text-2xl font-semibold">Backlinkler</h1>
           <PageHelpButton topic="backlinks" />
         </div>
         <p className="text-sm text-muted-foreground">
-          Links to your site that Bing has found. Free, from Bing Webmaster
-          Tools.
+          Bing'in bulduğu, sitene verilen linkler. Bing Webmaster Tools'tan,
+          ücretsiz.
         </p>
       </div>
 
@@ -54,9 +54,9 @@ export function BingBacklinksPage({ projectId }: { projectId: string }) {
       ) : (
         <>
           <div className="grid gap-3 sm:grid-cols-2">
-            <Stat label="Total inbound links" value={overview.data.totalLinks} />
+            <Stat label="Toplam gelen link" value={overview.data.totalLinks} />
             <Stat
-              label="Pages with links"
+              label="Link alan sayfalar"
               value={overview.data.pages.length}
             />
           </div>
@@ -64,8 +64,8 @@ export function BingBacklinksPage({ projectId }: { projectId: string }) {
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead>Your page</TableHead>
-                  <TableHead className="w-32 text-right">Links</TableHead>
+                  <TableHead>Senin sayfan</TableHead>
+                  <TableHead className="w-32 text-right">Link</TableHead>
                   <TableHead className="w-40" />
                 </TableRow>
               </TableHeader>
@@ -73,7 +73,7 @@ export function BingBacklinksPage({ projectId }: { projectId: string }) {
                 {overview.data.pages.length === 0 ? (
                   <TableRow>
                     <TableCell colSpan={3} className="text-muted-foreground">
-                      Bing has not found links to this site yet.
+                      Bing henüz bu siteye verilen bir link bulmadı.
                     </TableCell>
                   </TableRow>
                 ) : (
@@ -83,7 +83,7 @@ export function BingBacklinksPage({ projectId }: { projectId: string }) {
                         {page.url}
                       </TableCell>
                       <TableCell className="text-right tabular-nums">
-                        {page.count.toLocaleString()}
+                        {page.count.toLocaleString("tr-TR")}
                       </TableCell>
                       <TableCell className="text-right">
                         <Button
@@ -93,7 +93,7 @@ export function BingBacklinksPage({ projectId }: { projectId: string }) {
                           }
                           onClick={() => setSelectedUrl(page.url)}
                         >
-                          Who links here
+                          Kimler link veriyor
                         </Button>
                       </TableCell>
                     </TableRow>
@@ -121,7 +121,7 @@ function LinksToUrl({ projectId, url }: { projectId: string; url: string }) {
   return (
     <Card className="gap-0 py-0">
       <div className="border-b border-border px-4 py-3">
-        <h2 className="font-medium">Links to {url}</h2>
+        <h2 className="font-medium">{url} adresine verilen linkler</h2>
       </div>
       {links.isPending ? (
         <div className="p-4">
@@ -136,9 +136,9 @@ function LinksToUrl({ projectId, url }: { projectId: string; url: string }) {
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead>Linking page</TableHead>
-                <TableHead className="w-48">Domain</TableHead>
-                <TableHead className="w-64">Anchor text</TableHead>
+                <TableHead>Link veren sayfa</TableHead>
+                <TableHead className="w-48">Alan adı</TableHead>
+                <TableHead className="w-64">Bağlantı metni</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -154,7 +154,9 @@ function LinksToUrl({ projectId, url }: { projectId: string; url: string }) {
                       {link.sourceUrl}
                     </a>
                   </TableCell>
-                  <TableCell className="truncate">{link.sourceDomain}</TableCell>
+                  <TableCell className="truncate">
+                    {link.sourceDomain}
+                  </TableCell>
                   <TableCell className="truncate">
                     {link.anchorText || "—"}
                   </TableCell>
@@ -170,7 +172,7 @@ function LinksToUrl({ projectId, url }: { projectId: string; url: string }) {
                 disabled={page === 0}
                 onClick={() => setPage(page - 1)}
               >
-                Previous
+                Önceki
               </Button>
               <span>
                 {page + 1} / {links.data.totalPages}
@@ -181,7 +183,7 @@ function LinksToUrl({ projectId, url }: { projectId: string; url: string }) {
                 disabled={page + 1 >= links.data.totalPages}
                 onClick={() => setPage(page + 1)}
               >
-                Next
+                Sonraki
               </Button>
             </div>
           ) : null}
@@ -196,7 +198,7 @@ function Stat({ label, value }: { label: string; value: number }) {
     <Card className="p-4">
       <div className="text-sm text-muted-foreground">{label}</div>
       <div className="text-2xl font-semibold tabular-nums">
-        {value.toLocaleString()}
+        {value.toLocaleString("tr-TR")}
       </div>
     </Card>
   );
@@ -206,17 +208,19 @@ function SetupCard() {
   return (
     <Card className="space-y-3 p-6">
       <div className="flex items-center gap-2 font-medium">
-        <Link2 className="size-5" /> Connect Bing Webmaster Tools (free)
+        <Link2 className="size-5" /> Bing Webmaster Tools'u bağla (ücretsiz)
       </div>
       <ol className="list-decimal space-y-1 pl-5 text-sm text-muted-foreground">
         <li>
-          Sign in at bing.com/webmasters and add your site (you can import it
-          from Google Search Console).
+          bing.com/webmasters adresinde oturum aç ve siteni ekle (Google Search
+          Console'dan içe aktarabilirsin).
         </li>
-        <li>Open Settings → API Access and generate an API key.</li>
         <li>
-          Add <code>BING_WEBMASTER_API_KEY=your-key</code> to{" "}
-          <code>.env.local</code> and restart FOXSEO.
+          Bing'de Settings → API Access bölümünü aç ve bir API anahtarı oluştur.
+        </li>
+        <li>
+          Anahtarı FOXSEO → Ayarlar (API anahtarları) menüsünden ekle, sonra
+          FOXSEO → Yeniden başlat ile uygulamayı yeniden başlat.
         </li>
       </ol>
     </Card>

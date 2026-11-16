@@ -201,12 +201,13 @@ export function KeywordResearchPage(input: Props) {
   return (
     <div className="px-4 py-4 md:px-6 md:py-6 pb-24 md:pb-8">
       <div className="mx-auto flex max-w-7xl flex-col gap-4">
-        <PageHeader help="keywords"
-          title="Keyword Research"
+        <PageHeader
+          help="keywords"
+          title="Anahtar Kelime Araştırması"
           description={
             controller.hasSearched
               ? undefined
-              : "Discover keyword ideas, search demand, and ranking opportunities."
+              : "Anahtar kelime fikirlerini, arama talebini ve sıralama fırsatlarını keşfet."
           }
           backLink={
             controller.hasSearched ? (
@@ -214,7 +215,7 @@ export function KeywordResearchPage(input: Props) {
                 data-testid="keyword-research-recent-searches"
                 onClick={showRecentSearches}
               >
-                Recent searches
+                Son aramalar
               </BackButton>
             ) : undefined
           }
@@ -313,7 +314,7 @@ function KeywordSaveDialog({
 
   return (
     <FormDialog
-      title={`Save ${controller.selectedKeywordRows.length} Keywords`}
+      title={`${controller.selectedKeywordRows.length} kelimeyi kaydet`}
       onClose={() => controller.setShowSaveDialog(false)}
       actions={
         <>
@@ -321,23 +322,24 @@ function KeywordSaveDialog({
             variant="outline"
             onClick={() => controller.setShowSaveDialog(false)}
           >
-            Cancel
+            Vazgeç
           </Button>
           <Button
             pending={controller.savePending}
             onClick={controller.confirmSave}
           >
-            Save
+            Kaydet
           </Button>
         </>
       }
     >
       <div className="space-y-2 text-sm text-muted-foreground">
-        <p>These keywords will be saved to your current project.</p>
+        <p>Bu kelimeler mevcut projene kaydedilecek.</p>
         {controller.locationName ? (
           <p>
-            Saved keywords show national metrics. The local volume for{" "}
-            {formatLocationLabel(controller.locationName)} is not saved.
+            Kayıtlı kelimeler ülke geneli verileri gösterir.{" "}
+            {formatLocationLabel(controller.locationName)} için yerel hacim
+            kaydedilmez.
           </p>
         ) : null}
       </div>

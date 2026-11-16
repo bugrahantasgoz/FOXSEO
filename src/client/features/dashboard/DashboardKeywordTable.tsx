@@ -14,7 +14,9 @@ type Keyword = {
 const columns: ColumnDef<Keyword>[] = [
   {
     accessorKey: "query",
-    header: ({ column }) => <SortableHeader column={column} label="Keyword" />,
+    header: ({ column }) => (
+      <SortableHeader column={column} label="Anahtar kelime" />
+    ),
     filterFn: "includesString",
   },
   ...(["impressions", "clicks", "position"] as const).map(
@@ -26,10 +28,10 @@ const columns: ColumnDef<Keyword>[] = [
             column={column}
             label={
               id === "position"
-                ? "Avg. position"
+                ? "Ort. pozisyon"
                 : id === "clicks"
-                  ? "Clicks"
-                  : "Impressions"
+                  ? "Tıklama"
+                  : "Gösterim"
             }
             align="right"
           />
@@ -37,7 +39,7 @@ const columns: ColumnDef<Keyword>[] = [
         cell: ({ getValue }) =>
           id === "position"
             ? Number(getValue()).toFixed(1)
-            : Number(getValue()).toLocaleString(),
+            : Number(getValue()).toLocaleString("tr-TR"),
         filterFn: "inNumberRange",
         meta: {
           headerClassName: "text-right",
@@ -61,7 +63,7 @@ export function DashboardKeywordTable({
 >) {
   const pageColumn: ColumnDef<Keyword> = {
     accessorKey: "page",
-    header: "Page",
+    header: "Sayfa",
     filterFn: "includesString",
     cell: ({ row }) => <ExternalPage url={row.original.page ?? null} />,
   };
@@ -74,13 +76,13 @@ export function DashboardKeywordTable({
       }
       initialSorting={[{ id: sortBy, desc: true }]}
       filters={[
-        { id: "query", label: "Keyword", kind: "text" },
+        { id: "query", label: "Anahtar kelime", kind: "text" },
         ...(showPages
-          ? [{ id: "page", label: "Page", kind: "text" as const }]
+          ? [{ id: "page", label: "Sayfa", kind: "text" as const }]
           : []),
-        { id: "impressions", label: "Impressions", kind: "number" },
-        { id: "clicks", label: "Clicks", kind: "number" },
-        { id: "position", label: "Average position", kind: "number" },
+        { id: "impressions", label: "Gösterim", kind: "number" },
+        { id: "clicks", label: "Tıklama", kind: "number" },
+        { id: "position", label: "Ortalama pozisyon", kind: "number" },
       ]}
     />
   );

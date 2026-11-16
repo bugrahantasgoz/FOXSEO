@@ -25,10 +25,10 @@ import { hasOrgPermission } from "@/lib/org-permissions";
 import type { DashboardSetupStep } from "@/types/schemas/dashboard";
 import { parseResearchTarget } from "@/shared/researchScope";
 
-const projectPrompt = `Use FOXSEO to set up a separate project for each website below. List my existing projects first and reuse matches so you don’t create duplicates. Set the country and language for each site, and ask me about anything missing.
+const projectPrompt = `FOXSEO'yu kullanarak aşağıdaki her site için ayrı bir proje kur. Önce mevcut projelerimi listele ve eşleşenleri yeniden kullan, böylece kopya oluşmasın. Her site için ülke ve dili ayarla, eksik bir şey varsa bana sor.
 
-Replace this list with my websites:
-- Project name — website — country — language`;
+Bu listeyi kendi sitelerimle değiştir:
+- Proje adı — site — ülke — dil`;
 
 export function DashboardSetupAction({
   step,
@@ -50,10 +50,10 @@ export function DashboardSetupAction({
   if (step === "competitor")
     return (
       <StepInputForm
-        description="Explore a competitor’s domain to discover the topics they rank for and the websites linking to them."
-        label="Competitor website"
-        placeholder="competitor.com"
-        submitLabel="Explore competitor"
+        description="Bir rakibin alan adını incele; hangi konularda sıralandığını ve ona link veren siteleri keşfet."
+        label="Rakip site"
+        placeholder="rakip.com"
+        submitLabel="Rakibi incele"
         validate={validateDomain}
         onSubmit={(value) => {
           onComplete();
@@ -68,12 +68,12 @@ export function DashboardSetupAction({
   if (step === "keywords")
     return (
       <StepInputForm
-        description="Start from one keyword that describes what you offer. You’ll get related searches with volume and difficulty."
-        label="Seed keyword"
-        placeholder="e.g. running shoes"
-        submitLabel="Get keyword ideas"
+        description="Sunduğun şeyi anlatan tek bir kelimeyle başla. İlgili aramaları ve arama hacimlerini göreceksin."
+        label="Başlangıç kelimesi"
+        placeholder="örn. koşu ayakkabısı"
+        submitLabel="Kelime fikirleri al"
         validate={(value) =>
-          value.trim() ? undefined : "Enter a keyword to start from"
+          value.trim() ? undefined : "Başlamak için bir kelime yaz"
         }
         onSubmit={(value) => {
           onComplete();
@@ -88,11 +88,11 @@ export function DashboardSetupAction({
   if (step === "audit")
     return (
       <StepInputForm
-        description="Crawl your site to find broken links, missing tags, and pages search engines can’t index. You can adjust the crawl size before it starts."
-        label="Site URL"
+        description="Kırık linkleri, eksik etiketleri ve arama motorlarının dizine ekleyemediği sayfaları bulmak için siteni tara. Taramanın boyutunu başlamadan önce ayarlayabilirsin."
+        label="Site adresi"
         placeholder="https://example.com"
         defaultValue={domain ? `https://${domain}` : ""}
-        submitLabel="Set up audit"
+        submitLabel="Taramayı hazırla"
         validate={validateDomain}
         onSubmit={(value) => {
           onComplete();
@@ -134,7 +134,7 @@ export function DashboardSetupAction({
   if (!canManage)
     return org.isPending ? (
       <p className="text-sm text-muted-foreground">
-        Checking workspace permissions…
+        Çalışma alanı izinleri kontrol ediliyor…
       </p>
     ) : org.isError ? (
       <p className="text-sm text-muted-foreground">
@@ -147,16 +147,14 @@ export function DashboardSetupAction({
     return (
       <div className="space-y-4">
         <p className="text-sm leading-relaxed text-muted-foreground">
-          Keep each website’s research, rankings, and connections in its own
-          project. Use the project switcher in the sidebar → New project
-          anytime.
+          Her sitenin araştırmalarını, sıralamalarını ve bağlantılarını ayrı bir
+          projede tut. İstediğin zaman kenar çubuğundaki proje seçici → Yeni
+          proje yolunu kullanabilirsin.
         </p>
-        <Button onClick={() => setShowModal(true)}>
-          Create another project
-        </Button>
+        <Button onClick={() => setShowModal(true)}>Yeni proje oluştur</Button>
         <Collapsible className="rounded-lg border border-border p-4">
           <CollapsibleTrigger className="cursor-pointer text-sm font-medium">
-            Have a list of websites? Let your agent set them up.
+            Elinde bir site listesi mi var? Asistanın kursun.
           </CollapsibleTrigger>
           <CollapsibleContent className="mt-3 space-y-3">
             <p className="text-sm text-muted-foreground">
@@ -164,17 +162,17 @@ export function DashboardSetupAction({
                 to="/ai"
                 className="text-primary underline-offset-4 hover:underline"
               >
-                Connect your agent
+                Asistanını bağla
               </Link>
-              , then paste this prompt with your list of websites.
+              , sonra bu komutu site listenle birlikte yapıştır.
             </p>
             <pre className="whitespace-pre-wrap break-words font-sans text-sm leading-relaxed text-muted-foreground">
               {projectPrompt}
             </pre>
             <CopyButton
               value={projectPrompt}
-              label="Copy project prompt"
-              successMessage="Project prompt copied"
+              label="Proje komutunu kopyala"
+              successMessage="Proje komutu kopyalandı"
             />
           </CollapsibleContent>
         </Collapsible>
@@ -186,10 +184,9 @@ export function DashboardSetupAction({
   return (
     <div className="space-y-4">
       <p className="text-sm leading-relaxed text-muted-foreground">
-        Bring a teammate into your workspace to share projects, research, and
-        results.
+        Bu adım tek kullanıcılı FOXSEO'da gerekli değil.
       </p>
-      <Button onClick={() => setShowModal(true)}>Invite a teammate</Button>
+      <Button onClick={() => setShowModal(true)}>Davet et</Button>
       {showModal && (
         <InviteTeammateModal
           onClose={() => setShowModal(false)}

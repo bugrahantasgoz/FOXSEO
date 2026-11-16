@@ -30,19 +30,19 @@ export function DashboardLinkActivity({
     retry: false,
   });
   return (
-    <QueryState query={query} errorFallback="Could not load new links">
+    <QueryState query={query} errorFallback="Yeni linkler yüklenemedi">
       {(data) => (
         <CardShell
-          title="New backlinks"
+          title="Yeni backlinkler"
           icon={<Link2 className="size-5" />}
           titleInfo={
-            <DashboardInfo label="About new links">
+            <DashboardInfo label="Yeni linkler hakkında">
               <p>
-                Links to your website found in the past week. We show new
-                linking sites first.
+                Son bir haftada bulunan, sitene verilen linkler. Yeni link veren
+                siteler önce gösterilir.
               </p>
               <p className="mt-2">
-                A link may be older than the date it was found.
+                Bir link, bulunduğu tarihten daha eski olabilir.
               </p>
             </DashboardInfo>
           }
@@ -52,9 +52,9 @@ export function DashboardLinkActivity({
               params={{ projectId }}
               search={{ tab: "backlinks" }}
               className={moreDetailsClass}
-              aria-label="View all new backlinks"
+              aria-label="Tüm yeni backlinkleri gör"
             >
-              View all
+              Tümünü gör
             </Link>
           }
         >
@@ -63,8 +63,8 @@ export function DashboardLinkActivity({
             <Table className={cardTableClass}>
               <TableHeader>
                 <TableRow>
-                  <TableHead>Referring domain</TableHead>
-                  <TableHead className="text-right">Backlinks</TableHead>
+                  <TableHead>Referans alan adı</TableHead>
+                  <TableHead className="text-right">Backlinkler</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
@@ -77,7 +77,7 @@ export function DashboardLinkActivity({
                       />
                     </TableCell>
                     <TableCell className="text-right tabular-nums">
-                      {row.backlinks?.toLocaleString() ?? "—"}
+                      {row.backlinks?.toLocaleString("tr-TR") ?? "—"}
                     </TableCell>
                   </TableRow>
                 ))}
@@ -87,8 +87,8 @@ export function DashboardLinkActivity({
             <Table className={cardTableClass}>
               <TableHeader>
                 <TableRow>
-                  <TableHead>Referring page</TableHead>
-                  <TableHead>Anchor</TableHead>
+                  <TableHead>Link veren sayfa</TableHead>
+                  <TableHead>Bağlantı metni</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
@@ -111,8 +111,8 @@ export function DashboardLinkActivity({
             <EmptyState
               variant="plain"
               icon={Link2}
-              title="No new links this week"
-              description="Explore the sites already linking to you."
+              title="Bu hafta yeni link yok"
+              description="Sana zaten link veren sitelere göz at."
               action={
                 <Button
                   variant="outline"
@@ -125,7 +125,7 @@ export function DashboardLinkActivity({
                     />
                   }
                 >
-                  View backlinks
+                  Backlinkleri gör
                 </Button>
               }
             />

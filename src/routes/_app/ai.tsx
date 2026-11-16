@@ -89,7 +89,8 @@ function AiPage() {
   return (
     <div className="h-full overflow-auto px-4 py-4 pb-24 md:px-6 md:py-6 md:pb-8">
       <div className="mx-auto max-w-7xl">
-        <PageHeader help="agent"
+        <PageHeader
+          help="agent"
           title="Agent setup"
           description="The most powerful way to use FOXSEO is through the AI agent you already use. Set it up once, then ask it anything."
         />
@@ -120,9 +121,9 @@ function AiPage() {
                         <h2>Set up your agent</h2>
                       </CardTitle>
                       <CardDescription>
-                        Paste the setup prompt into your agent to connect
-                        FOXSEO and install its SEO skills. It will guide you
-                        through any manual steps.
+                        Paste the setup prompt into your agent to connect FOXSEO
+                        and install its SEO skills. It will guide you through
+                        any manual steps.
                       </CardDescription>
                     </CardHeader>
                     <CardContent>

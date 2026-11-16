@@ -45,7 +45,7 @@ describe("dashboard onboarding visibility", () => {
       ...fresh,
       dismissedSteps: setupSteps.map((step) => step.id),
     });
-    expect(markup).toContain("saved for later");
+    expect(markup).toContain("sonraya bırakıldı");
   });
 
   it("renders nothing once every step is complete", () => {

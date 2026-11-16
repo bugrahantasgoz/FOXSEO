@@ -58,7 +58,7 @@ export function SavedKeywordsTable({
       makeSelectionColumn<SavedKeywordRow>(selectAnchorRef),
       columnHelper.accessor("keyword", {
         header: ({ column }) => (
-          <SortableHeader column={column} label="Keyword" />
+          <SortableHeader column={column} label="Anahtar kelime" />
         ),
         cell: ({ getValue }) => (
           <span className="font-medium">{getValue()}</span>
@@ -66,7 +66,7 @@ export function SavedKeywordsTable({
       }),
       columnHelper.accessor("searchVolume", {
         header: ({ column }) => (
-          <SortableHeader column={column} label="Volume" align="right" />
+          <SortableHeader column={column} label="Hacim" align="right" />
         ),
         cell: ({ getValue }) => formatSavedKeywordNumber(getValue()),
         meta: RIGHT_ALIGNED,
@@ -85,8 +85,8 @@ export function SavedKeywordsTable({
         header: ({ column }) => (
           <SortableHeader
             column={column}
-            label="Competition"
-            helpText="Paid-search competition from Google Ads (0-1): higher means more advertisers bidding."
+            label="Rekabet"
+            helpText="Reklam rekabeti (0-1): yüksekse bu kelimeye daha çok reklamveren teklif veriyor demektir."
             align="right"
           />
         ),
@@ -100,8 +100,8 @@ export function SavedKeywordsTable({
         header: ({ column }) => (
           <SortableHeader
             column={column}
-            label="Difficulty"
-            helpText="Organic ranking difficulty (0-100): higher means harder to reach Google's top 10."
+            label="Zorluk"
+            helpText="Organik sıralama zorluğu (0-100): yüksekse Google'da ilk 10'a girmek daha zor demektir."
             align="right"
           />
         ),
@@ -109,7 +109,7 @@ export function SavedKeywordsTable({
         meta: { headerClassName: "text-right", cellClassName: "text-right" },
       }),
       columnHelper.accessor("intent", {
-        header: () => "Intent",
+        header: () => "Arama amacı",
         cell: ({ getValue }) => (
           <IntentBadge intent={normalizeIntent(getValue())} />
         ),
@@ -117,14 +117,14 @@ export function SavedKeywordsTable({
       }),
       columnHelper.display({
         id: "tags",
-        header: () => "Tags",
+        header: () => "Etiketler",
         cell: ({ row }) => <TagList tags={row.original.tags} />,
         enableSorting: false,
         meta: { cellClassName: "min-w-40 max-w-64" },
       }),
       columnHelper.accessor("fetchedAt", {
         header: ({ column }) => (
-          <SortableHeader column={column} label="Last Fetched" />
+          <SortableHeader column={column} label="Son güncelleme" />
         ),
         cell: ({ getValue }) => (
           <span className="text-xs text-muted-foreground">
@@ -157,8 +157,9 @@ export function SavedKeywordsTable({
       isFiltered={hasActiveFilters}
       onClearFilters={onClearFilters}
       empty={{
-        title: "No saved keywords yet",
-        description: "Use the Keyword Research page to find and save keywords.",
+        title: "Henüz kayıtlı kelime yok",
+        description:
+          "Kelime bulup kaydetmek için Anahtar Kelime Araştırması sayfasını kullan.",
       }}
       toolbar={toolbar}
       footer={footer}

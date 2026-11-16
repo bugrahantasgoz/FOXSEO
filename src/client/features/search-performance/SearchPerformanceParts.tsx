@@ -48,7 +48,7 @@ function strikingExportTable(report: Report): ExportTable {
   const stamp = `${report.range.startDate}-to-${report.range.endDate}`;
   return {
     filename: `search-performance-striking-distance-${stamp}`,
-    headers: ["Query", "Page", "Impressions", "Clicks", "Position"],
+    headers: ["Sorgu", "Sayfa", "Gösterim", "Tıklama", "Pozisyon"],
     rows: report.strikingDistance.map((row) => [
       row.query,
       row.page,
@@ -69,11 +69,11 @@ function dimensionExportTable(
   return {
     filename: `search-performance-${isPage ? "pages" : "queries"}-${stamp}`,
     headers: [
-      isPage ? "Page" : "Query",
-      "Clicks",
-      "Impressions",
+      isPage ? "Sayfa" : "Sorgu",
+      "Tıklama",
+      "Gösterim",
       "CTR (%)",
-      ...(showPosition ? ["Position"] : []),
+      ...(showPosition ? ["Pozisyon"] : []),
     ],
     rows: rows.map((row) => [
       row.key,
@@ -146,27 +146,27 @@ export function TotalsTable({
   showPosition: boolean;
 }) {
   const { totals, prevTotals, range } = report;
-  const deltaTitle = `Compared with ${range.prevStartDate} to ${range.prevEndDate}`;
+  const deltaTitle = `${range.prevStartDate} – ${range.prevEndDate} dönemiyle karşılaştırma`;
   const metrics = [
     {
-      label: "Clicks",
+      label: "Tıklama",
       value: formatCount(totals.clicks),
       delta: percentDelta(totals.clicks, prevTotals.clicks),
     },
     {
-      label: "Impressions",
+      label: "Gösterim",
       value: formatCount(totals.impressions),
       delta: percentDelta(totals.impressions, prevTotals.impressions),
     },
     {
-      label: "Click-through rate",
+      label: "CTR (tıklama oranı)",
       value: formatCtr(totals.ctr),
       delta: percentDelta(totals.ctr, prevTotals.ctr),
     },
     ...(showPosition
       ? [
           {
-            label: "Average position",
+            label: "Ortalama pozisyon",
             value: formatPosition(totals.position),
             delta: positionDelta(totals.position, prevTotals.position),
           },
@@ -178,10 +178,10 @@ export function TotalsTable({
       <Table>
         <TableHeader>
           <TableRow>
-            <TableHead className="w-full">Metric</TableHead>
-            <TableHead className="min-w-32 text-right">Value</TableHead>
+            <TableHead className="w-full">Metrik</TableHead>
+            <TableHead className="min-w-32 text-right">Değer</TableHead>
             <TableHead className="min-w-32 text-right" title={deltaTitle}>
-              Change
+              Değişim
             </TableHead>
           </TableRow>
         </TableHeader>
@@ -239,17 +239,18 @@ export function DimensionTable({
       empty={
         isPastEnd
           ? {
-              title: "No rows on this page",
-              description: "This page is past the end of the results.",
+              title: "Bu sayfada satır yok",
+              description: "Bu sayfa sonuçların sonunu geçiyor.",
               action: (
                 <Button variant="outline" size="sm" onClick={onFirstPage}>
-                  Go to first page
+                  İlk sayfaya git
                 </Button>
               ),
             }
           : {
-              title: "No Search Console data yet",
-              description: "Search Console data can take a few days to appear.",
+              title: "Henüz Search Console verisi yok",
+              description:
+                "Search Console verilerinin görünmesi birkaç gün sürebilir.",
             }
       }
     />
@@ -307,11 +308,9 @@ export function StrikingDistanceTable({
         .map((query) => normalizeExportValue(query))
         .join("\n");
       await navigator.clipboard.writeText(text);
-      toast.success(
-        `Copied ${selectedQueries.length} ${selectedQueries.length === 1 ? "keyword" : "keywords"}`,
-      );
+      toast.success(`${selectedQueries.length} kelime kopyalandı`);
     } catch {
-      toast.error("Couldn't copy to clipboard");
+      toast.error("Panoya kopyalanamadı");
     }
   };
 
@@ -326,9 +325,7 @@ export function StrikingDistanceTable({
       void queryClient.invalidateQueries({
         queryKey: ["savedKeywords", projectId],
       });
-      toast.success(
-        `Saved ${keywords.length} ${keywords.length === 1 ? "keyword" : "keywords"}`,
-      );
+      toast.success(`${keywords.length} kelime kaydedildi`);
       setRowSelection({});
     },
   });
@@ -337,8 +334,9 @@ export function StrikingDistanceTable({
     <>
       <div className="p-4">
         <p className="mb-3 text-sm text-muted-foreground">
-          Queries ranking at positions 5 to 20, sorted by impressions. Improve
-          the listed page to move them into the top results.
+          5 ile 20. pozisyonlar arasında çıkan sorgular, gösterime göre sıralı.
+          Listelenen sayfayı geliştirirsen bu sorgularda üst sıralara
+          çıkabilirsin.
         </p>
         <DataTable
           table={table}
@@ -347,22 +345,22 @@ export function StrikingDistanceTable({
           empty={
             isPastEnd
               ? {
-                  title: "No rows on this page",
-                  description: "This page is past the end of the results.",
+                  title: "Bu sayfada satır yok",
+                  description: "Bu sayfa sonuçların sonunu geçiyor.",
                   action: (
                     <Button
                       variant="outline"
                       size="sm"
                       onClick={() => onPageChange(1)}
                     >
-                      Go to first page
+                      İlk sayfaya git
                     </Button>
                   ),
                 }
               : {
-                  title: "No striking-distance queries",
+                  title: "Henüz fırsat sorgusu yok",
                   description:
-                    "Queries ranking at positions 5 to 20 will appear here.",
+                    "5 ile 20. pozisyonlar arasında çıkan sorgular burada görünür.",
                 }
           }
         />
@@ -381,7 +379,7 @@ export function StrikingDistanceTable({
       )}
       <TableBulkActionBar
         selectedCount={selectedQueries.length}
-        selectedLabel={selectedQueries.length === 1 ? "query" : "queries"}
+        selectedLabel="sorgu"
         onClear={() => setRowSelection({})}
         actions={
           <div className="flex items-center gap-1 px-1.5">
@@ -389,7 +387,7 @@ export function StrikingDistanceTable({
               icon={<Copy className="size-3.5" />}
               onClick={() => void copyKeywords()}
             >
-              Copy keywords
+              Kelimeleri kopyala
             </TableBulkActionButton>
             <TableBulkActionButton
               icon={
@@ -402,7 +400,7 @@ export function StrikingDistanceTable({
               onClick={() => save.mutate(selectedQueries)}
               disabled={save.isPending}
             >
-              Save as keywords
+              Kelime olarak kaydet
             </TableBulkActionButton>
             <TrackRankingsMenu
               projectId={projectId}

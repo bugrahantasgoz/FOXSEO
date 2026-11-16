@@ -28,16 +28,17 @@ export function SavedKeywordsHeader({
 
   return (
     <>
-      <PageHeader help="saved"
-        title="Saved Keywords"
-        description="Save keyword ideas from research, organize them with tags, and revisit when you're ready to act."
+      <PageHeader
+        help="saved"
+        title="Kayıtlı Kelimeler"
+        description="Araştırmada bulduğun kelimeleri kaydet, etiketlerle düzenle ve hazır olduğunda geri dön."
         actions={
           <>
             <ImportKeywordsButton projectId={projectId} />
             <Button
               variant="outline"
               size="sm"
-              title="Fetch new volume, difficulty, and CPC"
+              title="Güncel arama hacmini getir"
               disabled={disabled || metricsRefreshing}
               onClick={() => setConfirmingRefresh(true)}
             >
@@ -45,7 +46,9 @@ export function SavedKeywordsHeader({
                 data-icon="inline-start"
                 className={metricsRefreshing ? "animate-spin" : ""}
               />
-              {metricsRefreshing ? "Updating..." : "Update keyword stats"}
+              {metricsRefreshing
+                ? "Güncelleniyor..."
+                : "Kelime verilerini güncelle"}
             </Button>
 
             <ExportMenu
@@ -62,16 +65,16 @@ export function SavedKeywordsHeader({
 
       {confirmingRefresh ? (
         <ConfirmDialog
-          title="Update keyword stats?"
-          confirmLabel="Update stats"
+          title="Kelime verileri güncellensin mi?"
+          confirmLabel="Güncelle"
           onConfirm={() => {
             setConfirmingRefresh(false);
             onRefreshMetrics();
           }}
           onClose={() => setConfirmingRefresh(false)}
         >
-          This fetches new volume, difficulty, and CPC for every saved keyword
-          in this project. Each keyword uses credits.
+          Bu projedeki tüm kayıtlı kelimeler için güncel arama hacmi Bing'den
+          getirilir.
         </ConfirmDialog>
       ) : null}
     </>

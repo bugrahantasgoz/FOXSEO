@@ -18,10 +18,10 @@ const SOURCES = ["new", "top", "striking"] as const;
 type Source = (typeof SOURCES)[number];
 
 const DESCRIPTIONS: Record<Source, string> = {
-  new: "Searches where your website appeared in the latest week of Search Console data, but not in the previous four weeks.",
-  top: "Searches bringing the most clicks to your website over the last 28 days.",
+  new: "Sitenin Search Console verilerinin son haftasında görünüp önceki dört haftada görünmediği aramalar.",
+  top: "Son 28 günde sitene en çok tıklama getiren aramalar.",
   striking:
-    "Keywords at positions 5–20 over the last 28 days. Improving the listed page could help them move higher.",
+    "Son 28 günde 5–20. pozisyonlarda olan kelimeler. Listelenen sayfayı geliştirmek bunları yukarı taşıyabilir.",
 };
 
 export function DashboardKeywords({
@@ -89,7 +89,7 @@ export function DashboardKeywords({
         query.isError ? (
           <QueryError
             error={query.error}
-            fallback="Could not load keywords"
+            fallback="Kelimeler yüklenemedi"
             onRetry={() => void query.refetch()}
             isRetrying={query.isFetching}
           />
@@ -100,12 +100,12 @@ export function DashboardKeywords({
           ? {
               title:
                 emerging.data?.value.hasSearchData === false
-                  ? "No search data yet"
-                  : "No new keywords this week",
+                  ? "Henüz arama verisi yok"
+                  : "Bu hafta yeni sorgu yok",
             }
           : source === "striking"
-            ? { title: "No keywords at positions 5–20 in this period" }
-            : { title: "No keywords yet" }
+            ? { title: "Bu dönemde 5–20. pozisyonlarda kelime yok" }
+            : { title: "Henüz kelime yok" }
       }
       tabs={
         <DataTableTabs
@@ -126,7 +126,7 @@ export function DashboardKeywords({
                 />
               }
             >
-              View full GSC insights →
+              Arama Performansı'nı aç →
             </Button>
           }
           description={
@@ -136,9 +136,9 @@ export function DashboardKeywords({
             </>
           }
         >
-          <TabsTrigger value="new">New keywords</TabsTrigger>
-          <TabsTrigger value="top">Top keywords</TabsTrigger>
-          <TabsTrigger value="striking">Striking distance</TabsTrigger>
+          <TabsTrigger value="new">Yeni sorgular</TabsTrigger>
+          <TabsTrigger value="top">En iyi sorgular</TabsTrigger>
+          <TabsTrigger value="striking">Fırsatlar</TabsTrigger>
         </DataTableTabs>
       }
     />
