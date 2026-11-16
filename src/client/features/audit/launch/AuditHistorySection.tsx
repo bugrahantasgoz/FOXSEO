@@ -34,7 +34,7 @@ export function AuditHistorySection({
   return (
     <QueryState
       query={historyQuery}
-      errorFallback="Failed to load audit history"
+      errorFallback="Denetim geçmişi yüklenemedi"
     >
       {(history) => (
         <AuditHistoryTable
@@ -57,21 +57,21 @@ function AuditHistoryTable({
   onDelete: (auditId: string) => void;
 }) {
   if (history.length === 0) {
-    return <EmptyState icon={ScanSearch} title="No audits yet" />;
+    return <EmptyState icon={ScanSearch} title="Henüz denetim yok" />;
   }
 
   return (
     <TableCard>
       <DataTableToolbar>
-        <h2 className="text-sm font-semibold">Previous Audits</h2>
+        <h2 className="text-sm font-semibold">Önceki denetimler</h2>
       </DataTableToolbar>
       <Table>
         <TableHeader>
           <TableRow>
-            <TableHead>Date</TableHead>
+            <TableHead>Tarih</TableHead>
             <TableHead>URL</TableHead>
-            <TableHead>Status</TableHead>
-            <TableHead className="text-right">Pages</TableHead>
+            <TableHead>Durum</TableHead>
+            <TableHead className="text-right">Sayfa</TableHead>
             <TableHead>Lighthouse</TableHead>
             <TableHead />
           </TableRow>
@@ -94,7 +94,7 @@ function AuditHistoryTable({
               <TableCell>
                 {audit.ranLighthouse ? (
                   <Badge variant="outline" size="sm">
-                    Yes
+                    Evet
                   </Badge>
                 ) : null}
               </TableCell>
@@ -135,15 +135,15 @@ function HistoryActions({
           />
         }
       >
-        View
+        Görüntüle
       </Button>
-      <RowActionsMenu label="Audit actions">
+      <RowActionsMenu label="Denetim işlemleri">
         <DropdownMenuItem
           variant="destructive"
           onClick={() => onDelete(auditId)}
         >
           <Trash2 />
-          Delete audit
+          Denetimi sil
         </DropdownMenuItem>
       </RowActionsMenu>
     </div>

@@ -43,12 +43,12 @@ export function LighthouseIssuesHeader({
   return (
     <>
       <div className="flex items-center justify-between gap-3">
-        <BackButton onClick={onBack}>Site Audit</BackButton>
+        <BackButton onClick={onBack}>Site Denetimi</BackButton>
         <span className="text-xs text-muted-foreground">
           {scannedAt
-            ? `Scanned ${new Date(scannedAt).toLocaleString()}`
+            ? `Tarandı: ${new Date(scannedAt).toLocaleString("tr-TR")}`
             : isLoading
-              ? "Reading latest issues..."
+              ? "Son sorunlar okunuyor..."
               : null}
         </span>
       </div>
@@ -56,21 +56,21 @@ export function LighthouseIssuesHeader({
       <Card>
         <CardContent className="space-y-4">
           <div className="space-y-1">
-            <h1 className="text-2xl font-semibold">Lighthouse Issues</h1>
+            <h1 className="text-2xl font-semibold">Lighthouse sorunları</h1>
             <p className="text-sm text-muted-foreground break-all">
-              {finalUrl ?? (isLoading ? "Loading URL..." : null)}
+              {finalUrl ?? (isLoading ? "URL yükleniyor..." : null)}
             </p>
           </div>
           <LighthouseIssuesSummary scores={scores} metrics={metrics} />
           <div className="flex flex-wrap gap-2">
             <SeverityBadge severity="critical">
-              Critical {severityCounts.critical}
+              Kritik {severityCounts.critical}
             </SeverityBadge>
             <SeverityBadge severity="warning">
-              Warning {severityCounts.warning}
+              Uyarı {severityCounts.warning}
             </SeverityBadge>
             <SeverityBadge severity="info">
-              Info {severityCounts.info}
+              Bilgi {severityCounts.info}
             </SeverityBadge>
           </div>
         </CardContent>
@@ -109,8 +109,6 @@ export function LighthouseIssuesToolbar({
   const exportCurrentCategory: ExportPayload =
     category === "all" ? { mode: "issues" } : { mode: "category", category };
 
-  const categoryLabelLower = selectedCategoryLabel.toLowerCase();
-
   // One menu section per scope. The saved payload has no issue rows, so it
   // offers only the JSON formats.
   const scopes: Array<{
@@ -123,25 +121,25 @@ export function LighthouseIssuesToolbar({
   }> = [
     {
       id: "current",
-      label: `${selectedCategoryLabel} issues`,
+      label: `${selectedCategoryLabel}: sorunlar`,
       issues: visibleIssues,
       payload: exportCurrentCategory,
-      copied: `Copied ${categoryLabelLower} issues`,
+      copied: `${selectedCategoryLabel} sorunları kopyalandı`,
     },
     {
       id: "all",
-      label: "All actionable issues",
+      label: "Düzeltilebilir tüm sorunlar",
       issues: allIssues,
       payload: { mode: "issues" },
-      copied: "Copied all actionable issues",
+      copied: "Düzeltilebilir tüm sorunlar kopyalandı",
     },
     {
       id: "full",
-      label: "Saved Lighthouse payload",
+      label: "Kayıtlı Lighthouse verisi",
       actions: ["copy-json", "json"],
       issues: [],
       payload: { mode: "full" },
-      copied: "Copied saved Lighthouse payload",
+      copied: "Kayıtlı Lighthouse verisi kopyalandı",
     },
   ];
 
@@ -218,7 +216,7 @@ export function LighthouseIssueList({
   if (!issues.length) {
     return (
       <p className="p-4 text-sm text-muted-foreground">
-        {emptyMessage ?? "No actionable issues for this category."}
+        {emptyMessage ?? "Bu kategoride düzeltilecek sorun yok."}
       </p>
     );
   }
@@ -227,13 +225,13 @@ export function LighthouseIssueList({
       <TableHeader>
         <TableRow>
           <TableHead className="w-8" />
-          <TableHead className="w-24">Severity</TableHead>
-          <TableHead>Issue</TableHead>
-          <TableHead className="hidden w-28 sm:table-cell">Category</TableHead>
+          <TableHead className="w-24">Önem</TableHead>
+          <TableHead>Sorun</TableHead>
+          <TableHead className="hidden w-28 sm:table-cell">Kategori</TableHead>
           <TableHead className="hidden w-28 md:table-cell text-right">
-            Impact
+            Etki
           </TableHead>
-          <TableHead className="w-14 text-right">Score</TableHead>
+          <TableHead className="w-14 text-right">Puan</TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>

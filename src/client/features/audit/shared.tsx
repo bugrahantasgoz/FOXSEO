@@ -32,7 +32,7 @@ export function extractHostname(url: string): string {
 }
 
 export function formatDate(dateStr: string): string {
-  return parseDbTimestamp(dateStr).toLocaleDateString("en-US", {
+  return parseDbTimestamp(dateStr).toLocaleDateString("tr-TR", {
     month: "short",
     day: "numeric",
     year: "numeric",
@@ -40,7 +40,7 @@ export function formatDate(dateStr: string): string {
 }
 
 export function formatStartedAt(dateStr: string): string {
-  return parseDbTimestamp(dateStr).toLocaleString("en-US", {
+  return parseDbTimestamp(dateStr).toLocaleString("tr-TR", {
     month: "short",
     day: "numeric",
     hour: "numeric",
@@ -52,7 +52,7 @@ export function StatusBadge({ status }: { status: string }) {
   if (status === "running") {
     return (
       <Badge variant="info">
-        <Spinner /> Running
+        <Spinner /> Çalışıyor
       </Badge>
     );
   }
@@ -60,14 +60,14 @@ export function StatusBadge({ status }: { status: string }) {
   if (status === "completed") {
     return (
       <Badge variant="success">
-        <CheckCircle /> Done
+        <CheckCircle /> Bitti
       </Badge>
     );
   }
 
   return (
     <Badge variant="destructive">
-      <AlertCircle /> Failed
+      <AlertCircle /> Başarısız
     </Badge>
   );
 }
@@ -167,7 +167,7 @@ export function BotProtectionAdvice({
       >
         LibreCrawl
       </a>{" "}
-      or{" "}
+      ya da{" "}
       <a
         href="https://www.screamingfrog.co.uk/seo-spider/"
         target="_blank"
@@ -181,15 +181,15 @@ export function BotProtectionAdvice({
   if (!rendered && canRender) {
     return (
       <>
-        Turn on Render JavaScript and run the audit again. To avoid the extra
-        cost, use a free desktop crawler like {desktopCrawlers}.
+        "JavaScript'i işle" seçeneğini aç ve denetimi yeniden çalıştır. Ya da
+        {desktopCrawlers} gibi ücretsiz bir masaüstü tarayıcı kullan.
       </>
     );
   }
   return (
     <>
-      {rendered ? "Rendering couldn't get past it. " : null}
-      Try a free desktop crawler like {desktopCrawlers}.
+      {rendered ? "JavaScript işleme de bu engeli geçemedi. " : null}
+      {desktopCrawlers} gibi ücretsiz bir masaüstü tarayıcı dene.
     </>
   );
 }

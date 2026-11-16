@@ -33,56 +33,56 @@ export function PagesFilterBar({
     <DataTableFilterPanel activeCount={activeFilterCount} onReset={onReset}>
       <div className="grid grid-cols-1 gap-3 lg:grid-cols-4">
         <TextFilter
-          label="Search"
+          label="Ara"
           value={filters.query}
-          placeholder="URL, title, meta"
+          placeholder="URL, başlık, meta"
           onChange={(query) => onChange({ ...filters, query })}
         />
         <SelectFilter
-          label="Status"
+          label="Durum"
           value={filters.status}
           onChange={(status) => onChange({ ...filters, status })}
           options={[
-            ["all", "All"],
+            ["all", "Tümü"],
             ["ok", "2xx"],
             ["redirect", "3xx"],
             ["error", "4xx/5xx"],
-            ["missing", "Missing"],
+            ["missing", "Eksik"],
           ]}
         />
         <SelectFilter
-          label="Crawl result"
+          label="Tarama sonucu"
           value={filters.fetchClass}
           onChange={(fetchClass) => onChange({ ...filters, fetchClass })}
           options={[
-            ["all", "All"],
-            ["ok", "Read"],
-            ["error", "Failed"],
-            ["blocked", "Blocked"],
-            ["rate_limited", "Rate limited"],
+            ["all", "Tümü"],
+            ["ok", "Okundu"],
+            ["error", "Başarısız"],
+            ["blocked", "Engellendi"],
+            ["rate_limited", "İstek sınırı"],
           ]}
         />
         <SelectFilter
-          label="Alt text"
+          label="Alt metin"
           value={filters.missingAlt}
           onChange={(missingAlt) => onChange({ ...filters, missingAlt })}
           options={[
-            ["all", "All"],
-            ["yes", "Missing alt"],
-            ["no", "No missing alt"],
+            ["all", "Tümü"],
+            ["yes", "Alt metni eksik"],
+            ["no", "Alt metni tam"],
           ]}
         />
       </div>
       <div className="grid grid-cols-1 gap-2 lg:grid-cols-2">
         <RangeFilter
-          label="Words"
+          label="Kelime"
           min={filters.minWords}
           max={filters.maxWords}
           onMinChange={(minWords) => onChange({ ...filters, minWords })}
           onMaxChange={(maxWords) => onChange({ ...filters, maxWords })}
         />
         <RangeFilter
-          label="Speed ms"
+          label="Hız (ms)"
           min={filters.minResponseMs}
           max={filters.maxResponseMs}
           onMinChange={(minResponseMs) =>
@@ -112,33 +112,33 @@ export function PerformanceFilterBar({
     <DataTableFilterPanel activeCount={activeFilterCount} onReset={onReset}>
       <div className="grid grid-cols-1 gap-3 lg:grid-cols-4">
         <TextFilter
-          label="Search"
+          label="Ara"
           value={filters.query}
           placeholder="URL"
           onChange={(query) => onChange({ ...filters, query })}
         />
         <SelectFilter
-          label="Device"
+          label="Cihaz"
           value={filters.device}
           onChange={(device) => onChange({ ...filters, device })}
           options={[
-            ["all", "All"],
-            ["desktop", "Desktop"],
-            ["mobile", "Mobile"],
+            ["all", "Tümü"],
+            ["desktop", "Masaüstü"],
+            ["mobile", "Mobil"],
           ]}
         />
         <SelectFilter
-          label="Status"
+          label="Durum"
           value={filters.status}
           onChange={(status) => onChange({ ...filters, status })}
           options={[
-            ["all", "All"],
-            ["ok", "OK"],
-            ["failed", "Failed"],
+            ["all", "Tümü"],
+            ["ok", "Başarılı"],
+            ["failed", "Başarısız"],
           ]}
         />
         <TextFilter
-          label="Max LCP s"
+          label="En fazla LCP (sn)"
           value={filters.maxLcpSeconds}
           placeholder="2.5"
           type="number"
@@ -147,7 +147,7 @@ export function PerformanceFilterBar({
       </div>
       <div className="grid grid-cols-1 gap-2 lg:grid-cols-2">
         <RangeFilter
-          label="Perf"
+          label="Performans"
           min={filters.minPerf}
           max={filters.maxPerf}
           onMinChange={(minPerf) => onChange({ ...filters, minPerf })}
@@ -183,7 +183,8 @@ export function ResultsTableToolbar({
     <DataTableToolbar
       actions={
         <span className="text-sm tabular-nums text-muted-foreground">
-          {resultCount.toLocaleString()} of {totalCount.toLocaleString()}
+          {resultCount.toLocaleString("tr-TR")} /{" "}
+          {totalCount.toLocaleString("tr-TR")}
         </span>
       }
     >

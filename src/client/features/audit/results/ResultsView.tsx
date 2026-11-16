@@ -103,8 +103,7 @@ export function ResultsView({
         <Alert variant="warning">
           <ShieldAlert />
           <AlertTitle>
-            Bot protection blocked our crawler on {blockedCount}{" "}
-            {blockedCount === 1 ? "page" : "pages"}.
+            Bot koruması tarayıcımızı {blockedCount} sayfada engelledi.
           </AlertTitle>
           <AlertDescription>
             <BotProtectionAdvice
@@ -120,24 +119,24 @@ export function ResultsView({
           <ShieldAlert />
           <AlertTitle>
             {crawlStopped
-              ? "The crawl stopped early because of the site’s rate limit."
-              : `The site rate limited us on ${rateLimitedCount} ${rateLimitedCount === 1 ? "page" : "pages"}.`}
+              ? "Sitenin istek sınırı yüzünden tarama erken durdu."
+              : `Site, ${rateLimitedCount} sayfada istek sınırına takıldı.`}
           </AlertTitle>
           <AlertDescription>
             {crawlStopped
-              ? "The site kept refusing pages, so some URLs were left unvisited. This report is incomplete. "
-              : "Pages that returned 429 Too Many Requests could not be audited. "}
-            Re-run the audit after the rate limit resets, or ask the site owner
-            to allow the{" "}
+              ? "Site sayfaları reddetmeye devam etti, bu yüzden bazı URL'ler ziyaret edilemedi. Bu rapor eksik. "
+              : "429 Too Many Requests (çok fazla istek) döndüren sayfalar denetlenemedi. "}
+            İstek sınırı sıfırlandıktan sonra denetimi yeniden çalıştır ya da
+            site sahibinden{" "}
             <a
               className="underline underline-offset-4"
               href="https://openseo.so/docs/crawler"
               target="_blank"
               rel="noreferrer"
             >
-              FOXSEO-Audit crawler
-            </a>
-            .
+              FOXSEO-Audit tarayıcısına
+            </a>{" "}
+            izin vermesini iste.
           </AlertDescription>
         </Alert>
       )}
@@ -218,13 +217,13 @@ function ResultsHeader({
   onExport: (format: "csv" | "json" | "sheets") => void;
 }) {
   const tabs: Array<{ tab: ResultsTab; label: string }> = [
-    { tab: "issues", label: `Issues (${issueCount})` },
-    { tab: "pages", label: `Pages (${pageCount})` },
+    { tab: "issues", label: `Sorunlar (${issueCount})` },
+    { tab: "pages", label: `Sayfalar (${pageCount})` },
     ...(hasPerformanceTab
       ? [
           {
             tab: "performance" as const,
-            label: `Performance (${lighthouseCount})`,
+            label: `Performans (${lighthouseCount})`,
           },
         ]
       : []),
@@ -286,9 +285,9 @@ function StatsStrip({
   }, [issueGroups]);
 
   const items: StatItem[] = [
-    { label: "Pages crawled", value: String(pagesCrawled) },
+    { label: "Taranan sayfa", value: String(pagesCrawled) },
     {
-      label: "Issues found",
+      label: "Bulunan sorun",
       value: String(issueCount),
       valueClass: issueCount === 0 ? "text-success" : "",
       sub: issueCount > 0 && (
@@ -301,10 +300,10 @@ function StatsStrip({
                 title={severity}
               >
                 {severity === "critical"
-                  ? "Critical"
+                  ? "Kritik"
                   : severity === "warning"
-                    ? "Warning"
-                    : "Info"}{" "}
+                    ? "Uyarı"
+                    : "Bilgi"}{" "}
                 {severityCounts[severity]}
               </SeverityBadge>
             ) : null,
@@ -312,14 +311,14 @@ function StatsStrip({
         </span>
       ),
     },
-    { label: "Average response time", value: `${averageResponseMs}ms` },
+    { label: "Ortalama yanıt süresi", value: `${averageResponseMs} ms` },
   ];
 
   if (totalLighthouse > 0) {
     items.push(
-      { label: "Lighthouse tests", value: String(totalLighthouse) },
+      { label: "Lighthouse ölçümü", value: String(totalLighthouse) },
       {
-        label: "Lighthouse performance",
+        label: "Lighthouse performans",
         value:
           lighthouseSummary.avgPerformance == null
             ? "-"
@@ -335,7 +334,7 @@ function StatsStrip({
         valueClass: scoreClass(lighthouseSummary.avgSeo),
       },
       {
-        label: "Lighthouse accessibility",
+        label: "Lighthouse erişilebilirlik",
         value:
           lighthouseSummary.avgAccessibility == null
             ? "-"
@@ -343,7 +342,7 @@ function StatsStrip({
         valueClass: scoreClass(lighthouseSummary.avgAccessibility),
       },
       {
-        label: "Lighthouse failures",
+        label: "Başarısız Lighthouse ölçümü",
         value: String(lighthouseSummary.failed),
         valueClass:
           lighthouseSummary.failed > 0 ? "text-destructive" : "text-success",

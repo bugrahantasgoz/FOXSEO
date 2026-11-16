@@ -50,7 +50,7 @@ export function LaunchFormCard({
     <Card>
       <CardHeader>
         <CardTitle>
-          <h2>Start New Audit</h2>
+          <h2>Yeni denetim başlat</h2>
         </CardTitle>
       </CardHeader>
       <CardContent className="space-y-4">
@@ -68,7 +68,7 @@ export function LaunchFormCard({
               return (
                 <Input
                   className="lg:col-span-9"
-                  aria-label="Site URL"
+                  aria-label="Site URL'si"
                   aria-invalid={urlError ? true : undefined}
                   placeholder="https://example.com"
                   value={field.state.value}
@@ -91,7 +91,7 @@ export function LaunchFormCard({
                 className="w-full lg:col-span-3"
                 pending={isSubmitting}
               >
-                {isSubmitting ? "Starting..." : "Start Audit"}
+                {isSubmitting ? "Başlatılıyor..." : "Denetimi başlat"}
               </Button>
             )}
           </launchForm.Subscribe>
@@ -126,7 +126,7 @@ function LaunchOptions({
 }: Props) {
   return (
     <Field className="rounded-lg border border-border p-3">
-      <FieldLabel htmlFor="audit-max-pages">Max pages</FieldLabel>
+      <FieldLabel htmlFor="audit-max-pages">En fazla sayfa</FieldLabel>
       <launchForm.Field name="maxPagesInput">
         {(field) => (
           <Input
@@ -149,14 +149,15 @@ function LaunchOptions({
         )}
       </launchForm.Field>
       <FieldDescription>
-        Enter any value from {MIN_PAGES} to {maxPagesLimit.toLocaleString()}.
+        {MIN_PAGES} ile {maxPagesLimit.toLocaleString("tr-TR")} arasında bir
+        değer gir.
         {maxPagesLimit < PAID_MAX_AUDIT_PAGES ? (
           <>
             {" "}
             <Link to={SUBSCRIBE_ROUTE} search={{ upgrade: true }}>
-              Upgrade
-            </Link>{" "}
-            to crawl up to {PAID_MAX_AUDIT_PAGES.toLocaleString()} pages.
+              Planını yükselt
+            </Link>
+            , {PAID_MAX_AUDIT_PAGES.toLocaleString("tr-TR")} sayfaya kadar tara.
           </>
         ) : null}
       </FieldDescription>
@@ -179,9 +180,9 @@ function LighthouseOptions({ launchForm }: Pick<Props, "launchForm">) {
         </launchForm.Field>
         <FieldLabel
           htmlFor="audit-run-lighthouse"
-          title="Lighthouse measures the performance of your pages and identifies issues."
+          title="Lighthouse, sayfalarının performansını ölçer ve sorunları bulur."
         >
-          Include Lighthouse
+          Lighthouse da çalışsın
         </FieldLabel>
       </div>
 
@@ -191,8 +192,8 @@ function LighthouseOptions({ launchForm }: Pick<Props, "launchForm">) {
         {(runLighthouse) =>
           runLighthouse ? (
             <FieldDescription>
-              We choose a sample of 20 pages to audit, removing pages from
-              duplicate templates.
+              Google PageSpeed Insights ile ölçmek için 20 sayfalık bir örnek
+              seçeriz; aynı şablonu kullanan sayfaları tekrar ölçmeyiz.
             </FieldDescription>
           ) : null
         }
@@ -221,9 +222,9 @@ function RenderingOptions({
         </launchForm.Field>
         <FieldLabel
           htmlFor="audit-render-javascript"
-          title="Loads each page in a browser before auditing it. Slower."
+          title="Her sayfayı denetlemeden önce bir tarayıcıda açar. Daha yavaştır."
         >
-          Render JavaScript
+          JavaScript'i işle
         </FieldLabel>
       </div>
 
@@ -247,22 +248,22 @@ function RenderingOptions({
       )}
       {canRenderJavaScript === false && isEveryAppClientAuthMode() && (
         <FieldDescription>
-          JavaScript rendering isn't set up on your Every App gateway yet. An
-          owner or admin sets it with{" "}
+          JavaScript işleme Every App ağ geçidinde henüz ayarlanmadı. Bir sahip
+          veya yönetici bunu şu komutla ayarlar:{" "}
           <code>pnpm everyapp secret set CONTEXT_API_KEY</code>.
         </FieldDescription>
       )}
       {canRenderJavaScript === false && !isEveryAppClientAuthMode() && (
         <FieldDescription>
-          This deployment has no browser, so rendering needs a Context.dev API
-          key. Set <code>CONTEXT_API_KEY</code>, restart FOXSEO, then reload
-          this page.{" "}
+          Bu kurulumda tarayıcı yok, bu yüzden JavaScript işlemek için bir
+          Context.dev API anahtarı gerekiyor. <code>CONTEXT_API_KEY</code>{" "}
+          değerini ayarla, FOXSEO'yu yeniden başlat ve bu sayfayı yenile.{" "}
           <a
             href="https://github.com/every-app/open-seo/blob/main/docs/SELF_HOSTING_CLOUDFLARE_OPERATIONS.md#render-javascript-in-site-audits"
             target="_blank"
             rel="noreferrer"
           >
-            Setup guide
+            Kurulum rehberi
           </a>
         </FieldDescription>
       )}

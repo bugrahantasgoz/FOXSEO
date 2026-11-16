@@ -84,7 +84,7 @@ export function PerformanceTable({
   return (
     <DataTable
       table={table}
-      empty={{ title: "No Lighthouse results" }}
+      empty={{ title: "Lighthouse sonucu yok" }}
       isFiltered={activeFilterCount > 0}
       onClearFilters={resetFilters}
       toolbar={
@@ -128,24 +128,27 @@ function buildPerformanceColumns({
       meta: { cellClassName: "max-w-[180px] truncate" },
     }),
     performanceColumnHelper.accessor("strategy", {
-      header: ({ column }) => <SortableHeader column={column} label="Device" />,
+      header: ({ column }) => <SortableHeader column={column} label="Cihaz" />,
       cell: ({ getValue }) => (
-        <span className="capitalize text-xs">{getValue()}</span>
+        <span className="text-xs">
+          {getValue() === "mobile" ? "Mobil" : "Masaüstü"}
+        </span>
       ),
     }),
     performanceColumnHelper.display({
       id: "status",
-      header: ({ column }) => <SortableHeader column={column} label="Status" />,
+      header: ({ column }) => <SortableHeader column={column} label="Durum" />,
       cell: ({ row }) => {
         const isFailed = isLighthouseFailure(row.original);
         const failureMessage =
-          row.original.errorMessage ?? "Lighthouse returned no category scores";
+          row.original.errorMessage ??
+          "Lighthouse hiçbir kategori puanı döndürmedi";
         return isFailed ? (
           <Badge variant="destructive" title={failureMessage}>
-            failed
+            başarısız
           </Badge>
         ) : (
-          <Badge variant="success">ok</Badge>
+          <Badge variant="success">başarılı</Badge>
         );
       },
       enableSorting: true,
@@ -154,12 +157,14 @@ function buildPerformanceColumns({
         Number(isLighthouseFailure(right.original)),
     }),
     performanceColumnHelper.accessor("performanceScore", {
-      header: ({ column }) => <SortableHeader column={column} label="Perf" />,
+      header: ({ column }) => <SortableHeader column={column} label="Perf." />,
       cell: ({ getValue }) => <LighthouseScoreBadge score={getValue()} />,
       sortingFn: numericNullsLast,
     }),
     performanceColumnHelper.accessor("accessibilityScore", {
-      header: ({ column }) => <SortableHeader column={column} label="A11y" />,
+      header: ({ column }) => (
+        <SortableHeader column={column} label="Erişil." />
+      ),
       cell: ({ getValue }) => <LighthouseScoreBadge score={getValue()} />,
       sortingFn: numericNullsLast,
     }),
@@ -173,7 +178,9 @@ function buildPerformanceColumns({
       cell: ({ getValue }) => {
         const value = getValue();
         return value ? (
-          <span className="text-xs">{(value / 1000).toFixed(1)}s</span>
+          <span className="text-xs">
+            {(value / 1000).toFixed(1).replace(".", ",")} sn
+          </span>
         ) : (
           <span className="text-xs text-muted-foreground">-</span>
         );
@@ -185,7 +192,7 @@ function buildPerformanceColumns({
       cell: ({ getValue }) => {
         const value = getValue();
         return value != null ? (
-          <span className="text-xs">{value.toFixed(3)}</span>
+          <span className="text-xs">{value.toFixed(3).replace(".", ",")}</span>
         ) : (
           <span className="text-xs text-muted-foreground">-</span>
         );
@@ -197,7 +204,7 @@ function buildPerformanceColumns({
       cell: ({ getValue }) => {
         const value = getValue();
         return value ? (
-          <span className="text-xs">{Math.round(value)}ms</span>
+          <span className="text-xs">{Math.round(value)} ms</span>
         ) : (
           <span className="text-xs text-muted-foreground">-</span>
         );
@@ -209,7 +216,7 @@ function buildPerformanceColumns({
       cell: ({ getValue }) => {
         const value = getValue();
         return value ? (
-          <span className="text-xs">{Math.round(value)}ms</span>
+          <span className="text-xs">{Math.round(value)} ms</span>
         ) : (
           <span className="text-xs text-muted-foreground">-</span>
         );
@@ -218,7 +225,7 @@ function buildPerformanceColumns({
     }),
     performanceColumnHelper.display({
       id: "issues",
-      header: () => "Issues",
+      header: () => "Sorunlar",
       cell: ({ row }) =>
         row.original.r2Key && !isLighthouseFailure(row.original) ? (
           <Button
@@ -232,7 +239,7 @@ function buildPerformanceColumns({
               />
             }
           >
-            View issues
+            Sorunları gör
           </Button>
         ) : (
           <span className="text-xs text-muted-foreground">-</span>

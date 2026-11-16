@@ -57,7 +57,7 @@ export function ShopifyCrawlWarning({
   const canStoreCrawlerAccess = !useCrawlerAccessNeedsSetup(projectId);
   const setupHint = canStoreCrawlerAccess ? null : (
     <p className="text-muted-foreground">
-      A signature can't be saved here until crawler access is set up.{" "}
+      Tarayıcı erişimi ayarlanana kadar burada imza kaydedilemez.{" "}
       <CrawlerAccessSetupHint />
     </p>
   );
@@ -113,7 +113,7 @@ export function ShopifyCrawlWarning({
       disabled={isSaving}
       onClick={() => rerunMutation.mutate()}
     >
-      {rerunMutation.isPending ? "Starting…" : "Re-run audit"}
+      {rerunMutation.isPending ? "Başlatılıyor…" : "Denetimi yeniden çalıştır"}
     </Button>
   );
 
@@ -137,23 +137,22 @@ export function ShopifyCrawlWarning({
         <AlertDescription className="text-foreground">
           {signedAndStillLimited ? (
             <>
-              Shopify limited this crawl despite your signature. To check that
-              it was created for <span className="font-mono">{host}</span>,
-              paste it again in{" "}
+              Shopify, imzana rağmen bu taramayı sınırladı. İmzanın{" "}
+              <span className="font-mono">{host}</span> için oluşturulduğunu
+              kontrol etmek için onu tekrar şuraya yapıştır:{" "}
               <Link
                 to="/p/$projectId/settings/integrations"
                 params={{ projectId }}
               >
-                Project settings
+                Proje ayarları
               </Link>
-              . If it was, Shopify is still throttling this store: re-run the
-              audit later or with fewer pages.
+              . Doğruysa Shopify bu mağazayı hâlâ yavaşlatıyor: denetimi daha
+              sonra ya da daha az sayfayla yeniden çalıştır.
             </>
           ) : (
             <>
-              Crawler access is saved for{" "}
-              <span className="font-mono">{host}</span>. Re-run the audit to
-              crawl with it.
+              <span className="font-mono">{host}</span> için tarayıcı erişimi
+              kaydedildi. Bununla taramak için denetimi yeniden çalıştır.
             </>
           )}
         </AlertDescription>
@@ -169,27 +168,30 @@ export function ShopifyCrawlWarning({
         {expiredCredential?.expiresAt ? (
           <>
             <AlertTitle>
-              Your Shopify signature for this store has expired.
+              Bu mağaza için Shopify imzanın süresi doldu.
             </AlertTitle>
             {setupHint}
             <p className="text-muted-foreground">
-              It ran out on{" "}
-              {new Date(expiredCredential.expiresAt).toLocaleDateString()}, so
-              requests after that went out unsigned and Shopify limited them.
+              İmzanın süresi{" "}
+              {new Date(expiredCredential.expiresAt).toLocaleDateString(
+                "tr-TR",
+              )}{" "}
+              tarihinde doldu; sonraki istekler imzasız gitti ve Shopify onları
+              sınırladı.
               {canStoreCrawlerAccess
-                ? " Signatures can't be renewed: create a fresh one in Shopify admin and paste it below to replace the stored values."
+                ? " İmzalar yenilenemez: Shopify yönetim panelinde yeni bir imza oluştur ve kayıtlı değerlerin yerine geçmesi için aşağıya yapıştır."
                 : null}
             </p>
           </>
         ) : (
           <>
-            <AlertTitle>Shopify limited this crawl.</AlertTitle>
+            <AlertTitle>Shopify bu taramayı sınırladı.</AlertTitle>
             {setupHint}
             <p className="text-muted-foreground">
-              Shopify rate-limits crawlers it hasn't authorized, so parts of
-              this report are missing.
+              Shopify, yetki vermediği tarayıcıları sınırlar, bu yüzden bu
+              raporun bazı kısımları eksik.
               {canStoreCrawlerAccess
-                ? " If you own this store, authorizing FOXSEO takes about a minute."
+                ? " Mağaza senin ise FOXSEO'ya yetki vermek yaklaşık bir dakika sürer."
                 : null}
             </p>
           </>
@@ -199,14 +201,14 @@ export function ShopifyCrawlWarning({
           <>
             <ol className="list-decimal space-y-1 pl-5 text-muted-foreground">
               <li>
-                In Shopify admin, go to Online Store &rarr; Preferences &rarr;
-                Crawler access and click Create signature.
+                Shopify yönetim panelinde Online Store &rarr; Preferences &rarr;
+                Crawler access bölümüne git ve Create signature&apos;a tıkla.
               </li>
               <li>
-                Pick the domain <span className="font-mono">{host}</span> and an
-                expiry (up to 3 months).
+                <span className="font-mono">{host}</span> alan adını ve bir
+                geçerlilik süresi (en fazla 3 ay) seç.
               </li>
-              <li>Paste the two values below.</li>
+              <li>İki değeri aşağıya yapıştır.</li>
             </ol>
 
             {/* Keyed by host: the report stays mounted when the audit changes. */}
@@ -227,7 +229,7 @@ export function ShopifyCrawlWarning({
             target="_blank"
             rel="noreferrer"
           >
-            Shopify's crawler access guide
+            Shopify tarayıcı erişimi rehberi
           </a>
         </div>
       </div>
