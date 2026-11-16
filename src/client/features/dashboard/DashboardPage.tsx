@@ -12,7 +12,6 @@ import {
 import { DashboardKeywords } from "./DashboardKeywords";
 import { DashboardBacklinks } from "./DashboardBacklinks";
 import { DashboardNewQueries } from "./DashboardNewQueries";
-import { DashboardLinkActivity } from "./DashboardLinkActivity";
 import { dashboardSiteTabSchema } from "@/types/schemas/dashboard";
 import type { z } from "zod";
 import { useQuery } from "@tanstack/react-query";
@@ -83,7 +82,6 @@ export function DashboardPage({
     return <DashboardSkeleton />;
   }
 
-  const showBacklinks = activation.domain !== null;
   const gscConnected = activation.gsc.connected;
   const ga4Connected = activation.ga4.connected;
   const agentConnected =
@@ -208,12 +206,6 @@ export function DashboardPage({
                 projectId={projectId}
                 audit={overview.audit}
                 domain={activation.domain}
-              />
-            ) : null}
-            {showBacklinks ? (
-              <DashboardLinkActivity
-                projectId={projectId}
-                domain={activation.domain!}
               />
             ) : null}
           </TabsContent>
