@@ -18,10 +18,10 @@ import { EditableListSection } from "./EditableListSection";
 import { Provenance, useContextUpdate, type ContextKeyPage } from "./shared";
 
 const ROLE_LABELS: Record<KeyPageRole, string> = {
-  hub: "Hub page",
-  spoke: "Supporting page",
-  money: "Money page",
-  other: "Other",
+  hub: "Ana konu sayfası",
+  spoke: "Destek sayfası",
+  money: "Satış sayfası",
+  other: "Diğer",
 };
 const roleItems = KEY_PAGE_ROLES.map((role) => ({
   value: role,
@@ -69,11 +69,11 @@ export function KeyPagesSection({
 
   return (
     <EditableListSection
-      title="Key pages"
-      hint="A shortlist of the pages that carry the site — not an inventory."
-      addLabel="Add page"
-      emptyTitle="No key pages yet"
-      emptyDescription="Add the handful that has to rank, or let an agent propose them from your last site audit."
+      title="Önemli sayfalar"
+      hint="Siteyi taşıyan sayfaların kısa listesi; tüm sayfaların dökümü değil."
+      addLabel="Sayfa ekle"
+      emptyTitle="Henüz önemli sayfa yok"
+      emptyDescription="Mutlaka sıralamaya girmesi gereken birkaç sayfayı ekle ya da yapay zekâ ajanının son site denetimine bakıp önermesine izin ver."
       items={keyPages}
       getId={(item) => item.id}
       getLabel={(item) => item.url}
@@ -89,7 +89,7 @@ export function KeyPagesSection({
           </div>
           {item.topic ? (
             <p className="text-sm text-muted-foreground">
-              Target: {item.topic}
+              Hedef: {item.topic}
             </p>
           ) : null}
           {item.notes ? (
@@ -143,7 +143,7 @@ function KeyPageForm({
         onChange={(event) => setDraft({ ...draft, url: event.target.value })}
         placeholder="example.com/pricing"
         maxLength={2048}
-        aria-label="Page URL"
+        aria-label="Sayfa URL'si"
       />
       <div className="grid gap-2 sm:grid-cols-2">
         <Select
@@ -153,7 +153,7 @@ function KeyPageForm({
             if (role !== null) setDraft({ ...draft, role });
           }}
         >
-          <SelectTrigger className="w-full" aria-label="Page role">
+          <SelectTrigger className="w-full" aria-label="Sayfa rolü">
             <SelectValue />
           </SelectTrigger>
           <SelectContent>
@@ -169,17 +169,17 @@ function KeyPageForm({
           onChange={(event) =>
             setDraft({ ...draft, topic: event.target.value })
           }
-          placeholder="Target topic (optional)"
+          placeholder="Hedef konu (isteğe bağlı)"
           maxLength={200}
-          aria-label="Target topic"
+          aria-label="Hedef konu"
         />
       </div>
       <Input
         value={draft.notes}
         onChange={(event) => setDraft({ ...draft, notes: event.target.value })}
-        placeholder="Notes (optional)"
+        placeholder="Notlar (isteğe bağlı)"
         maxLength={500}
-        aria-label="Page notes"
+        aria-label="Sayfa notları"
       />
       <FormActions
         pending={pending}

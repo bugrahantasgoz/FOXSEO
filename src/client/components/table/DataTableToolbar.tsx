@@ -76,9 +76,9 @@ export function DataTableFilterToggle({
   return (
     <Button variant="outline" size="sm" aria-expanded={open} onClick={onToggle}>
       <SlidersHorizontal data-icon="inline-start" />
-      Filters
+      Filtreler
       {activeCount > 0 ? (
-        <Badge size="sm" aria-label={`${activeCount} active`}>
+        <Badge size="sm" aria-label={`${activeCount} etkin`}>
           {activeCount}
         </Badge>
       ) : null}
@@ -99,9 +99,9 @@ export function DataTableFilterPanel({
     <div className="space-y-3 border-b border-border bg-foreground/[0.02] px-4 py-3">
       <div className="flex flex-wrap items-center justify-between gap-2">
         <div className="flex items-center gap-2">
-          <p className="text-sm font-semibold">Refine results</p>
+          <p className="text-sm font-semibold">Sonuçları daralt</p>
           {activeCount > 0 ? (
-            <Badge size="sm">{activeCount} active</Badge>
+            <Badge size="sm">{activeCount} etkin</Badge>
           ) : null}
         </div>
         <Button
@@ -111,7 +111,7 @@ export function DataTableFilterPanel({
           disabled={activeCount === 0}
         >
           <RotateCcw data-icon="inline-start" />
-          Clear all
+          Tümünü temizle
         </Button>
       </div>
       {children}

@@ -19,7 +19,7 @@ import { CreateProjectModal } from "@/client/features/projects/CreateProjectModa
 import { pageHead } from "@/client/lib/pageHead";
 
 export const Route = createFileRoute("/_app/projects")({
-  head: () => pageHead("Projects"),
+  head: () => pageHead("Projeler"),
   component: ProjectsPage,
 });
 
@@ -38,19 +38,19 @@ function ProjectsPage() {
     <div className="h-full overflow-auto px-4 py-4 pb-24 md:px-6 md:py-6 md:pb-8">
       <div className="mx-auto max-w-7xl space-y-6">
         <PageHeader
-          title="Projects"
-          description="Each project has its own Search Console, rank tracking, and audits."
+          title="Projeler"
+          description="Her projenin kendi Search Console bağlantısı ve denetimleri vardır."
           actions={
             <Button onClick={() => setCreating(true)}>
               <Plus data-icon="inline-start" />
-              New project
+              Yeni proje
             </Button>
           }
         />
 
         <QueryState
           query={projectsQuery}
-          errorFallback="Failed to load projects"
+          errorFallback="Projeler yüklenemedi"
         >
           {(data) => (
             <ul className="divide-y divide-border overflow-hidden rounded-lg border border-border bg-card">
@@ -68,12 +68,12 @@ function ProjectsPage() {
                         </span>
                         {project.id === currentProjectId ? (
                           <Badge variant="secondary" size="sm">
-                            Current
+                            Geçerli
                           </Badge>
                         ) : null}
                       </span>
                       <span className="truncate text-xs text-muted-foreground">
-                        {project.domain ?? "No domain set"}
+                        {project.domain ?? "Alan adı ayarlanmadı"}
                       </span>
                     </span>
                     <ChevronRight className="size-4 shrink-0 text-muted-foreground" />
@@ -110,7 +110,7 @@ function ArchivedProjects() {
       await queryClient.invalidateQueries({
         queryKey: projectsQueryOptions().queryKey,
       });
-      toast.success("Project restored");
+      toast.success("Proje geri getirildi");
     },
   });
 
@@ -126,7 +126,7 @@ function ArchivedProjects() {
       await queryClient.invalidateQueries({
         queryKey: ["projects", "archived"],
       });
-      toast.success("Project deleted");
+      toast.success("Proje silindi");
     },
   });
 
@@ -134,7 +134,7 @@ function ArchivedProjects() {
 
   return (
     <section className="space-y-3">
-      <SectionHeader title="Archived" />
+      <SectionHeader title="Arşivlenenler" />
       <ul className="divide-y divide-border overflow-hidden rounded-lg border border-border bg-card">
         {archived.map((project) => (
           <li
@@ -146,7 +146,7 @@ function ArchivedProjects() {
                 {project.name}
               </span>
               <span className="truncate text-xs text-muted-foreground">
-                {project.domain ?? "No domain set"}
+                {project.domain ?? "Alan adı ayarlanmadı"}
               </span>
             </span>
             <span className="flex shrink-0 gap-1">
@@ -156,7 +156,7 @@ function ArchivedProjects() {
                 onClick={() => restoreMutation.mutate(project.id)}
                 disabled={restoreMutation.isPending}
               >
-                Restore
+                Geri getir
               </Button>
               <Button
                 variant="ghost"
@@ -164,7 +164,7 @@ function ArchivedProjects() {
                 className="text-destructive hover:text-destructive"
                 onClick={() => setDeleting(project)}
               >
-                Delete
+                Sil
               </Button>
             </span>
           </li>
@@ -172,16 +172,15 @@ function ArchivedProjects() {
       </ul>
       {deleting ? (
         <ConfirmDialog
-          title={`Permanently delete \u201c${deleting.name}\u201d?`}
-          confirmLabel="Delete permanently"
+          title={`\u201c${deleting.name}\u201d kalıcı olarak silinsin mi?`}
+          confirmLabel="Kalıcı olarak sil"
           destructive
           pending={deleteMutation.isPending}
           onClose={() => setDeleting(null)}
           onConfirm={() => deleteMutation.mutate(deleting.id)}
         >
-          This deletes the project and all of its data: audits, rank tracking,
-          saved keywords, reports, AI visibility, and chats. It can&apos;t be
-          undone.
+          Bu işlem projeyi ve tüm verilerini siler: denetimler, kayıtlı
+          kelimeler, raporlar ve sohbetler. Geri alınamaz.
         </ConfirmDialog>
       ) : null}
     </section>

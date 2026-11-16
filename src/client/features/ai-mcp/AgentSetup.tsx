@@ -47,7 +47,7 @@ export function AgentSetup({
     <div>
       <div className="mb-8">
         <h1 className="text-2xl font-semibold tracking-tight">
-          Set up your agent
+          Yapay zekâ ajanını kur
         </h1>
         <p className="mt-3 text-pretty text-sm leading-relaxed text-muted-foreground">
           {AGENT_SETUP_DESCRIPTION}
@@ -78,8 +78,8 @@ export function AgentSetup({
             <Icon data-icon="inline-start" />
             {/* "Add to" drops on narrow screens so both buttons fit one row. */}
             <span>
-              <span className="max-sm:sr-only">Add to </span>
               {name}
+              <span className="max-sm:sr-only">&apos;a ekle</span>
             </span>
           </Button>
         ))}
@@ -90,11 +90,11 @@ export function AgentSetup({
             className="mt-3 flex items-center justify-center gap-1.5 text-sm font-medium text-success"
           >
             <Check className="size-4" aria-hidden />
-            Connected
+            Bağlandı
           </p>
         ) : copied ? (
           <p className="mt-3 text-center text-xs text-muted-foreground">
-            Paste it into your agent and approve the connection.
+            Ajanına yapıştır ve bağlantıyı onayla.
           </p>
         ) : null}
       </AgentSetupPanel>
@@ -113,7 +113,7 @@ export function AgentSetup({
               }
               onClick={onFinish}
             >
-              Go to dashboard <ArrowRight className="size-4" />
+              Panoya git <ArrowRight className="size-4" />
             </Button>
           }
         />

@@ -37,33 +37,33 @@ const LINK_CLASS =
 const MUTED_LINK_CLASS =
   "inline-flex items-center gap-1 text-sm text-muted-foreground underline decoration-foreground/25 underline-offset-4 hover:text-foreground";
 const SKILLS = [
-  ["seo-coach", "Explains where you stand and picks your next step."],
+  ["seo-coach", "Nerede olduğunu anlatır ve bir sonraki adımını seçer."],
   [
     "seo-project-setup",
-    "Saves your goals, competitors, and key pages as shared context.",
+    "Hedeflerini, rakiplerini ve önemli sayfalarını ortak bağlam olarak kaydeder.",
   ],
   [
     "seo-audit",
-    "One-page site audit built around a single do-this-week action.",
+    "Bu hafta yapılacak tek bir işe odaklanan, tek sayfalık site denetimi.",
   ],
   [
     "ai-visibility-audit",
-    "Finds the few changes most likely to get you cited in AI answers.",
+    "Yapay zekâ yanıtlarında anılma şansını en çok artıracak birkaç değişikliği bulur.",
   ],
   [
     "ai-prompt-research",
-    "Finds what people ask ChatGPT about your market and who gets cited.",
+    "İnsanların ChatGPT'ye pazarın hakkında ne sorduğunu ve kimlerin anıldığını bulur.",
   ],
-  ["keyword-research", "Finds keyword opportunities from a few seed topics."],
-  ["keyword-clustering", "Groups keywords by intent and maps them to pages."],
-  ["competitive-landscape", "Maps who wins in your market and why."],
+  ["keyword-research", "Birkaç başlangıç konusundan anahtar kelime fırsatları bulur."],
+  ["keyword-clustering", "Anahtar kelimeleri amaca göre gruplar ve sayfalarla eşleştirir."],
+  ["competitive-landscape", "Pazarında kimin kazandığını ve nedenini çıkarır."],
   [
     "competitor-analysis",
-    "Studies one competitor's keywords, content, and backlinks.",
+    "Bir rakibin anahtar kelimelerini, içeriğini ve backlinklerini inceler.",
   ],
-  ["link-prospecting", "Finds link prospects and drafts outreach."],
-  ["local-seo", "Audits a Google Business Profile and Maps visibility."],
-  ["seo-report", "Saves any of the above as a report on your Reports page."],
+  ["link-prospecting", "Link alınabilecek siteleri bulur ve iletişim taslağı hazırlar."],
+  ["local-seo", "Google İşletme Profilini ve Haritalar görünürlüğünü denetler."],
+  ["seo-report", "Yukarıdakilerden herhangi birini Raporlar sayfana rapor olarak kaydeder."],
 ];
 
 const aiSearchSchema = z.object({
@@ -72,7 +72,7 @@ const aiSearchSchema = z.object({
 });
 
 export const Route = createFileRoute("/_app/ai")({
-  head: () => pageHead("Agent setup"),
+  head: () => pageHead("Yapay zekâ ajanı kurulumu"),
   validateSearch: aiSearchSchema,
   component: AiPage,
 });
@@ -90,8 +90,8 @@ function AiPage() {
     <div className="h-full overflow-auto px-4 py-4 pb-24 md:px-6 md:py-6 md:pb-8">
       <div className="mx-auto max-w-7xl">
         <PageHeader
-          title="Agent setup"
-          description="The most powerful way to use FOXSEO is through the AI agent you already use. Set it up once, then ask it anything."
+          title="Yapay zekâ ajanı kurulumu"
+          description="FOXSEO'yu en verimli şekilde, zaten kullandığın yapay zekâ ajanı üzerinden kullanırsın. Bir kez kur, sonra ona istediğini sor."
         />
 
         <Tabs
@@ -105,8 +105,8 @@ function AiPage() {
           className="mt-8"
         >
           <TabsList variant="line">
-            <TabsTrigger value="setup">Set up your agent</TabsTrigger>
-            <TabsTrigger value="skills">Skills</TabsTrigger>
+            <TabsTrigger value="setup">Ajanını kur</TabsTrigger>
+            <TabsTrigger value="skills">Beceriler</TabsTrigger>
           </TabsList>
           <TabsContent value="setup">
             {everyApp ? (
@@ -117,12 +117,12 @@ function AiPage() {
                   <Card size="lg">
                     <CardHeader>
                       <CardTitle>
-                        <h2>Set up your agent</h2>
+                        <h2>Ajanını kur</h2>
                       </CardTitle>
                       <CardDescription>
-                        Paste the setup prompt into your agent to connect
-                        FOXSEO and install its SEO skills. It will guide you
-                        through any manual steps.
+                        FOXSEO&apos;yu bağlamak ve SEO becerilerini yüklemek için
+                        kurulum promptunu ajanına yapıştır. Elle yapılması
+                        gereken adımlarda sana yol gösterir.
                       </CardDescription>
                     </CardHeader>
                     <CardContent>
@@ -132,8 +132,8 @@ function AiPage() {
                           variant="default"
                           size="lg"
                           value={prompt}
-                          label="Copy setup prompt"
-                          successMessage="Setup prompt copied"
+                          label="Kurulum promptunu kopyala"
+                          successMessage="Kurulum promptu kopyalandı"
                           onCopy={() =>
                             captureClientEvent("mcp:setup_prompt_copy")
                           }
@@ -144,14 +144,15 @@ function AiPage() {
                           rel="noreferrer"
                           className={MUTED_LINK_CLASS}
                         >
-                          Setup instructions
+                          Kurulum talimatları
                           <ArrowUpRight className="size-3.5" />
                         </a>
                       </div>
                     </CardContent>
                     <CardFooter className="text-muted-foreground">
                       <p>
-                        Once connected, ask your agent to use{" "}
+                        Bağlandıktan sonra ajanından, ne yapacağını seçmene
+                        yardım etmesi için{" "}
                         <a
                           href={COACH_DOCS_URL}
                           target="_blank"
@@ -160,7 +161,7 @@ function AiPage() {
                         >
                           SEO Coach
                         </a>{" "}
-                        to help you choose what to do next.
+                        becerisini kullanmasını iste.
                       </p>
                     </CardFooter>
                   </Card>
@@ -168,12 +169,12 @@ function AiPage() {
                   <Card size="lg">
                     <CardHeader>
                       <CardTitle>
-                        <h2>Update your skills</h2>
+                        <h2>Becerilerini güncelle</h2>
                       </CardTitle>
                       <CardDescription>
-                        Already connected? Paste the update prompt into your
-                        agent to get the latest FOXSEO skills while preserving
-                        your connection settings and personal edits.
+                        Zaten bağlı mısın? Bağlantı ayarlarını ve kendi
+                        düzenlemelerini koruyarak en yeni FOXSEO becerilerini
+                        almak için güncelleme promptunu ajanına yapıştır.
                       </CardDescription>
                     </CardHeader>
                     <CardContent className="flex flex-wrap items-center gap-x-5 gap-y-3">
@@ -181,8 +182,8 @@ function AiPage() {
                         variant="default"
                         size="lg"
                         value={agentUpdatePrompt}
-                        label="Copy update prompt"
-                        successMessage="Update prompt copied"
+                        label="Güncelleme promptunu kopyala"
+                        successMessage="Güncelleme promptu kopyalandı"
                         onCopy={() =>
                           captureClientEvent("mcp:update_prompt_copy")
                         }
@@ -193,7 +194,7 @@ function AiPage() {
                         rel="noreferrer"
                         className={MUTED_LINK_CLASS}
                       >
-                        Update instructions
+                        Güncelleme talimatları
                         <ArrowUpRight className="size-3.5" />
                       </a>
                     </CardContent>
@@ -204,17 +205,17 @@ function AiPage() {
                   <Alert className="mt-8">
                     <Info />
                     <AlertDescription>
-                      This instance is behind Cloudflare Access, so MCP clients
-                      connect through Managed OAuth on your Access application.
-                      If a client gets a login page instead of connecting, check
-                      that Managed OAuth is on.{" "}
+                      Bu kurulum Cloudflare Access arkasında; bu yüzden MCP
+                      istemcileri Access uygulamandaki Managed OAuth üzerinden
+                      bağlanır. Bir istemci bağlanmak yerine giriş sayfası
+                      görüyorsa Managed OAuth&apos;un açık olduğunu kontrol et.{" "}
                       <a
                         href="https://github.com/every-app/open-seo/blob/main/docs/SELF_HOSTING_CLOUDFLARE_OPERATIONS.md#through-cloudflare-access"
                         target="_blank"
                         rel="noreferrer"
                         className="font-medium"
                       >
-                        Setup guide
+                        Kurulum rehberi
                       </a>
                     </AlertDescription>
                   </Alert>
@@ -222,14 +223,14 @@ function AiPage() {
 
                 <div className="mt-10 flex flex-wrap items-center justify-between gap-x-4 gap-y-2 border-t border-border pt-5 text-xs text-muted-foreground">
                   <span>
-                    MCP server URL for this instance:{" "}
+                    Bu kurulumun MCP sunucu adresi:{" "}
                     <code className="font-mono text-foreground/80">
                       {mcpUrl}
                     </code>
                   </span>
                   <CopyButton
                     value={mcpUrl}
-                    successMessage="MCP URL copied"
+                    successMessage="MCP adresi kopyalandı"
                     onCopy={() => captureClientEvent("mcp:setup_url_copy")}
                   />
                 </div>
@@ -240,10 +241,10 @@ function AiPage() {
             <section className="mt-6">
               <p className="text-sm text-muted-foreground">
                 {everyApp
-                  ? "Install them with npx skills add every-app/open-seo."
-                  : "The setup prompt installs these."}{" "}
-                Run one by name when you want a full report instead of a quick
-                answer.
+                  ? "Bunları npx skills add every-app/open-seo komutuyla yükle."
+                  : "Kurulum promptu bunları yükler."}{" "}
+                Kısa bir yanıt yerine tam bir rapor istediğinde birini adıyla
+                çalıştır.
               </p>
               <ul className="mt-5 space-y-3 text-sm sm:space-y-2">
                 {SKILLS.map(([name, blurb]) => (
@@ -285,11 +286,11 @@ function EveryAppAgentSetup() {
       <Card size="lg">
         <CardHeader>
           <CardTitle>
-            <h2>Connect your agent to Every App</h2>
+            <h2>Ajanını Every App&apos;e bağla</h2>
           </CardTitle>
           <CardDescription>
-            Every App has one address for your agent, and it covers FOXSEO and
-            your other apps. Connect it once.
+            Every App&apos;te ajanın için tek bir adres var; FOXSEO&apos;yu ve
+            diğer uygulamalarını kapsar. Bir kez bağla.
           </CardDescription>
         </CardHeader>
         {gatewayUrl ? (
@@ -297,7 +298,7 @@ function EveryAppAgentSetup() {
             <code className="font-mono text-sm">{gatewayUrl}/mcp</code>
             <CopyButton
               value={`${gatewayUrl}/mcp`}
-              successMessage="MCP URL copied"
+              successMessage="MCP adresi kopyalandı"
             />
           </CardContent>
         ) : null}
@@ -306,23 +307,24 @@ function EveryAppAgentSetup() {
       <Card size="lg">
         <CardHeader>
           <CardTitle>
-            <h2>Install the SEO skills</h2>
+            <h2>SEO becerilerini yükle</h2>
           </CardTitle>
           <CardDescription>
-            Run this in a terminal to add FOXSEO's skills to your agent. They
-            use FOXSEO through your Every App connection.
+            FOXSEO becerilerini ajanına eklemek için bunu terminalde çalıştır.
+            Beceriler FOXSEO&apos;yu Every App bağlantın üzerinden kullanır.
           </CardDescription>
         </CardHeader>
         <CardContent className="flex flex-wrap items-center gap-x-5 gap-y-3">
           <code className="font-mono text-sm">{EVERY_APP_SKILLS_COMMAND}</code>
           <CopyButton
             value={EVERY_APP_SKILLS_COMMAND}
-            successMessage="Command copied"
+            successMessage="Komut kopyalandı"
           />
         </CardContent>
         <CardFooter className="text-muted-foreground">
           <p>
-            Once connected, ask your agent to use{" "}
+            Bağlandıktan sonra ajanından, ne yapacağını seçmene yardım etmesi
+            için{" "}
             <a
               href={COACH_DOCS_URL}
               target="_blank"
@@ -331,7 +333,7 @@ function EveryAppAgentSetup() {
             >
               SEO Coach
             </a>{" "}
-            to help you choose what to do next.
+            becerisini kullanmasını iste.
           </p>
         </CardFooter>
       </Card>

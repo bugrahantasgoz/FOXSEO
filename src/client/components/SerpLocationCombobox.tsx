@@ -60,12 +60,12 @@ function useSerpLocationSearch(countryCode: string) {
   const results = searching || !trimmed ? [] : (searchQuery.data ?? []);
 
   const emptyMessage = !trimmed
-    ? "Type a city, county, or region"
+    ? "Bir şehir, ilçe veya bölge yaz"
     : searching
-      ? "Searching..."
+      ? "Aranıyor…"
       : searchQuery.isError
-        ? "Unable to load locations"
-        : `No locations found for "${trimmed}"`;
+        ? "Konumlar yüklenemedi"
+        : `"${trimmed}" için konum bulunamadı`;
 
   return { setQuery, searching, results, emptyMessage };
 }
@@ -98,7 +98,7 @@ export function SerpLocationCombobox({
   value,
   onChange,
   countryCode,
-  placeholder = "Search cities...",
+  placeholder = "Şehir ara…",
   id,
   invalid,
 }: Props) {
@@ -204,8 +204,8 @@ export function SerpLocationChip({
         <ComboboxContent className="w-80">
           <ComboboxInput
             showTrigger={false}
-            placeholder="Search"
-            aria-label={`Search ${label.toLowerCase()}`}
+            placeholder="Ara"
+            aria-label={`${label} içinde ara`}
           >
             <InputGroupAddon>
               {searching ? <Spinner /> : <Search />}
@@ -220,7 +220,7 @@ export function SerpLocationChip({
           variant="outline"
           size="icon"
           className="-ml-px rounded-l-none focus-visible:z-10"
-          aria-label={`Clear ${label.toLowerCase()}`}
+          aria-label={`${label} temizle`}
           onClick={() => onChange(undefined)}
         >
           <X />

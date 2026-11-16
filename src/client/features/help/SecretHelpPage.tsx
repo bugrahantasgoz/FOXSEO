@@ -22,8 +22,8 @@ export function CommandBlock({ command }: { command: string }) {
       </pre>
       <CopyButton
         value={command}
-        successMessage="Command copied"
-        label="Copy command"
+        successMessage="Komut kopyalandı"
+        label="Komutu kopyala"
         variant="ghost"
         size="icon-xs"
       />
@@ -69,7 +69,7 @@ export function SecretHelpPage({
         <Card>
           <CardHeader>
             <CardTitle>
-              <h2>Steps</h2>
+              <h2>Adımlar</h2>
             </CardTitle>
           </CardHeader>
           <CardContent>
@@ -81,27 +81,28 @@ export function SecretHelpPage({
 
         {everyApp ? (
           <p className="text-sm text-muted-foreground">
-            Not an owner or admin? Send this page to one.
+            Yetkin yoksa bu sayfayı yetkili kişiye gönder.
           </p>
         ) : (
           <Card>
             <CardHeader>
               <CardTitle>
-                <h2>Cloudflare Workers (Dashboard UI)</h2>
+                <h2>Cloudflare Workers (panel arayüzü)</h2>
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-3">
               <ol className="list-decimal space-y-2 pl-5">
                 <li>
-                  In Cloudflare, go to <code>Compute</code> -&gt;{" "}
-                  <code>Workers &amp; Pages</code> and open your FOXSEO Worker.
+                  Cloudflare&apos;de <code>Compute</code> -&gt;{" "}
+                  <code>Workers &amp; Pages</code> bölümüne git ve FOXSEO
+                  Worker&apos;ını aç.
                 </li>
                 <li>
-                  Open <code>Settings</code>.
+                  <code>Settings</code> sekmesini aç.
                 </li>
                 <li>
-                  Go to <code>Variables &amp; Secrets</code> and add a new
-                  secret named <code>{secretName}</code>.
+                  <code>Variables &amp; Secrets</code> bölümüne git ve{" "}
+                  <code>{secretName}</code> adında yeni bir gizli değer ekle.
                 </li>
                 <li>{dashboardPasteStep}</li>
               </ol>
@@ -109,7 +110,7 @@ export function SecretHelpPage({
               <Separator />
 
               <div>
-                <p>Or set the same secret from your terminal with:</p>
+                <p>Ya da aynı gizli değeri terminalden şu komutla ayarla:</p>
                 <CommandBlock
                   command={`npx wrangler secret put ${secretName}`}
                 />

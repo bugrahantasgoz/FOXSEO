@@ -9,14 +9,14 @@ import { pageHead } from "@/client/lib/pageHead";
 const OPENROUTER_KEYS_URL = "https://openrouter.ai/settings/keys";
 
 export const Route = createFileRoute("/_app/help/openrouter-api-key")({
-  head: () => pageHead("OpenRouter API key"),
+  head: () => pageHead("OpenRouter API anahtarı"),
   component: OpenrouterApiKeyHelpPage,
 });
 
 function OpenrouterApiKeyHelpPage() {
   const accountStep = (
     <li>
-      Create an account at{" "}
+      Önce{" "}
       <a
         className={helpLinkClassName}
         href="https://openrouter.ai"
@@ -25,12 +25,12 @@ function OpenrouterApiKeyHelpPage() {
       >
         openrouter.ai
       </a>{" "}
-      and add credits (pay-as-you-go, like DataForSEO).
+      adresinde hesap aç ve bakiye yükle (DataForSEO gibi kullandıkça öde).
     </li>
   );
   const keyStep = (
     <li>
-      Go to{" "}
+      Sonra{" "}
       <a
         className={helpLinkClassName}
         href={OPENROUTER_KEYS_URL}
@@ -39,39 +39,40 @@ function OpenrouterApiKeyHelpPage() {
       >
         OpenRouter API Keys
       </a>{" "}
-      and click "Create API Key".
+      sayfasına git ve "Create API Key" düğmesine tıkla.
     </li>
   );
   return (
     <SecretHelpPage
-      title="Set up your OpenRouter API key"
+      title="OpenRouter API anahtarını kur"
       intro={
         <>
-          FOXSEO needs the <code>OPENROUTER_API_KEY</code> secret before AI
-          features like SAM, the in-app SEO agent, can run. It is optional —
-          everything else in FOXSEO works without it.
+          Uygulama içi SEO ajanı SAM gibi yapay zekâ özelliklerinin çalışması
+          için FOXSEO&apos;nun <code>OPENROUTER_API_KEY</code> gizli değerine
+          ihtiyacı var. İsteğe bağlıdır; FOXSEO&apos;nun geri kalanı onsuz da
+          çalışır.
         </>
       }
-      everyAppIntro="SAM, prompt suggestions and website research run on OpenRouter. On Every App the gateway holds the key once, for every app."
+      everyAppIntro="SAM, prompt önerileri ve site incelemesi OpenRouter üzerinde çalışır. Every App'te anahtar gateway'de bir kez, tüm uygulamalar için tutulur."
       secretName="OPENROUTER_API_KEY"
       steps={
         <>
           {accountStep}
           {keyStep}
           <li>
-            Save the key as the <code>OPENROUTER_API_KEY</code> secret in your
-            environment:
+            Anahtarı ortamında <code>OPENROUTER_API_KEY</code> gizli değeri
+            olarak kaydet:
             <ul className="mt-2 list-disc space-y-1 pl-5">
               <li>
-                Docker self-hosting: <code>.env</code>
+                Docker ile kendi sunucunda: <code>.env</code>
               </li>
-              <li>Cloudflare: set it in the Workers UI (see below)</li>
+              <li>Cloudflare: Workers arayüzünden ayarla (aşağıya bak)</li>
               <li>
-                Local development: <code>.env.local</code>
+                Yerel geliştirme: <code>.env.local</code>
               </li>
             </ul>
           </li>
-          <li>Restart FOXSEO.</li>
+          <li>FOXSEO&apos;yu yeniden başlat.</li>
         </>
       }
       everyAppSteps={
@@ -79,15 +80,14 @@ function OpenrouterApiKeyHelpPage() {
           {accountStep}
           {keyStep}
           <li>
-            An owner or admin runs this from the Every App checkout and pastes
-            the key:
+            Every App klasöründe bunu çalıştır ve anahtarı yapıştır:
             <CommandBlock command="pnpm everyapp secret set OPENROUTER_API_KEY" />
           </li>
-          <li>Reload FOXSEO.</li>
+          <li>FOXSEO&apos;yu yenile.</li>
         </>
       }
-      dashboardPasteStep="Paste your OpenRouter API key and save."
-      terminalPromptHint="Paste your OpenRouter API key when prompted."
+      dashboardPasteStep="OpenRouter API anahtarını yapıştır ve kaydet."
+      terminalPromptHint="Sorulduğunda OpenRouter API anahtarını yapıştır."
     />
   );
 }

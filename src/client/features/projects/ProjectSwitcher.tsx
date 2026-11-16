@@ -124,12 +124,12 @@ export function ProjectSwitcher({
       >
         <div className="flex items-stretch rounded-lg border border-sidebar-border bg-card">
           <ComboboxTrigger
-            aria-label="Switch project"
+            aria-label="Proje değiştir"
             className="flex min-w-0 flex-1 items-center justify-between gap-2 rounded-l-lg px-3 py-1.5 text-left hover:bg-accent"
           >
             <span className="flex min-w-0 flex-col">
               <span className="truncate text-sm font-medium">
-                {activeProject?.name ?? "Select project"}
+                {activeProject?.name ?? "Proje seç"}
               </span>
               {activeProject?.domain ? (
                 <span className="truncate text-xs text-muted-foreground">
@@ -145,8 +145,8 @@ export function ProjectSwitcher({
                 <Link
                   to="/p/$projectId/settings"
                   params={{ projectId: activeProject.id }}
-                  aria-label="Project settings"
-                  title="Project settings"
+                  aria-label="Proje ayarları"
+                  title="Proje ayarları"
                   onClick={() => {
                     setOpen(false);
                     onCloseDrawer?.();
@@ -164,13 +164,13 @@ export function ProjectSwitcher({
           {projects.length >= SEARCH_THRESHOLD ? (
             <ComboboxInput
               className="w-auto"
-              placeholder="Find project…"
-              aria-label="Filter projects"
+              placeholder="Proje bul…"
+              aria-label="Projeleri filtrele"
               showTrigger={false}
             />
           ) : null}
           {projects.length > 0 ? (
-            <ComboboxEmpty>No projects match.</ComboboxEmpty>
+            <ComboboxEmpty>Eşleşen proje yok.</ComboboxEmpty>
           ) : null}
           <ComboboxList className="max-h-[min(60vh,21rem)]">
             {(project: ProjectSummary) => (
@@ -203,7 +203,7 @@ export function ProjectSwitcher({
               }}
             >
               <Plus className="size-4" />
-              New project
+              Yeni proje
             </Button>
             <Button
               nativeButton={false}
@@ -220,7 +220,7 @@ export function ProjectSwitcher({
               className="justify-start"
             >
               <FolderCog className="size-4" />
-              Manage projects
+              Projeleri yönet
             </Button>
           </div>
         </ComboboxContent>

@@ -48,15 +48,15 @@ export function ExportToSheetsModal() {
             <span className="inline-flex size-8 shrink-0 items-center justify-center rounded-full bg-success/15 text-success">
               <Check className="size-4" />
             </span>
-            Copied {rowCount} row{rowCount === 1 ? "" : "s"} to your clipboard
+            {rowCount} satır panoya kopyalandı
           </DialogTitle>
           <DialogDescription>
-            Open a new Google Sheet and paste to fill it.
+            Yeni bir Google E-Tablosu aç ve yapıştır.
           </DialogDescription>
         </DialogHeader>
         <DialogFooter>
           <Button onClick={handleOpenSheet}>
-            Open new Google Sheet
+            Yeni Google E-Tablosu aç
             <ExternalLink data-icon="inline-end" />
           </Button>
         </DialogFooter>

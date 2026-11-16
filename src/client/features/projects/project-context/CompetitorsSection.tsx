@@ -40,11 +40,11 @@ export function CompetitorsSection({
 
   return (
     <EditableListSection
-      title="Competitors"
-      hint="The sites you measure yourself against."
-      addLabel="Add competitor"
-      emptyTitle="No competitors yet"
-      emptyDescription="Add the sites you compete with, or ask your agent to find them from your rankings and save them here."
+      title="Rakipler"
+      hint="Kendini kıyasladığın siteler."
+      addLabel="Rakip ekle"
+      emptyTitle="Henüz rakip yok"
+      emptyDescription="Rekabet ettiğin siteleri ekle ya da yapay zekâ ajanından sıralamalarına bakıp bulmasını ve buraya kaydetmesini iste."
       items={competitors}
       getId={(item) => item.id}
       getLabel={(item) => item.domain}
@@ -113,22 +113,22 @@ function CompetitorForm({
           }
           placeholder="competitor.com"
           maxLength={255}
-          aria-label="Competitor domain"
+          aria-label="Rakip alan adı"
         />
         <Input
           value={draft.name}
           onChange={(event) => setDraft({ ...draft, name: event.target.value })}
-          placeholder="Name (optional)"
+          placeholder="Ad (isteğe bağlı)"
           maxLength={120}
-          aria-label="Competitor name"
+          aria-label="Rakip adı"
         />
       </div>
       <Input
         value={draft.notes}
         onChange={(event) => setDraft({ ...draft, notes: event.target.value })}
-        placeholder="Why they matter — e.g. wins every comparison keyword (optional)"
+        placeholder="Neden önemli? Örn. karşılaştırma aramalarının hepsinde önde (isteğe bağlı)"
         maxLength={500}
-        aria-label="Competitor notes"
+        aria-label="Rakip notları"
       />
       <FormActions
         pending={pending}

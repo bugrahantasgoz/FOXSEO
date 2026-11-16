@@ -19,24 +19,24 @@ export function GscPropertySetupHelp({
   return (
     <>
       <div className="space-y-3 rounded-lg border border-border bg-muted/30 p-4 text-sm">
-        <h2 className="font-semibold">We couldn’t find your website</h2>
+        <h2 className="font-semibold">Siteni bulamadık</h2>
         <p className="break-words text-muted-foreground">
-          We checked{" "}
+          Kontrol edilen hesaplar:{" "}
           {accounts
             .map(
               (account) =>
                 account.email ??
-                `Google account · ${account.accountId.slice(-6)}`,
+                `Google hesabı · ${account.accountId.slice(-6)}`,
             )
             .join(", ")}
           .
         </p>
         <p className="text-muted-foreground">
-          Add your site to Search Console, or ask whoever manages it to give
+          Siteni Google Search Console&apos;a ekle ya da siteyi yöneten kişiden
           {accounts.length === 1
-            ? " this account"
-            : " one of these accounts"}{" "}
-          access.
+            ? " bu hesaba"
+            : " bu hesaplardan birine"}{" "}
+          erişim vermesini iste.
         </p>
         <div className="flex flex-wrap gap-x-4 gap-y-2">
           <a
@@ -45,7 +45,7 @@ export function GscPropertySetupHelp({
             rel="noopener noreferrer"
             className="underline underline-offset-4"
           >
-            Open Search Console ↗
+            Search Console&apos;u aç ↗
           </a>
           <a
             href="https://openseo.so/blogs/google-search-console-setup"
@@ -53,7 +53,7 @@ export function GscPropertySetupHelp({
             rel="noopener noreferrer"
             className="underline underline-offset-4"
           >
-            Setup guide
+            Kurulum rehberi
           </a>
         </div>
       </div>
@@ -64,7 +64,7 @@ export function GscPropertySetupHelp({
           onClick={onRetry}
           disabled={loading || busy}
         >
-          {loading ? "Refreshing…" : "Refresh"}
+          {loading ? "Yenileniyor…" : "Yenile"}
         </Button>
         <Button
           variant="ghost"
@@ -73,7 +73,7 @@ export function GscPropertySetupHelp({
           disabled={loading || busy}
           pending={linking}
         >
-          {linking ? "Opening Google…" : "Use a different Google account"}
+          {linking ? "Google açılıyor…" : "Başka bir Google hesabı kullan"}
         </Button>
       </div>
     </>

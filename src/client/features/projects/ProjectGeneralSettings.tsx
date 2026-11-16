@@ -31,12 +31,12 @@ export function ProjectGeneralSettings({ projectId }: { projectId: string }) {
   return (
     <QueryState
       query={projectsQuery}
-      errorFallback="Failed to load the project"
+      errorFallback="Proje yüklenemedi"
     >
       {(projects) => {
         const project = projects.find((entry) => entry.id === projectId);
         if (!project) {
-          return <QueryError fallback="This project was not found." />;
+          return <QueryError fallback="Bu proje bulunamadı." />;
         }
         return (
           <div className="space-y-8">
@@ -51,7 +51,7 @@ export function ProjectGeneralSettings({ projectId }: { projectId: string }) {
 }
 
 const generalSchema = z.object({
-  name: z.string().trim().min(1, "Enter a project name."),
+  name: z.string().trim().min(1, "Bir proje adı gir."),
   domain: z.string(),
   market: z.object({ locationCode: z.number(), languageCode: z.string() }),
 });
@@ -89,7 +89,7 @@ function GeneralSection({ project }: { project: ProjectSummary }) {
         queryKey: aiVisibilityKey(project.id),
       });
       setKeepBrand(false);
-      toast.success("Project updated");
+      toast.success("Proje güncellendi");
       toastInitialAudit(saved.initialAudit);
     },
   });
@@ -116,12 +116,12 @@ function GeneralSection({ project }: { project: ProjectSummary }) {
 
   return (
     <section className="space-y-3">
-      <SectionHeader title="General" />
+      <SectionHeader title="Genel" />
       <form.AppForm>
         <form.Form className="flex flex-col gap-4">
           <form.AppField name="name">
             {(field) => (
-              <field.TextField label="Name" maxLength={120} required />
+              <field.TextField label="Ad" maxLength={120} required />
             )}
           </form.AppField>
 
@@ -141,16 +141,16 @@ function GeneralSection({ project }: { project: ProjectSummary }) {
               <field.TextField
                 label={
                   <>
-                    Domain{" "}
+                    Alan adı{" "}
                     <span className="font-normal text-muted-foreground">
-                      (optional)
+                      (isteğe bağlı)
                     </span>
                   </>
                 }
                 description={
                   isEveryAppClientAuthMode()
-                    ? "Adding your website starts a 50-page site audit."
-                    : "Adding your website starts a 50-page scan with JavaScript rendering. Rendering uses your credits."
+                    ? "Siteni eklediğinde 50 sayfalık bir site denetimi başlar."
+                    : "Siteni eklediğinde 50 sayfalık bir tarama başlar."
                 }
                 placeholder="example.com"
                 maxLength={255}
@@ -168,8 +168,8 @@ function GeneralSection({ project }: { project: ProjectSummary }) {
               )}
             </form.Field>
             <span className="text-xs text-muted-foreground">
-              Keyword, SERP, and domain data uses this country and language
-              unless a call asks for a different one.
+              Anahtar kelime ve arama sonucu verileri, aksi istenmedikçe bu
+              ülke ve dili kullanır.
             </span>
           </div>
 
@@ -177,7 +177,7 @@ function GeneralSection({ project }: { project: ProjectSummary }) {
             <form.Subscribe selector={(state) => state.isDefaultValue}>
               {(isDefaultValue) => (
                 <form.SubmitButton disabled={isDefaultValue}>
-                  Save changes
+                  Değişiklikleri kaydet
                 </form.SubmitButton>
               )}
             </form.Subscribe>
@@ -218,19 +218,19 @@ function BrandChangeNote({
   if (keeping)
     return (
       <p className="text-sm text-muted-foreground">
-        We’ll keep tracking “{project.name}”.
+        “{project.name}” takip edilmeye devam edecek.
       </p>
     );
   return (
     <p className="text-sm text-muted-foreground">
-      We’ll start checking for “{renamed}” in AI search.{" "}
+      Yapay zekâ aramalarında “{renamed}” aranmaya başlanacak.{" "}
       <Button
         type="button"
         variant="link"
         className="h-auto p-0"
         onClick={onKeep}
       >
-        Keep tracking “{project.name}”
+        “{project.name}” takibine devam et
       </Button>
     </p>
   );
@@ -252,7 +252,7 @@ function DangerSection({
       await queryClient.invalidateQueries({
         queryKey: projectsQueryOptions().queryKey,
       });
-      toast.success("Project archived");
+      toast.success("Proje arşivlendi");
       // Re-resolve to a remaining project via the landing redirect.
       void navigate({ to: "/" });
     },
@@ -260,18 +260,18 @@ function DangerSection({
 
   return (
     <section className="space-y-3 border-t border-border pt-8">
-      <SectionHeader title="Archive project" />
+      <SectionHeader title="Projeyi arşivle" />
       <div className="flex items-center justify-between gap-4">
         <p className="text-sm text-muted-foreground">
           {canArchive
-            ? "Archiving removes the project from your workspace and stops its scheduled rank tracking. You can restore it later from the Projects page."
-            : "You can't archive your only project."}
+            ? "Arşivlemek projeyi çalışma alanından kaldırır. Daha sonra Projeler sayfasından geri getirebilirsin."
+            : "Tek projeni arşivleyemezsin."}
         </p>
         <div className="flex shrink-0 gap-2">
           <InlineConfirm
-            label={`Archive ${project.name}`}
-            triggerLabel="Archive project"
-            confirmLabel="Yes, archive project"
+            label={`${project.name} projesini arşivle`}
+            triggerLabel="Projeyi arşivle"
+            confirmLabel="Evet, projeyi arşivle"
             pending={archiveMutation.isPending}
             disabled={!canArchive}
             onConfirm={() => archiveMutation.mutate()}

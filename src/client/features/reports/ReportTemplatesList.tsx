@@ -27,8 +27,8 @@ export function ReportTemplatesList({
     return (
       <EmptyState
         icon={LayoutTemplate}
-        title="No templates yet"
-        description="A template is a reusable brief for a kind of report: who it is for, which sections it has, how it sounds."
+        title="Henüz şablon yok"
+        description="Şablon, bir rapor türü için tekrar kullanılabilir bir özettir: kimin için olduğu, hangi bölümleri içerdiği ve nasıl bir üslupla yazıldığı."
       />
     );
   }
@@ -38,9 +38,9 @@ export function ReportTemplatesList({
       <Table>
         <TableHeader>
           <TableRow>
-            <TableHead>Name</TableHead>
-            <TableHead>Description</TableHead>
-            <TableHead>Updated</TableHead>
+            <TableHead>Ad</TableHead>
+            <TableHead>Açıklama</TableHead>
+            <TableHead>Güncellenme</TableHead>
             <TableHead />
           </TableRow>
         </TableHeader>
@@ -63,17 +63,17 @@ export function ReportTemplatesList({
                 {formatRelativeTime(template.updatedAt)}
               </TableCell>
               <TableCell className="w-10 text-right">
-                <RowActionsMenu label={`Actions for ${template.name}`}>
+                <RowActionsMenu label={`${template.name} için işlemler`}>
                   <DropdownMenuItem onClick={() => onEdit(template)}>
                     <Pencil />
-                    Edit
+                    Düzenle
                   </DropdownMenuItem>
                   <DropdownMenuItem
                     variant="destructive"
                     onClick={() => onDelete(template)}
                   >
                     <Trash2 />
-                    Delete
+                    Sil
                   </DropdownMenuItem>
                 </RowActionsMenu>
               </TableCell>

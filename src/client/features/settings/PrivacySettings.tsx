@@ -17,18 +17,19 @@ export function PrivacySettings() {
     // The session is served from a signed cookie cache, so bypass it to pick
     // up the saved choice.
     onSuccess: () => refetch({ query: { disableCookieCache: true } }),
-    onError: () => toast.error("We couldn't save your email choice."),
+    onError: () => toast.error("E-posta tercihin kaydedilemedi."),
   });
   if (!choices || !session) return null;
 
   return (
     <section className="space-y-3">
-      <SectionHeader title="Privacy and emails" />
+      <SectionHeader title="Gizlilik ve e-postalar" />
       <div className="flex items-start justify-between gap-6">
         <div>
-          <p className="text-sm">Usage analytics</p>
+          <p className="text-sm">Kullanım analizi</p>
           <p className="mt-1 text-sm text-muted-foreground">
-            Share usage analytics and session replays to help improve FOXSEO.
+            FOXSEO&apos;yu geliştirmeye yardım etmek için kullanım verilerini ve
+            oturum kayıtlarını paylaş.
           </p>
         </div>
         <Switch
@@ -36,14 +37,15 @@ export function PrivacySettings() {
           onCheckedChange={(analytics) =>
             void updatePrivacyChoices({ ...choices, analytics }, true)
           }
-          aria-label="Share usage analytics"
+          aria-label="Kullanım analizini paylaş"
         />
       </div>
       <div className="flex items-start justify-between gap-6">
         <div>
-          <p className="text-sm">Product updates</p>
+          <p className="text-sm">Ürün güncellemeleri</p>
           <p className="mt-1 text-sm text-muted-foreground">
-            Occasional emails about new features and tips. Unsubscribe anytime.
+            Yeni özellikler ve ipuçları hakkında ara sıra e-posta. İstediğin
+            zaman abonelikten çıkabilirsin.
           </p>
         </div>
         <Switch
@@ -54,7 +56,7 @@ export function PrivacySettings() {
           }
           disabled={productUpdates.isPending}
           onCheckedChange={(optIn) => productUpdates.mutate(optIn)}
-          aria-label="Get product update emails"
+          aria-label="Ürün güncellemesi e-postaları al"
         />
       </div>
     </section>

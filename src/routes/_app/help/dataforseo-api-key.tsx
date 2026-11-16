@@ -9,14 +9,14 @@ import { pageHead } from "@/client/lib/pageHead";
 const DATAFORSEO_API_ACCESS_URL = "https://app.dataforseo.com/api-access";
 
 export const Route = createFileRoute("/_app/help/dataforseo-api-key")({
-  head: () => pageHead("DataForSEO API key"),
+  head: () => pageHead("DataForSEO API anahtarı"),
   component: DataforseoApiKeyHelpPage,
 });
 
 function DataforseoApiKeyHelpPage() {
   const requestStep = (
     <li>
-      Go to{" "}
+      Önce{" "}
       <a
         className={helpLinkClassName}
         href={DATAFORSEO_API_ACCESS_URL}
@@ -25,33 +25,34 @@ function DataforseoApiKeyHelpPage() {
       >
         DataForSEO API Access
       </a>{" "}
-      and request API credentials by email.
+      sayfasına git ve API kimlik bilgilerini e-postayla iste.
     </li>
   );
   const encodeStep = (
     <li>
-      Base64 encode your DataForSEO login and API password in this format:
+      DataForSEO giriş bilgini ve API şifreni bu biçimde base64 ile kodla:
       <CommandBlock command="printf '%s' 'YOUR_LOGIN:YOUR_PASSWORD' | base64" />
     </li>
   );
   return (
     <SecretHelpPage
-      title="Set up your DataForSEO API key"
+      title="DataForSEO API anahtarını kur"
       intro={
         <>
-          FOXSEO needs the <code>DATAFORSEO_API_KEY</code> secret before
-          keyword, domain, and SEO data workflows can run.
+          Anahtar kelime, alan adı ve SEO veri akışlarının çalışması için
+          FOXSEO&apos;nun <code>DATAFORSEO_API_KEY</code> gizli değerine
+          ihtiyacı var.
         </>
       }
-      everyAppIntro="FOXSEO's keyword, domain, backlink and rank data comes from DataForSEO. On Every App the gateway holds the key once, for every app."
+      everyAppIntro="FOXSEO'nun anahtar kelime, alan adı, backlink ve sıralama verileri DataForSEO'dan gelir. Every App'te anahtar gateway'de bir kez, tüm uygulamalar için tutulur."
       secretName="DATAFORSEO_API_KEY"
       steps={
         <>
           {requestStep}
           {encodeStep}
           <li>
-            Save the output as the <code>DATAFORSEO_API_KEY</code> secret in
-            your environment.
+            Çıktıyı ortamında <code>DATAFORSEO_API_KEY</code> gizli değeri
+            olarak kaydet.
           </li>
         </>
       }
@@ -60,17 +61,17 @@ function DataforseoApiKeyHelpPage() {
           {requestStep}
           {encodeStep}
           <li>
-            An owner or admin runs this from the Every App checkout and pastes
-            the value:
+            Every App klasöründe bunu çalıştır ve değeri yapıştır:
             <CommandBlock command="pnpm everyapp secret set DATAFORSEO_API_KEY" />
           </li>
-          <li>Reload FOXSEO: it uses the key on its next request.</li>
+          <li>FOXSEO&apos;yu yenile: anahtarı bir sonraki istekte kullanır.</li>
         </>
       }
-      dashboardPasteStep="Paste the base64 value from the terminal command above and save."
+      dashboardPasteStep="Yukarıdaki terminal komutunun verdiği base64 değerini yapıştır ve kaydet."
       terminalPromptHint={
         <>
-          Use the base64 value of <code>login:password</code> when prompted.
+          Sorulduğunda <code>login:password</code> bilgisinin base64 değerini
+          gir.
         </>
       }
     />

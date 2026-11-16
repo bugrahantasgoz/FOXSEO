@@ -22,7 +22,7 @@ import type { ReportTemplate } from "@/types/schemas/report-templates";
 import { pageHead } from "@/client/lib/pageHead";
 
 export const Route = createFileRoute("/_app/p/$projectId/reports/templates")({
-  head: () => pageHead("Report templates"),
+  head: () => pageHead("Rapor şablonları"),
   component: ReportTemplatesPage,
 });
 
@@ -59,7 +59,7 @@ function ReportTemplatesPage() {
         project_id: projectId,
         template_id: templateId,
       });
-      toast.success("Template deleted");
+      toast.success("Şablon silindi");
       setPendingDelete(null);
       invalidate();
     },
@@ -71,22 +71,22 @@ function ReportTemplatesPage() {
         <PageHeader
           backLink={
             <BackLink to="/p/$projectId/reports" params={{ projectId }}>
-              Reports
+              Raporlar
             </BackLink>
           }
-          title="Report templates"
-          description="Reusable briefs your agents follow when they write a report: who it is for, which sections it has, and how it should sound."
+          title="Rapor şablonları"
+          description="Ajanlarının rapor yazarken izlediği, tekrar kullanılabilir özetler: kimin için olduğu, hangi bölümleri içerdiği ve nasıl bir üslupla yazılacağı."
           actions={
             <Button onClick={() => setForm({})}>
               <Plus data-icon="inline-start" />
-              New template
+              Yeni şablon
             </Button>
           }
         />
 
         <QueryState
           query={templatesQuery}
-          errorFallback="Failed to load templates"
+          errorFallback="Şablonlar yüklenemedi"
         >
           {(data) => (
             <ReportTemplatesList
@@ -112,14 +112,14 @@ function ReportTemplatesPage() {
 
       {pendingDelete ? (
         <ConfirmDialog
-          title={`Delete \u201c${pendingDelete.name}\u201d?`}
-          confirmLabel="Delete template"
+          title={`\u201c${pendingDelete.name}\u201d silinsin mi?`}
+          confirmLabel="\u015eablonu sil"
           destructive
           pending={deleteMutation.isPending}
           onClose={() => setPendingDelete(null)}
           onConfirm={() => deleteMutation.mutate(pendingDelete.id)}
         >
-          Reports already written from it are not affected.
+          Bu şablonla yazılmış raporlar etkilenmez.
         </ConfirmDialog>
       ) : null}
     </div>

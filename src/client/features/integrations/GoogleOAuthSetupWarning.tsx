@@ -23,25 +23,25 @@ export function GoogleOAuthSetupWarning({
     return (
       <Alert variant="info">
         <Info className="size-4" />
-        <AlertTitle>Add Google to Every App first</AlertTitle>
+        <AlertTitle>Önce Google&apos;ı Every App&apos;e ekle</AlertTitle>
         <AlertDescription>
           <p>
-            An owner or admin does this once: create a Google OAuth client with
-            the redirect URI{" "}
+            Bu bir kez yapılır: yönlendirme URI&apos;si{" "}
             <code>
               https://&lt;your gateway&gt;/connect/google-workspace/callback
             </code>
-            , then paste its client ID and secret in Every App under Manage
-            workspace → Providers, or run{" "}
+            {" "}olan bir Google OAuth istemcisi oluştur, sonra istemci kimliğini
+            ve gizli anahtarını Every App&apos;te Manage workspace → Providers
+            altına yapıştır ya da şunu çalıştır:{" "}
             <code>
               pnpm everyapp secret set GOOGLE_WORKSPACE_CLIENT_ID
               GOOGLE_WORKSPACE_CLIENT_SECRET
             </code>
-            . Then connect {integrationName} here.
+            . Ardından {integrationName} bağlantısını burada kur.
           </p>
           <SafeExternalLink
             url={EVERY_APP_GOOGLE_SETUP_URL}
-            label="How to add a provider"
+            label="Sağlayıcı nasıl eklenir"
             className="inline-flex items-center gap-1 font-medium underline underline-offset-2"
           />
         </AlertDescription>
@@ -51,15 +51,15 @@ export function GoogleOAuthSetupWarning({
   return (
     <Alert variant="warning">
       <AlertTriangle className="size-4" />
-      <AlertTitle>Google OAuth client not configured</AlertTitle>
+      <AlertTitle>Google OAuth istemcisi ayarlanmamış</AlertTitle>
       <AlertDescription>
         <p>
-          Add your Google client ID and secret to this FOXSEO deployment before
-          connecting {integrationName}.
+          {integrationName} bağlantısını kurmadan önce Google istemci kimliğini
+          ve gizli anahtarını FOXSEO kurulumuna ekle.
         </p>
         <SafeExternalLink
           url={docsUrl}
-          label="Open setup guide"
+          label="Kurulum rehberini aç"
           className="inline-flex items-center gap-1 font-medium underline underline-offset-2"
         />
       </AlertDescription>

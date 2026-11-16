@@ -57,7 +57,7 @@ export function SearchTabStrip({
     >
       <div
         role="tablist"
-        aria-label="Search tabs"
+        aria-label="Arama sekmeleri"
         className="flex min-w-0 items-stretch gap-1 overflow-x-auto"
       >
         {tabs.map((tab) => {
@@ -98,7 +98,7 @@ export function SearchTabStrip({
                 data-search-tab-id={tab.id}
                 className="flex items-center px-1.5 text-muted-foreground opacity-60 transition hover:bg-foreground/10 hover:text-foreground hover:opacity-100 group-hover:opacity-100"
                 onClick={() => onClose(tab.id)}
-                aria-label={`Close ${tab.label} tab`}
+                aria-label={`${tab.label} sekmesini kapat`}
               >
                 <X className="size-3.5" />
               </button>
@@ -248,7 +248,7 @@ function getSearchTabQueryConfig(
   return {
     queryKey: buildKeywordResearchQueryKey(request),
     queryFn: () => {
-      if (!request) throw new Error("Tab is missing a research request");
+      if (!request) throw new Error("Sekmede araştırma isteği eksik");
       return keywordResearchQueryFn(request);
     },
     staleTime: KEYWORD_RESEARCH_STALE_TIME_MS,

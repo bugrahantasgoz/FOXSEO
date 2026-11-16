@@ -19,7 +19,7 @@ import { GoogleGlyphMuted } from "@/client/features/gsc/GoogleGlyph";
 const projectNavItems = [
   {
     to: "/p/$projectId" as const,
-    label: "Dashboard",
+    label: "Pano",
     icon: LayoutDashboard,
     // Without exact matching, the index path is a prefix of every project
     // route and the Dashboard item would render active everywhere.
@@ -27,68 +27,68 @@ const projectNavItems = [
   },
   {
     to: "/p/$projectId/keywords" as const,
-    label: "Keyword Research",
+    label: "Anahtar Kelime Araştırması",
     icon: Search,
   },
   {
     to: "/p/$projectId/saved" as const,
-    label: "Saved Keywords",
+    label: "Kayıtlı Kelimeler",
     icon: Bookmark,
   },
   {
     to: "/p/$projectId/rank-tracking" as const,
-    label: "Rank Tracking",
+    label: "Sıralama Takibi",
     icon: TrendingUp,
   },
   {
     to: "/p/$projectId/local-seo" as const,
-    label: "Local SEO",
+    label: "Yerel SEO",
     icon: MapPin,
   },
   {
     to: "/p/$projectId/search-performance" as const,
-    label: "GSC Insights",
+    label: "Arama Performansı (GSC)",
     icon: GoogleGlyphMuted,
   },
   {
     to: "/p/$projectId/domain" as const,
-    label: "Domain Overview",
+    label: "Alan Adı Genel Bakışı",
     icon: Globe,
   },
   {
     to: "/p/$projectId/backlinks" as const,
-    label: "Backlinks",
+    label: "Backlinkler",
     icon: Link2,
   },
   {
     to: "/p/$projectId/audit" as const,
-    label: "Site Audit",
+    label: "Site Denetimi",
     icon: ClipboardCheck,
   },
   {
     to: "/p/$projectId/ai-visibility" as const,
-    label: "Prompt Tracking",
+    label: "Prompt Takibi",
     icon: ChartLine,
     activeOptions: { exact: true, includeSearch: false },
   },
   {
     to: "/p/$projectId/ai-visibility/research" as const,
-    label: "Prompt Research",
+    label: "Prompt Araştırması",
     icon: Search,
   },
   {
     to: "/p/$projectId/prompt-explorer" as const,
-    label: "Prompt Explorer",
+    label: "Prompt Gezgini",
     icon: MessageSquare,
   },
   {
     to: "/p/$projectId/reports" as const,
-    label: "Reports",
+    label: "Raporlar",
     icon: FileText,
   },
   {
     to: "/p/$projectId/context" as const,
-    label: "Context",
+    label: "Bağlam",
     icon: Brain,
   },
 ] as const;
@@ -97,14 +97,14 @@ const projectNavItems = [
 // is selected, and on its own (connectNavGroup) when none is.
 const aiNavItem = linkOptions({
   to: "/ai" as const,
-  label: "Agent setup",
+  label: "Yapay zekâ ajanı kurulumu",
   icon: Bot,
 });
 
 // Shown only when no project is selected; with a project, Agent setup lives in
 // the "AI Tools" group below.
 export const connectNavGroup = {
-  label: "AI Tools",
+  label: "Yapay Zekâ Araçları",
   items: [aiNavItem],
 };
 
@@ -127,14 +127,14 @@ export function getProjectNavGroups(projectId: string) {
 
   return [
     {
-      label: "Overview",
+      label: "Genel bakış",
       items: [byPath("/p/$projectId")],
     },
     // FOXSEO shows only features that run on free data sources. Domain
     // overview, AI visibility, local SEO and paid rank checks need DataForSEO,
     // so they are left out of the menu.
     {
-      label: "My Site",
+      label: "Sitem",
       items: [
         byPath("/p/$projectId/audit"),
         byPath("/p/$projectId/search-performance"),
@@ -144,7 +144,7 @@ export function getProjectNavGroups(projectId: string) {
       ],
     },
     {
-      label: "AI Tools",
+      label: "Yapay Zekâ Araçları",
       items: [
         byPath("/p/$projectId/reports"),
         byPath("/p/$projectId/context"),

@@ -43,7 +43,7 @@ import { pageHead } from "@/client/lib/pageHead";
 const reportDetailSearchSchema = z.object({ full: z.boolean().optional() });
 
 export const Route = createFileRoute("/_app/p/$projectId/reports/$reportId")({
-  head: () => pageHead("Reports"),
+  head: () => pageHead("Raporlar"),
   validateSearch: reportDetailSearchSchema,
   component: ReportDetailPage,
 });
@@ -100,7 +100,7 @@ function ReportDetailPage() {
 
   const loadError = {
     error: reportQuery.error,
-    fallback: "Failed to load the report",
+    fallback: "Rapor yüklenemedi",
     onRetry: () => void reportQuery.refetch(),
     isRetrying: reportQuery.isFetching,
   };
@@ -114,7 +114,7 @@ function ReportDetailPage() {
       <div className="px-4 py-4 md:px-6 md:py-6">
         <div className="mx-auto max-w-7xl space-y-4">
           <BackLink to="/p/$projectId/reports" params={{ projectId }}>
-            Reports
+            Raporlar
           </BackLink>
           {/* A deleted report and another project's report are the same
               answer on purpose, so ids cannot be probed. Retrying either
@@ -122,13 +122,13 @@ function ReportDetailPage() {
           {notFound ? (
             <QueryError
               variant="page"
-              title="Report not found"
-              fallback="This report does not exist or you do not have access to it."
+              title="Rapor bulunamadı"
+              fallback="Bu rapor yok ya da ona erişimin yok."
             />
           ) : (
             <QueryError
               variant="page"
-              title="Couldn't load the report"
+              title="Rapor yüklenemedi"
               {...loadError}
             />
           )}
@@ -166,25 +166,25 @@ function ReportDetailPage() {
       <PageHeader
         backLink={
           <BackLink to="/p/$projectId/reports" params={{ projectId }}>
-            Reports
+            Raporlar
           </BackLink>
         }
         title={report.title}
         description={
           <dl className="flex flex-wrap items-baseline gap-x-6 gap-y-1 text-foreground">
             <div className="flex items-baseline gap-1.5">
-              <dt className="text-muted-foreground">Created by</dt>
+              <dt className="text-muted-foreground">Oluşturan</dt>
               <dd>{formatCreatedBy(report)}</dd>
             </div>
             <div className="flex items-baseline gap-1.5">
-              <dt className="text-muted-foreground">Type</dt>
+              <dt className="text-muted-foreground">Tür</dt>
               {/* As in the list's Type column: the template name when the
                     report followed one, else the skill, else an em dash. */}
               <dd>{report.templateName ?? report.skill ?? "—"}</dd>
             </div>
             <div className="flex items-baseline gap-1.5">
-              <dt className="text-muted-foreground">Updated</dt>
-              <dd title={new Date(report.updatedAt).toLocaleString()}>
+              <dt className="text-muted-foreground">Güncellenme</dt>
+              <dd title={new Date(report.updatedAt).toLocaleString("tr-TR")}>
                 {formatRelativeTime(report.updatedAt)}
               </dd>
             </div>
@@ -204,12 +204,12 @@ function ReportDetailPage() {
                 ) : (
                   <Lock data-icon="inline-start" />
                 )}
-                Share
+                Paylaş
               </Button>
             ) : (
               <Button onClick={exportPdf}>
                 <FileDown data-icon="inline-start" />
-                Export
+                Dışa aktar
               </Button>
             )}
             <DropdownMenu>
@@ -218,7 +218,7 @@ function ReportDetailPage() {
                   <Button
                     variant="ghost"
                     size="icon"
-                    aria-label="Report actions"
+                    aria-label="Rapor işlemleri"
                   />
                 }
               >
@@ -229,7 +229,7 @@ function ReportDetailPage() {
                   <>
                     <DropdownMenuItem onClick={exportPdf}>
                       <FileDown />
-                      Export
+                      Dışa aktar
                     </DropdownMenuItem>
                     <DropdownMenuSeparator />
                   </>
@@ -239,7 +239,7 @@ function ReportDetailPage() {
                   onClick={() => setShowDelete(true)}
                 >
                   <Trash2 />
-                  Delete
+                  Sil
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
@@ -259,8 +259,8 @@ function ReportDetailPage() {
           <Button
             variant="ghost"
             size="icon-sm"
-            aria-label="Full screen"
-            title="Full screen"
+            aria-label="Tam ekran"
+            title="Tam ekran"
             onClick={() =>
               void navigate({ search: () => ({ full: true }), replace: true })
             }
@@ -271,8 +271,8 @@ function ReportDetailPage() {
             variant="ghost"
             size="icon-sm"
             nativeButton={false}
-            aria-label="Open in new tab"
-            title="Open in new tab"
+            aria-label="Yeni sekmede aç"
+            title="Yeni sekmede aç"
             render={
               <a href={`/r/${report.id}`} target="_blank" rel="noreferrer" />
             }
@@ -333,7 +333,7 @@ function FullScreenReport({
         <span className="truncate text-sm font-medium">{title}</span>
         <Button ref={exitRef} variant="ghost" onClick={onExit}>
           <Minimize2 data-icon="inline-start" />
-          Exit
+          Çık
         </Button>
       </div>
       <div className="min-h-0 flex-1 p-2">

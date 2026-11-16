@@ -78,7 +78,7 @@ export function AuthenticatedAppLayout({
 function MobileTopBar() {
   return (
     <div className="flex shrink-0 items-center gap-1 border-b border-border bg-card px-2 py-1.5 md:hidden">
-      <SidebarTrigger aria-label="Toggle sidebar" />
+      <SidebarTrigger aria-label="Kenar çubuğunu aç/kapat" />
       <Link to="/" className="ml-1 font-semibold text-foreground">
         FOXSEO
       </Link>

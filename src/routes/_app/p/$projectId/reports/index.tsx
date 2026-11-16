@@ -15,7 +15,7 @@ import { REPORT_APP_LIST_LIMIT } from "@/types/schemas/reports";
 import { pageHead } from "@/client/lib/pageHead";
 
 export const Route = createFileRoute("/_app/p/$projectId/reports/")({
-  head: () => pageHead("Reports"),
+  head: () => pageHead("Raporlar"),
   component: ReportsPage,
 });
 
@@ -42,8 +42,8 @@ function ReportsPage() {
     <div className="overflow-auto px-4 py-4 pb-24 md:px-6 md:py-6 md:pb-8">
       <div className="mx-auto max-w-7xl space-y-4">
         <PageHeader
-          title="Reports"
-          description="HTML reports your agents saved to this project."
+          title="Raporlar"
+          description="Yapay zekâ ajanlarının bu projeye kaydettiği HTML raporlar."
           actions={
             <Button
               variant="ghost"
@@ -55,12 +55,12 @@ function ReportsPage() {
                 />
               }
             >
-              Templates
+              Şablonlar
             </Button>
           }
         />
 
-        <QueryState query={reportsQuery} errorFallback="Failed to load reports">
+        <QueryState query={reportsQuery} errorFallback="Raporlar yüklenemedi">
           {(data) => (
             <ReportsList
               projectId={projectId}

@@ -6,7 +6,6 @@ import { QueryState } from "@/client/components/QueryState";
 import { getProjectContext } from "@/serverFunctions/projectContext";
 import {
   PROJECT_CONTEXT_SECTION_KEYS,
-  PROJECT_CONTEXT_SECTION_LABELS,
   PROSE_MAX_CHARS,
   type ProjectContextSectionKey,
 } from "@/types/schemas/projectContext";
@@ -28,22 +27,31 @@ import { Button } from "@/client/components/ui/button";
 import { Input } from "@/client/components/ui/input";
 import { Textarea } from "@/client/components/ui/textarea";
 
+// The shared labels stay English because agents read them; the page shows
+// its own.
+const SECTION_LABELS: Record<ProjectContextSectionKey, string> = {
+  business_overview: "İşletme özeti",
+  current_goal: "Şu anki hedef",
+  positioning: "Konumlandırma",
+  writing_preferences: "Yazım tercihleri",
+};
+
 const SECTION_HINTS: Record<ProjectContextSectionKey, string> = {
-  business_overview: "What you sell, who buys it, and where.",
-  current_goal: "What you're pushing for right now, and by when.",
-  positioning: "Why someone picks you over the alternatives.",
-  writing_preferences: "Voice, words to avoid, topics that are off-limits.",
+  business_overview: "Ne sattığın, kimin aldığı ve nerede.",
+  current_goal: "Şu anda neyi hedeflediğin ve ne zamana kadar.",
+  positioning: "İnsanlar neden alternatifler yerine seni seçiyor.",
+  writing_preferences: "Üslup, kaçınılacak kelimeler, yazılmayacak konular.",
 };
 
 const SECTION_PLACEHOLDERS: Record<ProjectContextSectionKey, string> = {
   business_overview:
-    "e.g. Booking software for independent restaurants in the US and Canada. Buyers are owner-operators, not marketers.",
+    "Örn. Türkiye'deki bağımsız restoranlar için rezervasyon yazılımı. Alıcılar pazarlamacılar değil, işletme sahipleri.",
   current_goal:
-    "e.g. Double organic signups by Q4. Comparison pages are the current bet.",
+    "Örn. Yıl sonuna kadar organik kayıtları ikiye katlamak. Şu anki odak karşılaştırma sayfaları.",
   positioning:
-    "e.g. The only booking tool that sets up in an afternoon. Cheaper than the incumbents, simpler than the DIY stack.",
+    "Örn. Bir öğleden sonra kurulan tek rezervasyon aracı. Büyük rakiplerden ucuz, kendin-yap çözümlerden basit.",
   writing_preferences:
-    "e.g. Plain and direct, no hype. Never say 'seamless' or 'game-changing'. Don't write about competitor pricing.",
+    "Örn. Sade ve net, abartı yok. 'Kusursuz' veya 'devrim niteliğinde' deme. Rakip fiyatlarından bahsetme.",
 };
 
 export function ProjectContextPage({ projectId }: { projectId: string }) {
@@ -58,16 +66,16 @@ export function ProjectContextPage({ projectId }: { projectId: string }) {
   return (
     <QueryState
       query={contextQuery}
-      errorFallback="Failed to load project context"
+      errorFallback="Proje bağlamı yüklenemedi"
     >
       {(context) => (
         // key remounts the whole page when the project switches under it, so no
         // draft, open form, or edit state can carry over to another project.
         <div key={projectId} className="space-y-8">
           <p className="text-sm text-muted-foreground">
-            What Claude Code and any other connected MCP client know about this
-            project. They read it before they work and write back what they
-            learn, so correct anything that looks wrong.
+            Claude Code ve bağlı diğer MCP istemcilerinin bu proje hakkında
+            bildikleri. Çalışmaya başlamadan önce bunu okurlar ve öğrendiklerini
+            buraya yazarlar; yanlış görünen bir şey varsa düzelt.
           </p>
 
           <BrandNameSection
@@ -160,8 +168,8 @@ function ProseSections({
         <EmptyState
           size="sm"
           icon={null}
-          title="Nothing written down yet"
-          description="Fill in what you can — or ask your agent to draft it from your site and confirm what it got right."
+          title="Henüz hiçbir şey yazılmadı"
+          description="Bildiklerini doldur ya da yapay zekâ ajanından sitene bakarak bir taslak hazırlamasını iste, sonra doğru olanları onayla."
         />
       ) : null}
 
@@ -174,12 +182,12 @@ function ProseSections({
                 htmlFor={`context-${key}`}
                 className="text-sm font-medium text-foreground"
               >
-                {PROJECT_CONTEXT_SECTION_LABELS[key]}
+                {SECTION_LABELS[key]}
               </label>
               {section ? (
                 <Provenance by={section.updatedBy} at={section.updatedAt} />
               ) : (
-                <span className="text-xs text-muted-foreground">Empty</span>
+                <span className="text-xs text-muted-foreground">Boş</span>
               )}
             </div>
             <p className="text-xs text-muted-foreground">
@@ -215,7 +223,7 @@ function ProseSections({
           size="sm"
           disabled={update.isPending || changed.length === 0}
         >
-          Save changes
+          Değişiklikleri kaydet
         </Button>
       </div>
     </form>
@@ -235,16 +243,16 @@ function CustomSections({
   return (
     <section className="space-y-3">
       <SectionHeader
-        title="Custom sections"
-        hint="Anything an agent wrote down that didn't fit the sections above."
+        title="Özel bölümler"
+        hint="Bir ajanın yazdığı, yukarıdaki bölümlere uymayan notlar."
       />
 
       {customSections.length === 0 ? (
         <EmptyState
           size="sm"
           icon={null}
-          title="Nothing here yet"
-          description="Agents add a section when they learn something important that has nowhere else to live."
+          title="Burada henüz bir şey yok"
+          description="Ajanlar, başka bir yere uymayan önemli bir şey öğrendiklerinde buraya bölüm ekler."
         />
       ) : (
         <div className="space-y-3">
@@ -278,13 +286,13 @@ function CustomSections({
                     <Button
                       variant="ghost"
                       size="icon-xs"
-                      aria-label={`Edit ${custom.title ?? custom.slug}`}
+                      aria-label={`${custom.title ?? custom.slug} düzenle`}
                       onClick={() => setEditingSlug(custom.slug)}
                     >
                       <Pencil className="size-3.5" />
                     </Button>
                     <InlineConfirm
-                      label={`Delete ${custom.title ?? custom.slug}`}
+                      label={`${custom.title ?? custom.slug} sil`}
                       pending={update.isPending}
                       onConfirm={() =>
                         update.mutate([{ deleteCustomSection: custom.slug }])
@@ -332,14 +340,14 @@ function CustomSectionForm({
         onChange={(event) => setTitle(event.target.value)}
         placeholder={custom.slug}
         maxLength={120}
-        aria-label="Section title"
+        aria-label="Bölüm başlığı"
       />
       <Textarea
         value={content}
         onChange={(event) => setContent(event.target.value)}
         rows={5}
         maxLength={PROSE_MAX_CHARS}
-        aria-label="Section content"
+        aria-label="Bölüm içeriği"
       />
       <FormActions
         pending={pending}
@@ -363,16 +371,16 @@ function ResearchLog({
   return (
     <section className="space-y-3">
       <SectionHeader
-        title="Research log"
-        hint="What's already been looked up, so nobody buys the same data twice."
+        title="Araştırma günlüğü"
+        hint="Daha önce nelere bakıldığı; aynı araştırma iki kez yapılmasın diye."
       />
 
       {researchLog.length === 0 ? (
         <EmptyState
           size="sm"
           icon={null}
-          title="Nothing logged yet"
-          description="Agents record paid research here as they run it."
+          title="Henüz kayıt yok"
+          description="Ajanlar yaptıkları araştırmaları buraya kaydeder."
         />
       ) : (
         <ul className={listClass}>
@@ -390,7 +398,7 @@ function ResearchLog({
               </div>
               <RowActions>
                 <InlineConfirm
-                  label={`Delete log entry from ${entry.entryDate}`}
+                  label={`${entry.entryDate} tarihli kaydı sil`}
                   pending={update.isPending}
                   onConfirm={() =>
                     update.mutate([{ removeResearchLog: [entry.id] }])

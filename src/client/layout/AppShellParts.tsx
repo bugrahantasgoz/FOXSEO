@@ -27,7 +27,7 @@ function SeoApiStatusBanners({
       {...dataforseoHelpLinkOptions}
       className="font-medium text-primary underline-offset-4 hover:underline"
     >
-      help page
+      yardım sayfası
     </Link>
   );
   return (
@@ -36,15 +36,14 @@ function SeoApiStatusBanners({
         <AppBanner variant="warning" icon={icon}>
           {isEveryAppClientAuthMode() ? (
             <>
-              DataForSEO isn&apos;t set up on your Every App gateway yet. An
-              owner or admin sets it with{" "}
-              <code>pnpm everyapp secret set DATAFORSEO_API_KEY</code>. Steps on
-              the {helpLink}.
+              DataForSEO henüz Every App gateway&apos;inde kurulu değil.{" "}
+              <code>pnpm everyapp secret set DATAFORSEO_API_KEY</code> komutuyla
+              ayarlayabilirsin. Adımlar {helpLink} içinde.
             </>
           ) : (
             <>
-              Setup needed: add your DataForSEO API key to use FOXSEO features.
-              See the quick steps on the {helpLink}.
+              Kurulum gerekli: bu özellikler için DataForSEO API anahtarını
+              ekle. Kısa adımlar {helpLink} içinde.
             </>
           )}
         </AppBanner>
@@ -52,8 +51,8 @@ function SeoApiStatusBanners({
 
       {seoApiKeyStatusError ? (
         <AppBanner variant="info" icon={icon}>
-          We could not verify your DataForSEO setup. If features are not
-          working, check the setup steps on the {helpLink}.
+          DataForSEO kurulumun doğrulanamadı. Bazı özellikler çalışmıyorsa{" "}
+          {helpLink} içindeki kurulum adımlarına göz at.
         </AppBanner>
       ) : null}
     </>
@@ -75,15 +74,16 @@ function LegacyDockerBanner() {
   }
   return (
     <AppBanner variant="info" icon={<Info className="size-4 shrink-0" />}>
-      A new FOXSEO Docker setup starts in seconds and supports accounts. This
-      image keeps getting updates, and moving keeps your data.{" "}
+      Yeni FOXSEO Docker kurulumu saniyeler içinde açılır ve hesapları
+      destekler. Bu imaj güncellenmeye devam ediyor; geçiş yaparsan verilerin
+      korunur.{" "}
       <a
         href={DOCKER_MOVE_URL}
         target="_blank"
         rel="noreferrer"
         className="font-medium text-primary underline-offset-4 hover:underline"
       >
-        How to move
+        Nasıl geçilir
       </a>{" "}
       ·{" "}
       <button
@@ -94,7 +94,7 @@ function LegacyDockerBanner() {
           setDismissed(true);
         }}
       >
-        Dismiss
+        Kapat
       </button>
     </AppBanner>
   );
@@ -112,33 +112,33 @@ function MissingSeoSetupModal({ onClose }: { onClose: () => void }) {
           <div className="space-y-2">
             <DialogTitle>
               {everyApp
-                ? "DataForSEO isn't set up yet"
-                : "One quick setup step"}
+                ? "DataForSEO henüz kurulu değil"
+                : "Kısa bir kurulum adımı"}
             </DialogTitle>
             <DialogDescription>
               {everyApp ? (
                 <>
-                  Keyword, domain, backlink and rank data comes from DataForSEO
-                  through your Every App gateway. An owner or admin sets it once
-                  for every app with{" "}
-                  <code>pnpm everyapp secret set DATAFORSEO_API_KEY</code>; the
-                  setup guide has the steps.
+                  Anahtar kelime, alan adı, backlink ve sıralama verileri Every
+                  App gateway&apos;in üzerinden DataForSEO&apos;dan gelir. Bunu
+                  bir kez{" "}
+                  <code>pnpm everyapp secret set DATAFORSEO_API_KEY</code>{" "}
+                  komutuyla ayarlarsın; adımlar kurulum rehberinde.
                 </>
               ) : (
-                "Add your DataForSEO API key to start using FOXSEO."
+                "Başlamak için DataForSEO API anahtarını ekle."
               )}
             </DialogDescription>
           </div>
         </DialogHeader>
         <DialogFooter>
           <Button variant="ghost" onClick={onClose}>
-            Dismiss
+            Kapat
           </Button>
           <Button
             nativeButton={false}
             render={<Link {...dataforseoHelpLinkOptions} onClick={onClose} />}
           >
-            Open setup guide
+            Kurulum rehberini aç
             <ExternalLink className="size-4" />
           </Button>
         </DialogFooter>

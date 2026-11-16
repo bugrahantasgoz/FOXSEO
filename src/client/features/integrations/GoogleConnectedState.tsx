@@ -45,12 +45,12 @@ export function GoogleConnectedState({
         >
           <Button variant="outline" size="sm" onClick={onChange}>
             {canManage
-              ? "Change property or account"
-              : "Manage Google accounts"}
+              ? "Mülkü veya hesabı değiştir"
+              : "Google hesaplarını yönet"}
           </Button>
           {canManage ? (
             <Button variant="destructive" size="sm" onClick={onDisconnect}>
-              {disconnecting ? "Disconnecting…" : "Disconnect project"}
+              {disconnecting ? "Bağlantı kesiliyor…" : "Projenin bağlantısını kes"}
             </Button>
           ) : null}
         </fieldset>
