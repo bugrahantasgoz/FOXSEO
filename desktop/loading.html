@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="tr">
+  <head>
+    <meta charset="utf-8" />
+    <title>FOXSEO</title>
+    <style>
+      html,
+      body {
+        height: 100%;
+        margin: 0;
+        font-family: "Segoe UI", system-ui, sans-serif;
+        background: #ffffff;
+        color: #1f1a17;
+      }
+      body {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 16px;
+      }
+      img {
+        width: 96px;
+        height: 96px;
+      }
+      .bar {
+        width: 220px;
+        height: 4px;
+        border-radius: 2px;
+        background: #f3e3d8;
+        overflow: hidden;
+      }
+      .bar::after {
+        content: "";
+        display: block;
+        width: 40%;
+        height: 100%;
+        background: #f26b1d;
+        animation: slide 1.2s ease-in-out infinite;
+      }
+      @keyframes slide {
+        from {
+          transform: translateX(-100%);
+        }
+        to {
+          transform: translateX(250%);
+        }
+      }
+      p {
+        margin: 0;
+        color: #6b625c;
+        font-size: 14px;
+      }
+    </style>
+  </head>
+  <body>
+    <img src="build/icon.png" alt="" />
+    <div class="bar"></div>
+    <p>FOXSEO başlatılıyor… İlk açılış bir dakika kadar sürebilir.</p>
+  </body>
+</html>

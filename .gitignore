@@ -53,3 +53,7 @@ dist/
 
 # built by `stripe apps upload`
 deploy/stripe-app/.build/
+
+# Desktop app lockfile is committed.
+!desktop/package-lock.json
+desktop/release/

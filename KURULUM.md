@@ -2,16 +2,16 @@
 
 FOXSEO, [OpenSEO](https://github.com/every-app/open-seo) temel alınarak yapılmış, tamamen ücretsiz veri kaynaklarıyla çalışan kişisel bir SEO aracıdır. DataForSEO veya başka bir ücretli servis gerekmez.
 
-| Özellik | Veri kaynağı | Gerekli ayar |
-|---|---|---|
-| Site denetimi (kırık linkler, başlıklar, meta, sitemap…) | FOXSEO'nun kendi tarayıcısı | Yok |
-| Hız / Core Web Vitals (Lighthouse) | Google PageSpeed Insights | Google API anahtarı (ücretsiz) |
-| Sıralamalar, tıklamalar, kelimeler | Google Search Console | Google OAuth (ücretsiz) |
-| Trafik | Google Analytics 4 | Google OAuth (ücretsiz) |
-| Anahtar kelime fikirleri ve hacim | Bing Webmaster Tools | Bing API anahtarı (ücretsiz) |
-| Backlinkler | Bing Webmaster Tools | Bing API anahtarı (ücretsiz) |
-| Google/Bing'e hızlı dizinleme | IndexNow | Yok |
-| Claude ile kullanım | FOXSEO MCP sunucusu | Yok |
+| Özellik                                                  | Veri kaynağı                | Gerekli ayar                   |
+| -------------------------------------------------------- | --------------------------- | ------------------------------ |
+| Site denetimi (kırık linkler, başlıklar, meta, sitemap…) | FOXSEO'nun kendi tarayıcısı | Yok                            |
+| Hız / Core Web Vitals (Lighthouse)                       | Google PageSpeed Insights   | Google API anahtarı (ücretsiz) |
+| Sıralamalar, tıklamalar, kelimeler                       | Google Search Console       | Google OAuth (ücretsiz)        |
+| Trafik                                                   | Google Analytics 4          | Google OAuth (ücretsiz)        |
+| Anahtar kelime fikirleri ve hacim                        | Bing Webmaster Tools        | Bing API anahtarı (ücretsiz)   |
+| Backlinkler                                              | Bing Webmaster Tools        | Bing API anahtarı (ücretsiz)   |
+| Google/Bing'e hızlı dizinleme                            | IndexNow                    | Yok                            |
+| Claude ile kullanım                                      | FOXSEO MCP sunucusu         | Yok                            |
 
 > Not: Bing'deki hacimler Bing aramalarındaki gösterim sayısıdır (son 30 gün). Google hacminden düşüktür ama kelimeleri birbiriyle kıyaslamak için iyi bir göstergedir. Google'daki gerçek verilerin için Search Console sayfasını (GSC Insights) kullan.
 

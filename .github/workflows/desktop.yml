@@ -1,0 +1,110 @@
+name: Desktop (Windows)
+
+# Builds FOXSEO-Kurulum-<version>.exe on Windows and tests it:
+#  1. the server starts and a real site audit completes (smoke-test.cjs),
+#  2. the installer installs silently, and the installed app opens FOXSEO.
+# A pushed tag v* also publishes the installer as a GitHub release.
+
+on:
+  push:
+    branches: [main]
+    tags: ["v*"]
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: desktop-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: write
+
+jobs:
+  windows:
+    runs-on: windows-latest
+    timeout-minutes: 60
+    env:
+      AUTH_MODE: local_noauth
+      VITE_SHOW_DEVTOOLS: "false"
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@b906affcce14559ad1aafd4ab0e942779e9f58b1 # v4.3.0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - name: Check versions match
+        shell: pwsh
+        run: |
+          $app = (Get-Content package.json | ConvertFrom-Json).version
+          $desktop = (Get-Content desktop/package.json | ConvertFrom-Json).version
+          if ($app -ne $desktop) { throw "package.json ($app) and desktop/package.json ($desktop) versions differ" }
+          if ("${{ github.ref_type }}" -eq "tag" -and "${{ github.ref_name }}" -ne "v$desktop") {
+            throw "Tag ${{ github.ref_name }} does not match version v$desktop"
+          }
+
+      - name: Install app dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build FOXSEO
+        run: pnpm build
+
+      - name: Install desktop dependencies
+        working-directory: desktop
+        run: npm ci --no-audit --no-fund
+
+      - name: Smoke test (server + site audit)
+        working-directory: desktop
+        run: node smoke-test.cjs
+
+      - name: Build installer
+        working-directory: desktop
+        run: npx electron-builder --win --x64 --publish never
+
+      - name: Install and launch the app
+        shell: pwsh
+        run: |
+          $installer = Get-ChildItem desktop/release/FOXSEO-Kurulum-*.exe | Select-Object -First 1
+          Write-Host "Installer: $($installer.Name) ($([math]::Round($installer.Length / 1MB)) MB)"
+          Start-Process $installer.FullName -ArgumentList "/S" -Wait
+          $exe = Join-Path $env:LOCALAPPDATA "Programs\FOXSEO\FOXSEO.exe"
+          if (-not (Test-Path $exe)) { throw "FOXSEO.exe was not installed at $exe" }
+          $shot = Join-Path $env:RUNNER_TEMP "foxseo-window.png"
+          $env:FOXSEO_SMOKE_SCREENSHOT = $shot
+          $app = Start-Process $exe -PassThru
+          $deadline = (Get-Date).AddMinutes(5)
+          while (-not (Test-Path $shot) -and (Get-Date) -lt $deadline) { Start-Sleep -Seconds 5 }
+          $log = Join-Path $env:APPDATA "FOXSEO\logs\foxseo.log"
+          if (Test-Path $log) { Get-Content $log -Tail 40 }
+          Get-Process FOXSEO, workerd -ErrorAction SilentlyContinue | Stop-Process -Force
+          if (-not (Test-Path $shot)) { throw "The installed app did not open FOXSEO within 5 minutes" }
+          Copy-Item $shot desktop/release/
+
+      - name: Upload installer
+        uses: actions/upload-artifact@v4
+        with:
+          name: FOXSEO-windows
+          path: |
+            desktop/release/FOXSEO-Kurulum-*.exe
+            desktop/release/foxseo-window.png
+          retention-days: 14
+
+      - name: Publish release
+        if: github.ref_type == 'tag'
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          $installer = Get-ChildItem desktop/release/FOXSEO-Kurulum-*.exe | Select-Object -First 1
+          gh release create "${{ github.ref_name }}" $installer.FullName `
+            --repo "${{ github.repository }}" `
+            --title "FOXSEO ${{ github.ref_name }} (Demo)" `
+            --notes-file desktop/RELEASE_NOTES.md `
+            --prerelease

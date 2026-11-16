@@ -1,0 +1,73 @@
+{
+  "name": "foxseo-desktop",
+  "productName": "FOXSEO",
+  "version": "0.1.0",
+  "description": "FOXSEO - ücretsiz kişisel SEO aracı",
+  "author": "FOXSEO",
+  "license": "MIT",
+  "private": true,
+  "main": "main.cjs",
+  "scripts": {
+    "start": "electron .",
+    "smoke": "node smoke-test.cjs",
+    "dist:win": "electron-builder --win --x64 --publish never"
+  },
+  "dependencies": {
+    "wrangler": "4.151.0"
+  },
+  "devDependencies": {
+    "electron": "44.10.1",
+    "electron-builder": "26.18.0"
+  },
+  "build": {
+    "appId": "com.foxseo.desktop",
+    "productName": "FOXSEO",
+    "asar": false,
+    "directories": {
+      "output": "release",
+      "buildResources": "build"
+    },
+    "files": [
+      "main.cjs",
+      "server.cjs",
+      "wrangler-run.cjs",
+      "loading.html",
+      "build/icon.png",
+      "package.json"
+    ],
+    "extraResources": [
+      {
+        "from": "../dist",
+        "to": "foxseo/dist"
+      },
+      {
+        "from": "../drizzle/sqlite",
+        "to": "foxseo/drizzle/sqlite"
+      }
+    ],
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "icon": "build/icon.ico",
+      "artifactName": "FOXSEO-Kurulum-${version}.exe"
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "FOXSEO",
+      "installerLanguages": [
+        "tr_TR"
+      ],
+      "language": "1055"
+    }
+  }
+}
