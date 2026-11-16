@@ -20,6 +20,8 @@ const ERROR_CODES = [
   "AI_SEARCH_BILLING_ISSUE",
   "AI_VISIBILITY_ERROR",
   "DATAFORSEO_AUTH_FAILED",
+  "BING_NOT_CONFIGURED",
+  "BING_REQUEST_FAILED",
   "RATE_LIMITED",
   "UPSTREAM_UNAVAILABLE",
   "CONFLICT",
@@ -54,6 +56,8 @@ const NON_REPORTABLE_ERROR_CODES = new Set<ErrorCode>([
   // log what they capture, so every throw site warns on its own line to keep
   // the failure rate visible in Workers Observability.
   "UPSTREAM_UNAVAILABLE",
+  "BING_NOT_CONFIGURED",
+  "BING_REQUEST_FAILED",
 ]);
 
 export function isErrorCode(value: string): value is ErrorCode {

@@ -169,7 +169,6 @@ export function DashboardPage({
               [
                 ["overview", "Overview"],
                 ["keywords", "Keywords"],
-                ["backlinks", "Backlinks"],
               ] as const
             ).map(([value, label]) => (
               <TabsTrigger key={value} value={value} className="px-3">

@@ -50,6 +50,10 @@ const STANDARD_MESSAGES: Record<ErrorCode, string> = {
   DATAFORSEO_AUTH_FAILED: isEveryAppClientAuthMode()
     ? "DataForSEO isn't set up on your Every App gateway yet, or rejected the key it holds. An owner or admin sets it with pnpm everyapp secret set DATAFORSEO_API_KEY."
     : "DataForSEO rejected the credentials. Check that DATAFORSEO_API_KEY is the base64 of your DataForSEO login:password, and that the DataForSEO account is verified and has API access.",
+  BING_NOT_CONFIGURED:
+    "Bing Webmaster Tools is not connected yet. Add BING_WEBMASTER_API_KEY to .env.local and restart FOXSEO (see KURULUM.md, step 5).",
+  BING_REQUEST_FAILED:
+    "Bing Webmaster Tools rejected the request. Check your API key, and that this site is verified in Bing with the same address as in Project settings. Details are in the server logs.",
   RATE_LIMITED: "Too many requests. Please wait and try again.",
   UPSTREAM_UNAVAILABLE:
     "The data provider is temporarily unavailable. Please retry in a moment.",

@@ -1,3 +1,13 @@
+# FOXSEO
+
+Kişisel, tamamen ücretsiz SEO aracı. [OpenSEO](https://github.com/every-app/open-seo) temel alınarak yapıldı; DataForSEO ve ödeme sistemleri yerine ücretsiz kaynaklar kullanır (Google Search Console, Google Analytics, PageSpeed Insights, Bing Webmaster Tools, IndexNow).
+
+**Kurulum için: [KURULUM.md](./KURULUM.md)**
+
+---
+
+Aşağıdaki metin orijinal OpenSEO README'sidir.
+
 # OpenSEO
 
 > Open source alternative to Semrush and Ahrefs

@@ -3,7 +3,6 @@ import { Info, Search } from "lucide-react";
 import { cn } from "cn";
 import { getFieldError } from "@/client/lib/forms";
 import { MAX_KEYWORDS_PER_SUBMIT } from "@/client/features/keywords/keywordResearchTypes";
-import { isLabsLocationCode } from "@/client/features/keywords/locations";
 import { LocationChipSelect } from "@/client/components/LocationSelect";
 import { Alert, AlertDescription } from "@/client/components/ui/alert";
 import { Button } from "@/client/components/ui/button";
@@ -13,8 +12,6 @@ import {
   InputGroupAddon,
   InputGroupTextarea,
 } from "@/client/components/ui/input-group";
-import { KeywordAreaField } from "./KeywordAreaField";
-import { KeywordSearchOptions } from "./KeywordSearchOptions";
 import type { KeywordResearchControllerState } from "./types";
 
 type Props = {
@@ -112,24 +109,6 @@ export function KeywordResearchSearchBar({ controller, children }: Props) {
                 />
               )}
             </controlsForm.Field>
-
-            <controlsForm.Subscribe
-              selector={(state) => state.values.locationCode}
-            >
-              {(locationCode) => (
-                <controlsForm.Field name="locationName">
-                  {(field) => (
-                    <KeywordAreaField
-                      locationCode={locationCode}
-                      value={field.state.value}
-                      onChange={(name) => field.handleChange(name)}
-                    />
-                  )}
-                </controlsForm.Field>
-              )}
-            </controlsForm.Subscribe>
-
-            <KeywordSearchOptions controller={controller} />
           </div>
         </form>
         <controlsForm.Field name="keyword">
@@ -143,20 +122,17 @@ export function KeywordResearchSearchBar({ controller, children }: Props) {
             ) : null;
           }}
         </controlsForm.Field>
-        <controlsForm.Subscribe selector={(state) => state.values.locationCode}>
-          {(locationCode) =>
-            isLabsLocationCode(locationCode) ? null : (
-              <Alert variant="info" role="status">
-                <Info />
-                <AlertDescription>
-                  Keyword data for this country comes from Google Ads — search
-                  volume, CPC, and trends are available, but difficulty and
-                  intent are not.
-                </AlertDescription>
-              </Alert>
-            )
-          }
-        </controlsForm.Subscribe>
+        {hasSearched ? null : (
+          <Alert variant="info" role="status">
+            <Info />
+            <AlertDescription>
+              Keyword ideas and volumes come from Bing Webmaster Tools (free).
+              Volume is Bing search impressions over the last 30 days, so it
+              is lower than Google volume but good for comparing keywords.
+              For your real Google data, use GSC Insights.
+            </AlertDescription>
+          </Alert>
+        )}
         {children}
       </CardContent>
     </Card>

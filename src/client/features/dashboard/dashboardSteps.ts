@@ -1,11 +1,5 @@
-import {
-  Bot,
-  ClipboardCheck,
-  FolderPlus,
-  Globe,
-  Lightbulb,
-  Users,
-} from "lucide-react";
+import { Bot, ClipboardCheck, FolderPlus, Lightbulb } from "lucide-react";
+import type { Globe } from "lucide-react";
 import type { DashboardActivation } from "@/server/features/dashboard/services/DashboardService";
 import type { DashboardSetupStep } from "@/types/schemas/dashboard";
 
@@ -16,13 +10,6 @@ export const setupSteps: {
   icon: typeof Globe;
   skipLabel: string;
 }[] = [
-  {
-    id: "competitor",
-    label: "Explore a competitor",
-    detail: "Find topics and links worth learning from.",
-    icon: Globe,
-    skipLabel: "Skip for now",
-  },
   {
     id: "keywords",
     label: "Get keyword ideas",
@@ -43,13 +30,6 @@ export const setupSteps: {
     detail: "Use FOXSEO inside Claude or your favorite agent.",
     icon: Bot,
     skipLabel: "Skip for now",
-  },
-  {
-    id: "team",
-    label: "Invite a teammate",
-    detail: "Share the work, or keep things solo for now.",
-    icon: Users,
-    skipLabel: "Skip",
   },
   {
     id: "project",

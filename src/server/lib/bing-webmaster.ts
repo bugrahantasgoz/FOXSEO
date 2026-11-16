@@ -9,7 +9,7 @@ import { getOptionalEnvValue } from "@/server/lib/runtime-env";
 const BASE_URL = "https://ssl.bing.com/webmaster/api.svc/json";
 const REQUEST_TIMEOUT_MS = 30_000;
 
-export const BING_NOT_SET_UP_MESSAGE =
+const BING_NOT_SET_UP_MESSAGE =
   "Bing Webmaster API key is missing. Add BING_WEBMASTER_API_KEY to .env.local (see the FOXSEO setup guide).";
 
 export async function hasBingWebmasterKey(): Promise<boolean> {
@@ -22,7 +22,7 @@ async function bingGet(
 ): Promise<unknown> {
   const apiKey = await getOptionalEnvValue("BING_WEBMASTER_API_KEY");
   if (!apiKey) {
-    throw new AppError("VALIDATION_ERROR", BING_NOT_SET_UP_MESSAGE);
+    throw new AppError("BING_NOT_CONFIGURED", BING_NOT_SET_UP_MESSAGE);
   }
   const query = new URLSearchParams({ ...params, apikey: apiKey });
   const response = await fetch(`${BASE_URL}/${method}?${query}`, {
@@ -33,10 +33,9 @@ async function bingGet(
   if (!response.ok) {
     // Bing returns an ApiFault with a Message; never echo the key back.
     const message = /"Message"\s*:\s*"([^"]+)"/.exec(text)?.[1];
-    throw new AppError(
-      "VALIDATION_ERROR",
-      `Bing Webmaster API ${method} failed: ${message ?? `HTTP ${response.status}`}`,
-    );
+    const detail = `Bing Webmaster API ${method} failed: ${message ?? `HTTP ${response.status}`}`;
+    console.warn(detail);
+    throw new AppError("BING_REQUEST_FAILED", detail);
   }
   const body: unknown = JSON.parse(text);
   return z.object({ d: z.unknown() }).parse(body).d;
@@ -52,7 +51,7 @@ const keywordSchema = z.object({
   BroadImpressions: z.number().nullable().optional(),
 });
 
-export type BingKeyword = z.infer<typeof keywordSchema>;
+type BingKeyword = z.infer<typeof keywordSchema>;
 
 /**
  * Related keywords with their exact-match Bing impressions over the last 30
