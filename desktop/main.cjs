@@ -6,6 +6,13 @@ const fs = require("node:fs");
 const path = require("node:path");
 const { spawn } = require("node:child_process");
 const { startServer, stopServer, ensureSettings } = require("./server.cjs");
+const {
+  autoBackup,
+  backupExtension,
+  createBackup,
+  defaultBackupName,
+  restoreBackup,
+} = require("./backup.cjs");
 
 const GUIDE_URL =
   "https://github.com/bugrahantasgoz/FOXSEO/blob/main/KURULUM.md";
@@ -60,8 +67,135 @@ async function boot() {
   mainWindow.once("ready-to-show", () => mainWindow.show());
   keepExternalLinksInBrowser(mainWindow);
   await mainWindow.loadFile(path.join(__dirname, "loading.html"));
+  runAutoBackup();
   await launchServer();
 }
+
+// --- Backups ---------------------------------------------------------------
+
+function configFile() {
+  return path.join(dataDir(), "masaustu-ayarlari.json");
+}
+
+function readConfig() {
+  try {
+    return JSON.parse(fs.readFileSync(configFile(), "utf8"));
+  } catch {
+    return {};
+  }
+}
+
+function writeConfig(patch) {
+  fs.writeFileSync(
+    configFile(),
+    JSON.stringify({ ...readConfig(), ...patch }, null, 2),
+  );
+}
+
+// Runs before the server starts, so the database is not in use.
+function runAutoBackup() {
+  const folder = readConfig().autoBackupDir;
+  if (!folder) return;
+  try {
+    const file = autoBackup(dataDir(), folder);
+    if (file) log("Automatic backup: " + file);
+  } catch (error) {
+    log("Automatic backup failed: " + (error?.message ?? error));
+  }
+}
+
+/** Stops the server, runs fn, then starts FOXSEO again. */
+async function withServerStopped(fn) {
+  stopServer(server?.process);
+  server = null;
+  await mainWindow.loadFile(path.join(__dirname, "loading.html"));
+  await new Promise((resolve) => setTimeout(resolve, 2000));
+  try {
+    return await fn();
+  } finally {
+    await launchServer();
+  }
+}
+
+async function backupNow() {
+  const folder = readConfig().autoBackupDir ?? app.getPath("documents");
+  const { canceled, filePath } = await dialog.showSaveDialog(mainWindow, {
+    title: "FOXSEO yedeğini kaydet",
+    defaultPath: path.join(folder, defaultBackupName()),
+    filters: [
+      { name: "FOXSEO yedeği", extensions: [backupExtension.split(".").pop()] },
+    ],
+  });
+  if (canceled || !filePath) return;
+  try {
+    await withServerStopped(() => createBackup(dataDir(), filePath));
+    await dialog.showMessageBox(mainWindow, {
+      type: "info",
+      title: "Yedek alındı",
+      message: "FOXSEO yedeği kaydedildi.",
+      detail:
+        filePath +
+        "\n\nBilgisayarın bozulursa FOXSEO'yu yeni bilgisayara kurup FOXSEO → Yedekten geri yükle ile bu dosyayı seç.",
+    });
+  } catch (error) {
+    dialog.showErrorBox("Yedek alınamadı", String(error?.message ?? error));
+  }
+}
+
+async function restoreNow() {
+  const { canceled, filePaths } = await dialog.showOpenDialog(mainWindow, {
+    title: "Geri yüklenecek FOXSEO yedeğini seç",
+    properties: ["openFile"],
+    filters: [{ name: "FOXSEO yedeği", extensions: ["zip", "gz"] }],
+  });
+  if (canceled || !filePaths[0]) return;
+  const confirm = await dialog.showMessageBox(mainWindow, {
+    type: "warning",
+    title: "Yedekten geri yükle",
+    message: "Şu anki FOXSEO verilerinin yerine yedektekiler gelecek.",
+    detail:
+      "Şu anki veriler silinmez, veri klasöründeki 'onceki-veri' klasörüne taşınır. Devam edilsin mi?",
+    buttons: ["Geri yükle", "Vazgeç"],
+    defaultId: 1,
+    cancelId: 1,
+  });
+  if (confirm.response !== 0) return;
+  try {
+    await withServerStopped(() => restoreBackup(dataDir(), filePaths[0]));
+    await dialog.showMessageBox(mainWindow, {
+      type: "info",
+      title: "Geri yüklendi",
+      message: "Yedek geri yüklendi.",
+    });
+  } catch (error) {
+    dialog.showErrorBox("Geri yüklenemedi", String(error?.message ?? error));
+  }
+}
+
+async function chooseAutoBackupFolder() {
+  const { canceled, filePaths } = await dialog.showOpenDialog(mainWindow, {
+    title: "Otomatik yedeklerin kaydedileceği klasörü seç",
+    message:
+      "Google Drive veya OneDrive klasörünü seçersen yedekler buluta da gider.",
+    properties: ["openDirectory", "createDirectory"],
+  });
+  if (canceled || !filePaths[0]) return;
+  writeConfig({ autoBackupDir: filePaths[0] });
+  buildMenu();
+  await dialog.showMessageBox(mainWindow, {
+    type: "info",
+    title: "Otomatik yedek açık",
+    message: "FOXSEO her gün ilk açılışta bu klasöre yedek alacak.",
+    detail: filePaths[0] + "\n\nSon 10 yedek saklanır, eskileri silinir.",
+  });
+}
+
+function stopAutoBackup() {
+  writeConfig({ autoBackupDir: null });
+  buildMenu();
+}
+
+// ---------------------------------------------------------------------------
 
 async function launchServer() {
   try {
@@ -178,6 +312,18 @@ function buildMenu() {
             click: () => openSettings(),
           },
           { label: "Yeniden başlat", click: () => restartServer() },
+          { type: "separator" },
+          { label: "Yedek al…", click: () => backupNow() },
+          { label: "Yedekten geri yükle…", click: () => restoreNow() },
+          readConfig().autoBackupDir
+            ? {
+                label: "Otomatik yedeği kapat",
+                click: () => stopAutoBackup(),
+              }
+            : {
+                label: "Otomatik yedeği aç…",
+                click: () => chooseAutoBackupFolder(),
+              },
           { type: "separator" },
           {
             label: "Veri klasörünü aç",

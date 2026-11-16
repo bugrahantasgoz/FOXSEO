@@ -6,6 +6,11 @@ const os = require("node:os");
 const path = require("node:path");
 const fs = require("node:fs");
 const { startServer, stopServer } = require("./server.cjs");
+const {
+  createBackup,
+  restoreBackup,
+  defaultBackupName,
+} = require("./backup.cjs");
 
 const BASE = "http://127.0.0.1:3001";
 
@@ -38,6 +43,19 @@ async function main() {
   } finally {
     stopServer(server.process);
   }
+  await check("backup and restore", async () => {
+    await new Promise((resolve) => setTimeout(resolve, 3000));
+    const file = path.join(os.tmpdir(), defaultBackupName());
+    createBackup(dataDir, file);
+    assert(fs.statSync(file).size > 0, "backup file written");
+    fs.writeFileSync(path.join(dataDir, "ayarlar.txt"), "changed");
+    restoreBackup(dataDir, file);
+    assert(
+      fs.readFileSync(path.join(dataDir, "ayarlar.txt"), "utf8") !== "changed",
+      "settings restored from backup",
+    );
+    assert(fs.existsSync(path.join(dataDir, "state")), "database restored");
+  });
   console.log("\nAll smoke tests passed.");
 }
 
