@@ -54,7 +54,7 @@ async function boot() {
     minHeight: 600,
     title: "FOXSEO",
     icon: path.join(__dirname, "build", "icon.png"),
-    backgroundColor: "#ffffff",
+    backgroundColor: "#f6f3ff",
     show: false,
   });
   mainWindow.once("ready-to-show", () => mainWindow.show());

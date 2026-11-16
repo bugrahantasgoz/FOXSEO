@@ -1,15 +1,12 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-  <rect width="512" height="512" rx="112" fill="#F26B1D"/>
-  <!-- ears -->
-  <path d="M120 96 L210 196 L136 236 Z" fill="#FFFFFF"/>
-  <path d="M392 96 L302 196 L376 236 Z" fill="#FFFFFF"/>
-  <!-- head -->
-  <path d="M128 220 Q256 150 384 220 L300 380 Q256 420 212 380 Z" fill="#FFFFFF"/>
-  <!-- cheeks orange mask -->
-  <path d="M168 236 Q256 196 344 236 L292 330 Q256 352 220 330 Z" fill="#F26B1D" opacity="0.18"/>
-  <!-- eyes -->
-  <circle cx="206" cy="262" r="16" fill="#1F1A17"/>
-  <circle cx="306" cy="262" r="16" fill="#1F1A17"/>
-  <!-- nose -->
-  <path d="M236 356 L276 356 L256 384 Z" fill="#1F1A17"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 112">
+<path d="M14 10 L46 30 L20 52 Z" fill="#5B21B6"/><path d="M102 4 L98 50 L70 28 Z" fill="#5B21B6"/>
+<path d="M21 21 L38 32 L24 44 Z" fill="#DDD6FE"/><path d="M95 15 L92 40 L77 29 Z" fill="#DDD6FE"/>
+<path d="M16 44 C18 28 40 22 60 22 C82 22 104 28 106 46 L108 68 C106 86 86 102 60 104 C34 102 14 88 12 70 Z" fill="#5B21B6"/>
+<path d="M16 76 C30 70 46 72 60 80 C74 72 92 70 106 74 C102 92 84 104 60 106 C38 104 20 94 16 76 Z" fill="#FBF8FF"/>
+<path d="M30 46 C36 41 46 41 52 45" stroke="#C4B5FD" stroke-width="5" stroke-linecap="round" fill="none"/>
+<circle cx="41" cy="62" r="11" fill="#FFFFFF"/><circle cx="42" cy="61" r="6" fill="#1A0B2E"/><circle cx="44" cy="59" r="2" fill="#FFFFFF"/>
+<circle cx="78" cy="55" r="20" fill="#EDE9FE"/><circle cx="78" cy="55" r="17" fill="#FFFFFF" stroke="#A78BFA" stroke-width="6"/>
+<circle cx="79" cy="53" r="8" fill="#1A0B2E"/><circle cx="82" cy="50" r="2.6" fill="#FFFFFF"/>
+<path d="M92 70 L108 84" stroke="#1A0B2E" stroke-width="8" stroke-linecap="round"/>
+<path d="M50 78 C54 74 64 74 66 78 C63 84 53 85 50 78 Z" fill="#1A0B2E"/><ellipse cx="57" cy="94" rx="4" ry="4.5" fill="#1A0B2E"/>
 </svg>

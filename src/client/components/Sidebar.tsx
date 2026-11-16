@@ -1,3 +1,4 @@
+import { FoxLogo } from "@/client/components/FoxLogo";
 import { Link, useLocation, useMatchRoute } from "@tanstack/react-router";
 import type { LinkOptions } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
@@ -153,9 +154,10 @@ export function Sidebar({
         <Link
           to="/"
           onClick={() => setOpenMobile(false)}
-          className="px-1 pb-2 text-base font-semibold text-sidebar-foreground"
+          aria-label="Fox SEO ana sayfa"
+          className="px-1 pb-3"
         >
-          FOXSEO
+          <FoxLogo />
         </Link>
         <ProjectSwitcher
           activeProjectId={projectId}
