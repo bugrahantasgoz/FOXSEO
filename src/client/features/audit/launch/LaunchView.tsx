@@ -34,7 +34,7 @@ export function LaunchView({
   return (
     <div className="px-4 py-4 md:px-6 md:py-6 pb-24 md:pb-8 overflow-auto">
       <div className="mx-auto max-w-7xl space-y-4">
-        <PageHeader title="Site Audit" />
+        <PageHeader title="Site Denetimi" />
 
         <LaunchFormCard
           launchForm={controller.launchForm}
@@ -74,28 +74,30 @@ function LargeCrawlDialog({
   onConfirm: () => void;
   onClose: () => void;
 }) {
-  const pageCount = pages.toLocaleString();
+  const pageCount = pages.toLocaleString("tr-TR");
   // Only hosted plans pay for rendering, so only they see a price.
   const priced = renderJavaScript && isHostedClientAuthMode();
   return (
     <ConfirmDialog
       title={
-        priced ? `Render up to ${pageCount} pages?` : "Start a large audit?"
+        priced
+          ? `En fazla ${pageCount} sayfa işlensin mi?`
+          : "Büyük bir denetim başlatılsın mı?"
       }
-      confirmLabel={priced ? "Start audit" : "Continue"}
+      confirmLabel={priced ? "Denetimi başlat" : "Devam et"}
       onConfirm={onConfirm}
       onClose={onClose}
     >
       {priced ? (
         <>
-          {RENDERING_COST_NOTE} Rendered audits can take longer than regular
-          audits.
+          {RENDERING_COST_NOTE} JavaScript işleyen denetimler normal
+          denetimlerden uzun sürebilir.
           <span className="mt-3 block font-semibold text-foreground">
             {renderingCostText(pages)}
           </span>
         </>
       ) : (
-        `You are about to crawl ${pageCount} pages. This is okay, but it may take a while. Continue?`
+        `${pageCount} sayfa taramak üzeresin. Sorun değil, ama biraz zaman alabilir. Devam edilsin mi?`
       )}
     </ConfirmDialog>
   );

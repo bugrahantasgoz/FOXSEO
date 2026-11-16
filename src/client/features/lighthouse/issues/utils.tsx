@@ -2,21 +2,21 @@ import type { CsvValue } from "@/client/lib/csv";
 import type { CategoryTab, LighthouseIssue } from "./types";
 
 const ISSUE_HEADERS = [
-  "Category",
-  "Severity",
-  "Score",
-  "Title",
-  "Display Value",
-  "Description",
-  "Impact (ms)",
-  "Impact (bytes)",
-  "Affected Items",
+  "Kategori",
+  "Önem",
+  "Puan",
+  "Başlık",
+  "Görünen değer",
+  "Açıklama",
+  "Etki (ms)",
+  "Etki (bayt)",
+  "Etkilenen öğeler",
 ];
 
 function issuesToRows(issues: LighthouseIssue[]): CsvValue[][] {
   return issues.map((issue) => [
-    issue.category,
-    issue.severity,
+    categoryLabel(issue.category),
+    SEVERITY_LABELS[issue.severity],
     issue.score ?? "",
     issue.title,
     issue.displayValue ?? "",
@@ -31,8 +31,20 @@ export function issuesToTable(issues: LighthouseIssue[]) {
   return { headers: ISSUE_HEADERS, rows: issuesToRows(issues) };
 }
 
+const CATEGORY_LABELS: Record<CategoryTab, string> = {
+  all: "Tümü",
+  performance: "Performans",
+  accessibility: "Erişilebilirlik",
+  "best-practices": "En iyi uygulamalar",
+  seo: "SEO",
+};
+
+export const SEVERITY_LABELS: Record<LighthouseIssue["severity"], string> = {
+  critical: "Kritik",
+  warning: "Uyarı",
+  info: "Bilgi",
+};
+
 export function categoryLabel(category: CategoryTab) {
-  if (category === "best-practices") return "Best practices";
-  if (category === "all") return "All";
-  return `${category.charAt(0).toUpperCase()}${category.slice(1)}`;
+  return CATEGORY_LABELS[category];
 }

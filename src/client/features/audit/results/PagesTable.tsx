@@ -82,29 +82,29 @@ function buildPagesColumns(canonicalHost: string): ColumnDef<PageRow>[] {
       meta: { cellClassName: "max-w-[240px] truncate" },
     }),
     pageColumnHelper.accessor("statusCode", {
-      header: ({ column }) => <SortableHeader column={column} label="Status" />,
+      header: ({ column }) => <SortableHeader column={column} label="Durum" />,
       // A failed fetch or render has no HTTP status to show.
       cell: ({ getValue, row }) =>
         row.original.fetchClass === "error" ? (
           <Badge
             variant="destructive"
             size="sm"
-            title="Fetching or rendering failed, so this page was not checked for content issues."
+            title="Sayfa alınamadı ya da işlenemedi, bu yüzden içerik sorunları kontrol edilmedi."
           >
-            Failed
+            Başarısız
           </Badge>
         ) : (
           <HttpStatusBadge code={getValue()} />
         ),
     }),
     pageColumnHelper.accessor("title", {
-      header: ({ column }) => <SortableHeader column={column} label="Title" />,
+      header: ({ column }) => <SortableHeader column={column} label="Başlık" />,
       cell: ({ getValue, row }) => {
         if (isRedirect(row.original)) {
           const target = row.original.redirectUrl;
           return (
             <span className="text-xs text-muted-foreground">
-              → {target ? displayPath(target, canonicalHost) : "redirect"}
+              → {target ? displayPath(target, canonicalHost) : "yönlendirme"}
             </span>
           );
         }
@@ -115,7 +115,7 @@ function buildPagesColumns(canonicalHost: string): ColumnDef<PageRow>[] {
         // Red only when the engine flagged it — a 200 that isn't an HTML
         // document (robots.txt, security.txt) legitimately has no title.
         return row.original.missingTitle ? (
-          <span className="text-destructive text-xs">missing</span>
+          <span className="text-destructive text-xs">eksik</span>
         ) : (
           <EmptyCell />
         );
@@ -128,13 +128,13 @@ function buildPagesColumns(canonicalHost: string): ColumnDef<PageRow>[] {
         hasAnalyzedContent(row.original) ? getValue() : <EmptyCell />,
     }),
     pageColumnHelper.accessor("wordCount", {
-      header: ({ column }) => <SortableHeader column={column} label="Words" />,
+      header: ({ column }) => <SortableHeader column={column} label="Kelime" />,
       cell: ({ getValue, row }) =>
         hasAnalyzedContent(row.original) ? getValue() : <EmptyCell />,
     }),
     pageColumnHelper.display({
       id: "images",
-      header: ({ column }) => <SortableHeader column={column} label="Images" />,
+      header: ({ column }) => <SortableHeader column={column} label="Görsel" />,
       cell: ({ row }) => {
         if (!hasAnalyzedContent(row.original)) return <EmptyCell />;
         return row.original.imagesMissingAlt > 0 ? (
@@ -148,11 +148,11 @@ function buildPagesColumns(canonicalHost: string): ColumnDef<PageRow>[] {
       enableSorting: true,
     }),
     pageColumnHelper.accessor("responseTimeMs", {
-      header: ({ column }) => <SortableHeader column={column} label="Speed" />,
+      header: ({ column }) => <SortableHeader column={column} label="Hız" />,
       cell: ({ getValue }) => {
         const value = getValue();
         return value ? (
-          <span className="text-xs">{value}ms</span>
+          <span className="text-xs">{value} ms</span>
         ) : (
           <EmptyCell />
         );
@@ -245,13 +245,13 @@ export function PagesTable({
       error={
         pagesQuery.isError ? (
           <QueryError
-            fallback="Could not load the pages"
+            fallback="Sayfalar yüklenemedi"
             onRetry={() => void pagesQuery.refetch()}
             isRetrying={pagesQuery.isFetching}
           />
         ) : undefined
       }
-      empty={{ title: "No pages crawled" }}
+      empty={{ title: "Hiç sayfa taranmadı" }}
       isFiltered={activeFilterCount > 0}
       onClearFilters={resetFilters}
       toolbar={

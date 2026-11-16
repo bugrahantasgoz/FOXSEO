@@ -22,10 +22,13 @@ export function ShopifyRateLimitAlert({
   return (
     <Alert variant="warning">
       <ShieldAlert />
-      <AlertTitle>We ran into an error with your Shopify domain.</AlertTitle>
+      <AlertTitle>
+        Shopify alan adınla ilgili bir hatayla karşılaştık.
+      </AlertTitle>
       <AlertDescription>
-        Shopify is globally rate limiting, so this report is incomplete. To
-        complete the audit, start a new one with Render JavaScript turned on.
+        Shopify genel olarak istekleri sınırlıyor, bu yüzden bu rapor eksik.
+        Denetimi tamamlamak için "JavaScript'i işle" açık yeni bir denetim
+        başlat.
       </AlertDescription>
       <div className="col-start-2 mt-2">
         <Button
@@ -40,7 +43,7 @@ export function ShopifyRateLimitAlert({
             />
           }
         >
-          Start a new audit
+          Yeni denetim başlat
         </Button>
       </div>
     </Alert>

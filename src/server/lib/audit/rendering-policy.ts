@@ -25,5 +25,5 @@ export async function auditRenderingUnavailableMessage(): Promise<string> {
   if (isEveryAppAuthMode(await getOptionalEnvValue("AUTH_MODE"))) {
     return GATEWAY_RENDERING_NOT_SET_UP_MESSAGE;
   }
-  return "JavaScript rendering is not available on this deployment. It needs a Cloudflare deployment with Browser Run, or CONTEXT_API_KEY. Run the audit without rendering instead.";
+  return "Bu kurulumda JavaScript işleme kullanılamıyor. Bunun için Browser Run içeren bir Cloudflare kurulumu ya da CONTEXT_API_KEY gerekiyor. Denetimi JavaScript işleme olmadan çalıştır.";
 }

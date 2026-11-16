@@ -18,7 +18,12 @@ export async function fetchPageSpeedLighthouse(input: {
   url: string;
   strategy: LighthouseStrategy;
 }): Promise<StoredLighthousePayload> {
-  const params = new URLSearchParams({ url: input.url, strategy: input.strategy });
+  // locale=tr returns Lighthouse audit titles and descriptions in Turkish.
+  const params = new URLSearchParams({
+    url: input.url,
+    strategy: input.strategy,
+    locale: "tr",
+  });
   for (const category of CATEGORIES) params.append("category", category);
   const key = await getOptionalEnvValue("PAGESPEED_API_KEY");
   if (key) params.set("key", key);
@@ -37,7 +42,7 @@ export async function fetchPageSpeedLighthouse(input: {
       "message" in body.error
         ? String(body.error.message)
         : `HTTP ${response.status}`;
-    throw new Error(`PageSpeed Insights failed: ${message}`);
+    throw new Error(`PageSpeed Insights başarısız oldu: ${message}`);
   }
 
   const report =
@@ -45,7 +50,7 @@ export async function fetchPageSpeedLighthouse(input: {
       ? lighthouseResponseSchema.parse(body.lighthouseResult)
       : null;
   if (!report) {
-    throw new Error("PageSpeed Insights response missing lighthouseResult");
+    throw new Error("PageSpeed Insights yanıtında lighthouseResult yok");
   }
 
   return buildStoredLighthousePayload(report, {

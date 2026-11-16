@@ -20,12 +20,12 @@ export function RenderingWarnings({ data }: { data: AuditResultsData }) {
         <Alert variant="warning">
           <ShieldAlert />
           <AlertTitle>
-            Some pages may need JavaScript to show their content.
+            Bazı sayfaların içeriğini göstermek için JavaScript gerekebilir.
           </AlertTitle>
           <AlertDescription>
             {rendered
-              ? "They were still loading after rendering, so we couldn't check them."
-              : "Turn on Render JavaScript and run the audit again to check them."}
+              ? "İşlendikten sonra hâlâ yükleniyorlardı, bu yüzden kontrol edemedik."
+              : 'Kontrol etmek için "JavaScript\'i işle" seçeneğini aç ve denetimi yeniden çalıştır.'}
           </AlertDescription>
         </Alert>
       )}
@@ -33,19 +33,17 @@ export function RenderingWarnings({ data }: { data: AuditResultsData }) {
       {rendered && unreadCount > 0 && (
         <Alert variant="warning">
           <ShieldAlert />
-          <AlertTitle>
-            We couldn't read {unreadCount}{" "}
-            {unreadCount === 1 ? "page" : "pages"}.
-          </AlertTitle>
+          <AlertTitle>{unreadCount} sayfayı okuyamadık.</AlertTitle>
           <AlertDescription>
-            To see them, open Pages and filter Crawl result by Failed.
+            Görmek için Sayfalar sekmesini aç ve Tarama sonucu filtresinde
+            Başarısız seç.
           </AlertDescription>
         </Alert>
       )}
 
       {rendered && (
         <p className="text-sm text-muted-foreground">
-          JavaScript rendering was enabled for this audit.
+          Bu denetimde JavaScript işleme açıktı.
         </p>
       )}
     </>

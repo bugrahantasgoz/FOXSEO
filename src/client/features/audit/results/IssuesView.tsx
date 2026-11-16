@@ -26,9 +26,9 @@ const SEVERITY_RULE: Record<IssueSeverity, string> = {
 };
 
 const SEVERITY_LABEL: Record<IssueSeverity, string> = {
-  critical: "Critical",
-  warning: "Warning",
-  info: "Info",
+  critical: "Kritik",
+  warning: "Uyarı",
+  info: "Bilgi",
 };
 
 interface IssueGroup {
@@ -100,8 +100,8 @@ export function IssuesView({
       {groups.length === 0 ? (
         <EmptyState
           variant="plain"
-          title="No issues found."
-          description="Every crawled page passed the issue checks."
+          title="Hiç sorun bulunamadı."
+          description="Taranan tüm sayfalar sorun kontrollerinden geçti."
         />
       ) : (
         <div>
@@ -174,7 +174,7 @@ function IssueRow({
           {group.title}
         </span>
         <span className="text-xs tabular-nums text-muted-foreground shrink-0">
-          {group.count} {group.count === 1 ? "page" : "pages"}
+          {group.count} sayfa
         </span>
         <ChevronRight
           className={`size-4 shrink-0 text-muted-foreground transition-transform ${
@@ -192,7 +192,7 @@ function IssueRow({
           )}
           {group.howToFix && (
             <p className="text-sm max-w-prose">
-              <span className="font-medium">How to fix: </span>
+              <span className="font-medium">Nasıl düzeltilir: </span>
               <span className="text-foreground/80">{group.howToFix}</span>
             </p>
           )}
@@ -235,7 +235,7 @@ function AffectedUrlList({
             <Skeleton className="h-4 w-1/2" />
           </div>
         }
-        errorFallback="Could not load the affected URLs"
+        errorFallback="Etkilenen URL'ler yüklenemedi"
       >
         {(issues) => (
           <>
@@ -258,7 +258,8 @@ function AffectedUrlList({
             ))}
             {remaining > 0 && (
               <div className="px-3 py-2 text-xs text-muted-foreground">
-                …and {remaining} more — export the issues CSV for the full list.
+                …ve {remaining} tane daha. Tam liste için sorunları CSV olarak
+                dışa aktar.
               </div>
             )}
           </>
@@ -277,6 +278,35 @@ function parseDetails(detailsJson: string): Array<[string, unknown]> | null {
   }
   return null;
 }
+
+// Display names for the detail keys the issue engine stores.
+const DETAIL_LABELS: Record<string, string> = {
+  statusCode: "Durum kodu",
+  responseTimeMs: "Yanıt süresi (ms)",
+  robotsMeta: "robots meta",
+  xRobotsTag: "X-Robots-Tag",
+  htmlCanonical: "HTML canonical",
+  headerCanonical: "Başlık (header) canonical",
+  canonicalUrl: "Canonical URL",
+  crawlDepth: "Tık derinliği",
+  wordCount: "Kelime sayısı",
+  length: "Uzunluk",
+  max: "En fazla",
+  min: "En az",
+  title: "Başlık",
+  description: "Açıklama",
+  h1Count: "H1 sayısı",
+  imagesMissingAlt: "Alt metni eksik görsel",
+  imagesTotal: "Toplam görsel",
+  groupSize: "Grup boyutu",
+  otherUrls: "Diğer URL'ler",
+  hops: "Adımlar",
+  finalUrl: "Son URL",
+  pagesCrawled: "Taranan sayfa",
+  urlsNotCrawled: "Taranmayan URL",
+  targetUrl: "Hedef URL",
+  targetStatus: "Hedef durum kodu",
+};
 
 function IssueDetails({ detailsJson }: { detailsJson: string | null }) {
   const details = useMemo(
@@ -298,7 +328,7 @@ function IssueDetails({ detailsJson }: { detailsJson: string | null }) {
           const rendered = Array.isArray(value)
             ? value.join(" → ")
             : String(value);
-          return `${key}: ${rendered}`;
+          return `${DETAIL_LABELS[key] ?? key}: ${rendered}`;
         })
         .join(" · ")}
     </span>

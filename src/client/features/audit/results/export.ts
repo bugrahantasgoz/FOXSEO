@@ -29,23 +29,35 @@ async function fetchAllRows<T>(
 }
 
 async function withExportToast(run: () => Promise<void>) {
-  const toastId = toast.loading("Preparing export…");
+  const toastId = toast.loading("Dışa aktarma hazırlanıyor…");
   try {
     await run();
   } catch {
-    toast.error("Could not export the audit results");
+    toast.error("Denetim sonuçları dışa aktarılamadı");
   } finally {
     toast.dismiss(toastId);
   }
 }
 
-const ISSUES_HEADERS = ["Severity", "Issue", "URL", "Details", "How To Fix"];
+const ISSUES_HEADERS = [
+  "Önem",
+  "Sorun",
+  "URL",
+  "Ayrıntılar",
+  "Nasıl düzeltilir",
+];
+
+const SEVERITY_LABELS: Record<string, string> = {
+  critical: "Kritik",
+  warning: "Uyarı",
+  info: "Bilgi",
+};
 
 function issuesRows(issues: AuditIssueRow[]): CsvValue[][] {
   return issues.map((issue) => {
     const descriptor = getIssueDescriptor(issue.issueType);
     return [
-      issue.severity,
+      SEVERITY_LABELS[issue.severity] ?? issue.severity,
       descriptor?.title ?? issue.issueType,
       issue.pageUrl,
       issue.detailsJson ?? "",
@@ -89,13 +101,13 @@ export function exportIssues(ref: AuditRef, format: AuditExportFormat) {
 
 const PAGES_HEADERS = [
   "URL",
-  "Status",
-  "Title",
+  "Durum",
+  "Başlık",
   "H1",
-  "Words",
-  "Images",
-  "Missing Alt",
-  "Response Time (ms)",
+  "Kelime",
+  "Görsel",
+  "Alt metni eksik",
+  "Yanıt süresi (ms)",
 ];
 
 function pagesRows(pages: AuditPageRow[]): CsvValue[][] {
@@ -141,9 +153,9 @@ export function exportPages(ref: AuditRef, format: AuditExportFormat) {
 
 const PERFORMANCE_HEADERS = [
   "URL",
-  "Device",
-  "Performance",
-  "Accessibility",
+  "Cihaz",
+  "Performans",
+  "Erişilebilirlik",
   "SEO",
   "LCP (ms)",
   "CLS",

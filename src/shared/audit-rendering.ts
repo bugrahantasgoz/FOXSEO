@@ -20,7 +20,7 @@ export const CONTEXT_USD_PER_CREDIT = 0.0025;
  * shown by ErrorState, toasts and MCP answers as is.
  */
 export const GATEWAY_RENDERING_NOT_SET_UP_MESSAGE =
-  "JavaScript rendering isn't set up on your Every App gateway yet. An owner or admin sets it with pnpm everyapp secret set CONTEXT_API_KEY.";
+  "JavaScript işleme Every App ağ geçidinde henüz ayarlanmadı. Bir sahip veya yönetici bunu pnpm everyapp secret set CONTEXT_API_KEY komutuyla ayarlar.";
 
 /** Provider units a rendered audit used, counted per crawl chunk. */
 export type RenderUsage = {
@@ -73,14 +73,14 @@ function formatRenderingUsd(credits: number) {
 
 /** Why a hosted account cannot start a rendered audit of `maxPages` pages. */
 export function renderingCreditsNeededText(maxPages: number) {
-  return `Rendering up to ${maxPages.toLocaleString("en-US")} pages needs ${formatRenderingUsd(renderingHoldCredits(maxPages))} of credits available. Lower the page limit or add credits.`;
+  return `En fazla ${maxPages.toLocaleString("tr-TR")} sayfayı işlemek için ${formatRenderingUsd(renderingHoldCredits(maxPages))} kullanılabilir kredi gerekiyor. Sayfa sınırını düşür ya da kredi ekle.`;
 }
 
 export const RENDERING_COST_NOTE =
-  "Sites that block our browser need an advanced renderer. If the cost is higher than expected, it will stop.";
+  "Tarayıcımızı engelleyen siteler gelişmiş bir işleyici gerektirir. Maliyet beklenenden yüksek olursa denetim durur.";
 
 export function renderingCostText(maxPages: number) {
-  return `Costs up to ${formatRenderingUsd(renderingHoldCredits(maxPages))}.`;
+  return `En fazla ${formatRenderingUsd(renderingHoldCredits(maxPages))} tutar.`;
 }
 
 export function renderingEstimateText(maxPages: number) {
