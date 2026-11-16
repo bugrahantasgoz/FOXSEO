@@ -1,7 +1,6 @@
 import { Popover } from "@base-ui/react/popover";
 import { Info } from "lucide-react";
 import type { ReactNode } from "react";
-import { Link } from "@tanstack/react-router";
 import { getStandardErrorMessage } from "@/client/lib/error-messages";
 import { safeHttpUrl } from "@/shared/safe-url";
 export function Freshness({
@@ -15,15 +14,10 @@ export function Freshness({
   if (!stale && !refreshError) return null;
   return (
     <p role="status" className="text-xs text-muted-foreground">
-      Showing saved results
+      Kayıtlı sonuçlar gösteriliyor
       {refreshError
-        ? ` · ${getStandardErrorMessage(new Error(refreshError), "Could not update. Showing saved results.")}`
+        ? ` · ${getStandardErrorMessage(new Error(refreshError), "Güncellenemedi. Kayıtlı sonuçlar gösteriliyor.")}`
         : ""}
-      {refreshError === "INSUFFICIENT_CREDITS" ? (
-        <Link to="/billing" className="ml-2 text-primary underline">
-          Add credits
-        </Link>
-      ) : null}
     </p>
   );
 }

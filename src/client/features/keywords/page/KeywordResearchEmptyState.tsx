@@ -26,18 +26,17 @@ export function KeywordResearchNoResults({
       <EmptyState
         variant="card"
         icon={Globe}
-        title="Not enough keyword data for this query yet"
+        title="Bu arama için henüz yeterli veri yok"
         description={
           <>
-            We could not find keyword opportunities for
+            <span className="font-medium text-foreground">
+              {`${LOCATIONS[lastSearchLocationCode] || "Bu konum"} `}
+            </span>
+            için
             <span className="font-medium text-foreground">
               {` "${lastSearchKeyword}" `}
             </span>
-            in
-            <span className="font-medium text-foreground">
-              {` ${LOCATIONS[lastSearchLocationCode] || "this location"}`}
-            </span>
-            .
+            ile ilgili anahtar kelime fırsatı bulamadık.
           </>
         }
       />
@@ -93,8 +92,8 @@ function RecentSearchList({ controller, projectId }: Props) {
       onRemove={controller.removeHistoryItem}
       emptyIcon={Search}
       emptyIllustration={<KeywordRowsIllustration />}
-      emptyTitle="Enter a keyword to get started"
-      emptyDescription="Search for any keyword to see volume, difficulty, CPC, and related keyword ideas."
+      emptyTitle="Başlamak için bir anahtar kelime yaz"
+      emptyDescription="Herhangi bir anahtar kelimeyi ara; arama hacmini, trendini ve ilgili kelime fikirlerini gör."
       getTitle={(item) => item.keyword}
       getSubtitle={(item) => (
         <span className="inline-flex items-center gap-1.5">

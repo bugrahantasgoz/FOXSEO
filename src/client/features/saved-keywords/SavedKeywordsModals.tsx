@@ -22,17 +22,16 @@ export function DeleteSavedKeywordsModal({
   onClose: () => void;
   onConfirm: () => void;
 }) {
-  const plural = selectedCount !== 1 ? "s" : "";
   return (
     <ConfirmDialog
-      title="Delete keywords?"
-      confirmLabel={`Delete ${selectedCount} keyword${plural}`}
+      title="Kelimeler silinsin mi?"
+      confirmLabel={`${selectedCount} kelimeyi sil`}
       destructive
       pending={isPending}
       onClose={onClose}
       onConfirm={onConfirm}
     >
-      This will permanently delete {selectedCount} saved keyword{plural}.
+      {selectedCount} kayıtlı kelime kalıcı olarak silinecek.
     </ConfirmDialog>
   );
 }

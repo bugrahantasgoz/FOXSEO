@@ -57,8 +57,8 @@ const issueTitles: Record<string, string | undefined> = Object.fromEntries(
 );
 
 const gscChartConfig = {
-  clicks: { label: "Clicks", color: "var(--chart-1)" },
-  impressions: { label: "Impressions", color: "var(--chart-2)" },
+  clicks: { label: "Tıklama", color: "var(--chart-1)" },
+  impressions: { label: "Gösterim", color: "var(--chart-2)" },
 } satisfies ChartConfig;
 
 export function GscCard({
@@ -110,13 +110,13 @@ export function GscCard({
           search={{ range: dateRange }}
           className={moreDetailsClass}
         >
-          View GSC insights
+          Arama Performansı'na git
         </Link>
       }
     >
       {reportQuery.isError ? (
         <p className="text-sm text-muted-foreground">
-          Couldn&rsquo;t load Search Console data. Try again shortly.
+          Search Console verileri yüklenemedi. Biraz sonra tekrar dene.
         </p>
       ) : !report ? (
         <MetricsSkeleton />
@@ -127,7 +127,7 @@ export function GscCard({
           <MetricRow
             metrics={[
               {
-                label: "Clicks",
+                label: "Tıklama",
                 value: formatCount(report.totals.clicks),
                 change: percentChange(
                   report.totals.clicks,
@@ -136,7 +136,7 @@ export function GscCard({
                 dotClass: "bg-chart-1",
               },
               {
-                label: "Impressions",
+                label: "Gösterim",
                 value: formatCount(report.totals.impressions),
                 change: percentChange(
                   report.totals.impressions,
@@ -145,12 +145,12 @@ export function GscCard({
                 dotClass: "bg-chart-2",
               },
               {
-                label: "Click-through rate",
+                label: "CTR (tıklama oranı)",
                 value: formatCtr(report.totals.ctr),
                 change: null,
               },
               {
-                label: "Average position",
+                label: "Ortalama pozisyon",
                 value: formatPosition(report.totals.position),
                 change: null,
               },
@@ -160,7 +160,7 @@ export function GscCard({
             <TrendChart config={gscChartConfig} data={report.trend} />
           ) : (
             <p className="text-sm text-muted-foreground">
-              No search data for this period yet.
+              Bu dönem için henüz arama verisi yok.
             </p>
           )}
         </div>
@@ -199,17 +199,17 @@ export function AuditHealthCard({
   });
   if (!audit)
     return (
-      <CardShell title="Site health" icon={siteHealthIcon}>
+      <CardShell title="Site sağlığı" icon={siteHealthIcon}>
         <EmptyState
           variant="plain"
           icon={ScanSearch}
-          title="Find what's holding your website back"
-          description="Scan up to 50 pages for broken links, missing titles and pages Google can't index."
+          title="Siteni geride tutan sorunları bul"
+          description="50 sayfaya kadar tara; kırık linkleri, eksik başlıkları ve Google'ın dizine ekleyemediği sayfaları bul."
           action={
             <>
               {domain ? (
                 <Button disabled={scan.isPending} onClick={() => scan.mutate()}>
-                  {scan.isPending ? "Starting scan…" : "Scan my website"}
+                  {scan.isPending ? "Tarama başlatılıyor…" : "Sitemi tara"}
                 </Button>
               ) : (
                 <Button
@@ -218,13 +218,13 @@ export function AuditHealthCard({
                     <Link to="/p/$projectId/settings" params={{ projectId }} />
                   }
                 >
-                  Add your website
+                  Siteni ekle
                 </Button>
               )}
               {scan.isError && (
                 <QueryError
                   error={scan.error}
-                  fallback="Could not start your scan"
+                  fallback="Tarama başlatılamadı"
                 />
               )}
             </>
@@ -244,7 +244,7 @@ export function AuditHealthCard({
     // not the same as a healthy site, so show progress instead.
     return (
       <CardShell
-        title="Site health"
+        title="Site sağlığı"
         icon={siteHealthIcon}
         action={
           <Link
@@ -253,7 +253,7 @@ export function AuditHealthCard({
             search={{ auditId: audit.id }}
             className={moreDetailsClass}
           >
-            View progress
+            İlerlemeyi gör
           </Link>
         }
       >
@@ -261,27 +261,29 @@ export function AuditHealthCard({
           <LoaderCircle className="size-7 animate-spin text-muted-foreground" />
           <h3 className="font-medium">
             {isLighthouse
-              ? "Running Lighthouse checks"
+              ? "Lighthouse kontrolleri çalışıyor"
               : isFinalizing
-                ? "Preparing your results"
+                ? "Sonuçların hazırlanıyor"
                 : audit.currentPhase === "discovery"
-                  ? "Finding pages to scan"
-                  : "Scanning your website"}
+                  ? "Taranacak sayfalar bulunuyor"
+                  : "Siten taranıyor"}
           </h3>
           {!isFinalizing && (
             <Progress
               className="w-full max-w-xs"
               value={checked}
               max={total || 1}
-              aria-label={isLighthouse ? "Lighthouse checks" : "Pages crawled"}
+              aria-label={
+                isLighthouse ? "Lighthouse kontrolleri" : "Taranan sayfalar"
+              }
             />
           )}
           <p className="text-sm text-muted-foreground tabular-nums">
             {isLighthouse
-              ? `${checked} of ${total} checks${audit.lighthouseFailed > 0 ? ` (${audit.lighthouseFailed} failed)` : ""}`
+              ? `${total} kontrolden ${checked} tanesi tamam${audit.lighthouseFailed > 0 ? ` (${audit.lighthouseFailed} başarısız)` : ""}`
               : isFinalizing
-                ? `${audit.pagesCrawled} pages crawled. Finishing your report.`
-                : `${checked} of up to ${total} pages crawled`}
+                ? `${audit.pagesCrawled} sayfa tarandı. Raporun tamamlanıyor.`
+                : `En fazla ${total} sayfadan ${checked} tanesi tarandı`}
           </p>
         </div>
       </CardShell>
@@ -290,12 +292,13 @@ export function AuditHealthCard({
 
   return (
     <CardShell
-      title="Site health"
+      title="Site sağlığı"
       icon={siteHealthIcon}
       titleInfo={
         audit.status === "completed" ? (
           <span className={cardMetaClass}>
-            {audit.pagesCrawled} pages checked · {formatDay(audit.startedAt)}
+            {audit.pagesCrawled} sayfa kontrol edildi ·{" "}
+            {formatDay(audit.startedAt)}
           </span>
         ) : null
       }
@@ -306,33 +309,33 @@ export function AuditHealthCard({
           search={{ auditId: audit.id, tab: "issues" }}
           className={moreDetailsClass}
         >
-          Review issues
+          Sorunları incele
         </Link>
       }
     >
       {audit.status === "failed" && (
         <p className="mb-4 text-sm text-destructive">
-          The latest scan didn’t finish. Review the results or try again.
+          Son tarama tamamlanmadı. Sonuçlara bak ya da tekrar dene.
         </p>
       )}
       {audit.topIssues.length === 0 ? (
         audit.status === "completed" ? (
           <div className="flex items-center gap-2 text-sm text-muted-foreground">
             <Check className="size-4 text-success" />
-            No issues found — your site looks healthy.
+            Sorun bulunmadı — siten sağlıklı görünüyor.
           </div>
         ) : (
           <p className="text-sm text-muted-foreground">
-            Run the audit again to see issues.
+            Sorunları görmek için taramayı yeniden çalıştır.
           </p>
         )
       ) : (
         <Table className={cardTableClass}>
           <TableHeader>
             <TableRow>
-              <TableHead>Issue</TableHead>
-              <TableHead>Severity</TableHead>
-              <TableHead className="text-right">Pages affected</TableHead>
+              <TableHead>Sorun</TableHead>
+              <TableHead>Önem</TableHead>
+              <TableHead className="text-right">Etkilenen sayfalar</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -344,10 +347,10 @@ export function AuditHealthCard({
                 <TableCell>
                   <SeverityBadge severity={issue.severity}>
                     {issue.severity === "critical"
-                      ? "Critical"
+                      ? "Kritik"
                       : issue.severity === "warning"
-                        ? "Warning"
-                        : "Info"}
+                        ? "Uyarı"
+                        : "Bilgi"}
                   </SeverityBadge>
                 </TableCell>
                 <TableCell className="text-right tabular-nums">

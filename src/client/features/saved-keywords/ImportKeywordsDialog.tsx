@@ -54,7 +54,7 @@ export function ImportKeywordsButton({ projectId }: { projectId: string }) {
     },
     onSuccess: (count) => {
       setOpen(false);
-      toast.success(`Imported ${count} keyword${count === 1 ? "" : "s"}`);
+      toast.success(`${count} kelime içe aktarıldı`);
     },
     // Saved chunks stay saved when a later step fails, so refresh either way.
     onSettled: () =>
@@ -65,7 +65,7 @@ export function ImportKeywordsButton({ projectId }: { projectId: string }) {
     <>
       <Button variant="outline" size="sm" onClick={() => setOpen(true)}>
         <Upload data-icon="inline-start" />
-        Import keywords
+        Kelimeleri içe aktar
       </Button>
       {open ? (
         <ImportKeywordsDialog
@@ -94,7 +94,13 @@ function parseKeywordList(text: string): string[] {
       .replace(/^"(.*)"$/, "$1")
       .trim();
     const key = keyword.toLocaleLowerCase();
-    if (!keyword || key === "keyword" || key === "keywords" || seen.has(key))
+    if (
+      !keyword ||
+      key === "keyword" ||
+      key === "keywords" ||
+      key === "anahtar kelime" ||
+      seen.has(key)
+    )
       continue;
     seen.add(key);
     keywords.push(keyword);
@@ -135,22 +141,25 @@ function ImportKeywordsDialog({
     >
       <DialogContent className="sm:max-w-lg">
         <DialogHeader>
-          <DialogTitle>Import keywords</DialogTitle>
+          <DialogTitle>Kelimeleri içe aktar</DialogTitle>
           <DialogDescription>
-            Paste one keyword per line, or a CSV with keywords in the first
-            column. They are saved for this project&apos;s country and language.
+            Her satıra bir kelime yapıştır ya da ilk sütununda kelimeler olan
+            bir CSV kullan. Kelimeler bu projenin ülkesi ve diline göre
+            kaydedilir.
           </DialogDescription>
         </DialogHeader>
 
         <div className="space-y-4">
           <div className="space-y-1.5">
-            <Label htmlFor={listId}>Keywords</Label>
+            <Label htmlFor={listId}>Anahtar kelimeler</Label>
             <Textarea
               id={listId}
               rows={8}
               value={text}
               onChange={(event) => setText(event.target.value)}
-              placeholder={"best running shoes\nrunning shoes for flat feet"}
+              placeholder={
+                "en iyi koşu ayakkabısı\ndüz taban için koşu ayakkabısı"
+              }
             />
             <p
               className={
@@ -160,19 +169,19 @@ function ImportKeywordsDialog({
               }
             >
               {tooMany
-                ? `${keywords.length.toLocaleString()} keywords. Import up to ${MAX_IMPORT_KEYWORDS.toLocaleString()} at a time.`
-                : `${keywords.length.toLocaleString()} keyword${keywords.length === 1 ? "" : "s"} to import`}
+                ? `${keywords.length.toLocaleString("tr-TR")} kelime. Tek seferde en fazla ${MAX_IMPORT_KEYWORDS.toLocaleString("tr-TR")} kelime aktarabilirsin.`
+                : `İçe aktarılacak kelime: ${keywords.length.toLocaleString("tr-TR")}`}
             </p>
           </div>
 
           <div className="space-y-1.5">
-            <Label htmlFor={tagId}>Tag (optional)</Label>
+            <Label htmlFor={tagId}>Etiket (isteğe bağlı)</Label>
             <Input
               id={tagId}
               value={tag}
               maxLength={64}
               onChange={(event) => setTag(event.target.value)}
-              placeholder="e.g. Client list"
+              placeholder="örn. Blog fikirleri"
             />
           </div>
 
@@ -183,14 +192,14 @@ function ImportKeywordsDialog({
               onCheckedChange={(checked) => setFetchStats(checked)}
             />
             <Label htmlFor={statsId} className="font-normal leading-snug">
-              Fetch volume, difficulty, and CPC now. Each keyword uses credits.
+              Arama hacmini şimdi getir.
             </Label>
           </div>
         </div>
 
         <DialogFooter>
           <Button variant="outline" onClick={onClose} disabled={isPending}>
-            Cancel
+            Vazgeç
           </Button>
           <Button
             disabled={!canImport}
@@ -198,7 +207,7 @@ function ImportKeywordsDialog({
               onImport({ keywords, tag: tag.trim() || null, fetchStats })
             }
           >
-            {isPending ? "Importing..." : "Import"}
+            {isPending ? "Aktarılıyor..." : "İçe aktar"}
           </Button>
         </DialogFooter>
       </DialogContent>

@@ -12,9 +12,9 @@ const KINDS = ["new", "lost", "all"] as const;
 type Kind = (typeof KINDS)[number];
 
 const DESCRIPTIONS: Record<Kind, string> = {
-  new: "Links to your website found in the past week. A link may be older than the date it was found.",
-  lost: "Links that were found before but are no longer there. Last checked is when we last checked the link, not when it disappeared.",
-  all: "Recently found links that still point to your website.",
+  new: "Son bir haftada bulunan, sitene verilen linkler. Bir link, bulunduğu tarihten daha eski olabilir.",
+  lost: "Daha önce bulunup artık yerinde olmayan linkler. Son kontrol, linkin kaybolduğu değil en son kontrol edildiği tarihtir.",
+  all: "Yakın zamanda bulunan ve hâlâ sitene yönlenen linkler.",
 };
 
 export function DashboardBacklinks({
@@ -40,7 +40,7 @@ export function DashboardBacklinks({
         query.isError ? (
           <QueryError
             error={query.error}
-            fallback="Could not load backlinks"
+            fallback="Backlinkler yüklenemedi"
             onRetry={() => void query.refetch()}
             isRetrying={query.isFetching}
           />
@@ -60,9 +60,9 @@ export function DashboardBacklinks({
             </>
           }
         >
-          <TabsTrigger value="new">New this week</TabsTrigger>
-          <TabsTrigger value="lost">Lost links</TabsTrigger>
-          <TabsTrigger value="all">Active links</TabsTrigger>
+          <TabsTrigger value="new">Bu hafta yeni</TabsTrigger>
+          <TabsTrigger value="lost">Kaybedilen linkler</TabsTrigger>
+          <TabsTrigger value="all">Aktif linkler</TabsTrigger>
         </DataTableTabs>
       }
     />
@@ -88,7 +88,7 @@ function DashboardBacklinkTable({
       id: "urlFrom",
       accessorFn: (row) => `${row.domainFrom ?? ""} ${row.urlFrom ?? ""}`,
       header: ({ column }) => (
-        <SortableHeader column={column} label="Referring page" />
+        <SortableHeader column={column} label="Link veren sayfa" />
       ),
       cell: ({ row }) => (
         <ExternalPage
@@ -100,7 +100,7 @@ function DashboardBacklinkTable({
     },
     {
       accessorKey: "anchor",
-      header: "Anchor",
+      header: "Bağlantı metni",
       cell: ({ row }) => (
         <span
           className="block max-w-48 truncate"
@@ -113,20 +113,20 @@ function DashboardBacklinkTable({
     },
     {
       accessorKey: "urlTo",
-      header: "Target page",
+      header: "Hedef sayfa",
       cell: ({ row }) => <ExternalPage url={row.original.urlTo} />,
       filterFn: "includesString",
     },
     {
       id: "follow",
       accessorFn: (row) => (row.isDofollow ? "Follow" : "Nofollow"),
-      header: "Link type",
+      header: "Link türü",
       filterFn: "equalsString",
     },
     {
       accessorKey: "domainFromRank",
       header: ({ column }) => (
-        <SortableHeader column={column} label="Domain rank" />
+        <SortableHeader column={column} label="Alan adı puanı" />
       ),
       filterFn: "inNumberRange",
       cell: ({ getValue }) => getValue() ?? "—",
@@ -134,7 +134,7 @@ function DashboardBacklinkTable({
     {
       accessorKey: "spamScore",
       header: ({ column }) => (
-        <SortableHeader column={column} label="Spam score" />
+        <SortableHeader column={column} label="Spam puanı" />
       ),
       filterFn: "inNumberRange",
       cell: ({ getValue }) => getValue() ?? "—",
@@ -146,7 +146,7 @@ function DashboardBacklinkTable({
       header: ({ column }) => (
         <SortableHeader
           column={column}
-          label={kind === "lost" ? "Last checked" : "First discovered"}
+          label={kind === "lost" ? "Son kontrol" : "İlk bulunma"}
         />
       ),
     },
@@ -159,19 +159,19 @@ function DashboardBacklinkTable({
       empty={{
         title:
           kind === "new"
-            ? "No new backlinks this week"
+            ? "Bu hafta yeni backlink yok"
             : kind === "lost"
-              ? "No lost backlinks found"
-              : "No active backlinks found yet",
+              ? "Kaybedilen backlink bulunmadı"
+              : "Henüz aktif backlink bulunmadı",
       }}
       columns={columns}
       filters={[
-        { id: "urlFrom", label: "Referring page", kind: "text" },
-        { id: "anchor", label: "Anchor text", kind: "text" },
-        { id: "urlTo", label: "Target page", kind: "text" },
-        { id: "follow", label: "Link type", kind: "follow" },
-        { id: "domainFromRank", label: "Domain rank", kind: "number" },
-        { id: "spamScore", label: "Spam score", kind: "number" },
+        { id: "urlFrom", label: "Link veren sayfa", kind: "text" },
+        { id: "anchor", label: "Bağlantı metni", kind: "text" },
+        { id: "urlTo", label: "Hedef sayfa", kind: "text" },
+        { id: "follow", label: "Link türü", kind: "follow" },
+        { id: "domainFromRank", label: "Alan adı puanı", kind: "number" },
+        { id: "spamScore", label: "Spam puanı", kind: "number" },
       ]}
     />
   );

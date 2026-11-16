@@ -61,8 +61,8 @@ export function KeywordResearchSearchBar({ controller, children }: Props) {
                       compact ? "py-[7px]" : "py-[11px] md:text-base",
                     )}
                     rows={rows}
-                    placeholder="Enter a keyword, or a pattern like best * for dogs"
-                    aria-label="Keywords"
+                    placeholder="Bir anahtar kelime yaz ya da en iyi * maması gibi bir kalıp dene"
+                    aria-label="Anahtar kelimeler"
                     aria-invalid={keywordError ? true : undefined}
                     value={field.state.value}
                     onChange={(event) => field.handleChange(event.target.value)}
@@ -88,7 +88,7 @@ export function KeywordResearchSearchBar({ controller, children }: Props) {
             // layouts, so the button swells and briefly drops to its own row.
             className={cn("transition", compact && "xl:order-last")}
           >
-            Search
+            Ara
           </Button>
 
           <div
@@ -126,10 +126,12 @@ export function KeywordResearchSearchBar({ controller, children }: Props) {
           <Alert variant="info" role="status">
             <Info />
             <AlertDescription>
-              Keyword ideas and volumes come from Bing Webmaster Tools (free).
-              Volume is Bing search impressions over the last 30 days, so it
-              is lower than Google volume but good for comparing keywords.
-              For your real Google data, use GSC Insights.
+              Anahtar kelime fikirleri ve hacimler Bing Webmaster Tools'tan
+              (ücretsiz) gelir. Hacim, son 30 gündeki Bing gösterim sayısıdır;
+              Google'dakinden düşüktür ama kelimeleri karşılaştırmak için
+              iyidir. Bing anahtarını eklemek için FOXSEO → Ayarlar (API
+              anahtarları), sonra FOXSEO → Yeniden başlat. Gerçek Google
+              verilerin için Arama Performansı sayfasına bak.
             </AlertDescription>
           </Alert>
         )}

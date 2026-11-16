@@ -4,18 +4,18 @@ import type { MonthlySearch } from "@/types/keywords";
 export { LOCATIONS } from "./locations";
 
 export const MONTH_SHORT_LABELS = [
-  "Jan",
-  "Feb",
+  "Oca",
+  "Şub",
   "Mar",
-  "Apr",
+  "Nis",
   "May",
-  "Jun",
-  "Jul",
-  "Aug",
-  "Sep",
-  "Oct",
-  "Nov",
-  "Dec",
+  "Haz",
+  "Tem",
+  "Ağu",
+  "Eyl",
+  "Eki",
+  "Kas",
+  "Ara",
 ] as const;
 
 /** The most recent 12 months of a trend, oldest first. */
@@ -33,12 +33,12 @@ export function parseTerms(value: string): string[] {
 
 export function formatNumber(value: number | null | undefined): string {
   if (value == null) return "-";
-  return new Intl.NumberFormat().format(value);
+  return new Intl.NumberFormat("tr-TR").format(value);
 }
 
 export function formatCompactNumber(value: number | null | undefined): string {
   if (value == null) return "-";
-  return new Intl.NumberFormat(undefined, {
+  return new Intl.NumberFormat("tr-TR", {
     notation: "compact",
     maximumFractionDigits: 1,
   }).format(value);

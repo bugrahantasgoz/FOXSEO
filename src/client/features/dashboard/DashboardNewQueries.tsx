@@ -36,7 +36,7 @@ export function DashboardNewQueries({
   });
   if (!connected) return null;
   return (
-    <QueryState query={query} errorFallback="Could not load new keywords">
+    <QueryState query={query} errorFallback="Yeni sorgular yüklenemedi">
       {(data) =>
         !data.value.connected ? (
           <GoogleConnectionCard
@@ -46,14 +46,16 @@ export function DashboardNewQueries({
           />
         ) : (
           <CardShell
-            title="New keywords"
+            title="Yeni sorgular"
             icon={<Tag className="size-5" />}
             titleInfo={
-              <DashboardInfo label="About new keywords">
-                <p>Searches where your website recently appeared on Google.</p>
+              <DashboardInfo label="Yeni sorgular hakkında">
+                <p>
+                  Sitenin Google'da yakın zamanda görünmeye başladığı aramalar.
+                </p>
                 <p className="mt-2">
-                  We saw these in the latest week of Search Console data, but
-                  not in the previous four weeks.
+                  Bunlar Search Console verilerinin son haftasında var, önceki
+                  dört haftada yoktu.
                 </p>
               </DashboardInfo>
             }
@@ -63,9 +65,9 @@ export function DashboardNewQueries({
                 params={{ projectId }}
                 search={{ tab: "keywords" }}
                 className={moreDetailsClass}
-                aria-label="View all new keywords"
+                aria-label="Tüm yeni sorguları gör"
               >
-                View all
+                Tümünü gör
               </Link>
             }
           >
@@ -74,9 +76,9 @@ export function DashboardNewQueries({
               <Table className={cardTableClass}>
                 <TableHeader>
                   <TableRow>
-                    <TableHead>Keyword</TableHead>
-                    <TableHead className="text-right">Impressions</TableHead>
-                    <TableHead className="text-right">Clicks</TableHead>
+                    <TableHead>Sorgu</TableHead>
+                    <TableHead className="text-right">Gösterim</TableHead>
+                    <TableHead className="text-right">Tıklama</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
@@ -84,10 +86,10 @@ export function DashboardNewQueries({
                     <TableRow key={row.query}>
                       <TableCell className="font-medium">{row.query}</TableCell>
                       <TableCell className="text-right tabular-nums">
-                        {row.impressions.toLocaleString()}
+                        {row.impressions.toLocaleString("tr-TR")}
                       </TableCell>
                       <TableCell className="text-right tabular-nums">
-                        {row.clicks.toLocaleString()}
+                        {row.clicks.toLocaleString("tr-TR")}
                       </TableCell>
                     </TableRow>
                   ))}
@@ -99,13 +101,13 @@ export function DashboardNewQueries({
                 icon={Search}
                 title={
                   data.value.hasSearchData
-                    ? "No new keywords this week"
-                    : "No search data yet"
+                    ? "Bu hafta yeni sorgu yok"
+                    : "Henüz arama verisi yok"
                 }
                 description={
                   data.value.hasSearchData
-                    ? "Your existing queries can still be gaining clicks. See how they're performing."
-                    : "Google hasn't reported searches for your website yet. Check your connected property in Search Console."
+                    ? "Mevcut sorguların hâlâ tıklama kazanıyor olabilir. Nasıl gittiklerine bak."
+                    : "Google henüz siten için arama verisi bildirmedi. Search Console'da bağlı mülkünü kontrol et."
                 }
                 action={
                   <Button
@@ -118,7 +120,7 @@ export function DashboardNewQueries({
                       />
                     }
                   >
-                    View full GSC insights
+                    Arama Performansı'nı aç
                   </Button>
                 }
               />

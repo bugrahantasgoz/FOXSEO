@@ -66,10 +66,12 @@ export function TrackRankingsMenu({
       });
       const skipped = queries.length - result.added;
       toast.success(
-        `Tracking ${result.added} new keyword${result.added === 1 ? "" : "s"}${skipped > 0 ? ` (${skipped} already tracked, too long, or over the limit)` : ""}`,
+        `${result.added} yeni kelime takibe alındı${skipped > 0 ? ` (${skipped} tanesi zaten takipte, çok uzun ya da limit aşıldı)` : ""}`,
       );
       if (result.checkScheduledSoon) {
-        toast.info("The scheduled check within the hour covers these keywords");
+        toast.info(
+          "Bu kelimeler bir saat içindeki planlı kontrole dahil edilecek",
+        );
       }
       onAdded();
     },
@@ -81,7 +83,7 @@ export function TrackRankingsMenu({
         render={<Button variant="ghost" size="sm" pending={add.isPending} />}
       >
         {add.isPending ? null : <LineChart data-icon="inline-start" />}
-        Track rankings
+        Sıralamayı takip et
       </DropdownMenuTrigger>
       <DropdownMenuContent side="top" align="end" className="w-72">
         {configs.length === 0 ? (
@@ -92,12 +94,12 @@ export function TrackRankingsMenu({
             }
           >
             {configsQuery.isLoading
-              ? "Loading rank trackers…"
-              : "Set up rank tracking first"}
+              ? "Sıralama takipleri yükleniyor…"
+              : "Önce sıralama takibini kur"}
           </DropdownMenuItem>
         ) : (
           <>
-            <DropdownMenuLabel>Add to rank tracker</DropdownMenuLabel>
+            <DropdownMenuLabel>Sıralama takibine ekle</DropdownMenuLabel>
             {configs.map((config) => (
               <DropdownMenuItem
                 key={config.id}

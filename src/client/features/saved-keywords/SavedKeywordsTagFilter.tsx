@@ -82,15 +82,17 @@ export function SavedKeywordsTagFilter({
             }
           </ComboboxValue>
           <ComboboxChipsInput
-            aria-label="Filter by tag"
-            placeholder={selectedTags.length > 0 ? "" : "Filter by tag…"}
+            aria-label="Etikete göre filtrele"
+            placeholder={
+              selectedTags.length > 0 ? "" : "Etikete göre filtrele…"
+            }
           />
         </ComboboxChips>
         <ComboboxContent anchor={anchor}>
           <ComboboxEmpty className="px-3">
             {availableTags.length === 0
-              ? "No tags yet. Add tags from a selection of keywords."
-              : "No tags match that search."}
+              ? "Henüz etiket yok. Kelimeleri seçip etiket ekleyebilirsin."
+              : "Bu aramayla eşleşen etiket yok."}
           </ComboboxEmpty>
           <ComboboxList>
             {(tag: SavedKeywordTagSummary) => (
@@ -109,8 +111,8 @@ export function SavedKeywordsTagFilter({
       <Button
         variant="ghost"
         size="icon-sm"
-        aria-label="Manage tags"
-        title="Manage tags"
+        aria-label="Etiketleri yönet"
+        title="Etiketleri yönet"
         disabled={availableTags.length === 0}
         onClick={() => setManaging(true)}
       >
@@ -154,16 +156,17 @@ function TagManagerDialog({
     >
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
-          <DialogTitle>Manage tags</DialogTitle>
+          <DialogTitle>Etiketleri yönet</DialogTitle>
           <DialogDescription>
-            Rename, recolor, or delete the tags in this project.
+            Bu projedeki etiketleri yeniden adlandır, rengini değiştir ya da
+            sil.
           </DialogDescription>
         </DialogHeader>
 
         <div className="-mx-4 -mb-4 max-h-96 overflow-y-auto border-t border-border py-1">
           {tags.length === 0 ? (
             <p className="px-4 py-6 text-center text-sm text-muted-foreground">
-              No tags yet. Add tags from a selection of keywords.
+              Henüz etiket yok. Kelimeleri seçip etiket ekleyebilirsin.
             </p>
           ) : null}
           {tags.map((tag) => {
@@ -179,7 +182,7 @@ function TagManagerDialog({
                   <Button
                     variant="ghost"
                     size="icon-xs"
-                    aria-label={`Edit ${tag.name}`}
+                    aria-label={`${tag.name} etiketini düzenle`}
                     aria-pressed={editing}
                     className="aria-pressed:bg-muted"
                     onClick={() => setEditingTagId(editing ? null : tag.id)}

@@ -18,7 +18,7 @@ export const cardTableClass =
 export function formatDay(timestamp: string): string {
   const ms = parseDbTimestamp(timestamp).getTime();
   if (Number.isNaN(ms)) return timestamp;
-  return new Date(ms).toLocaleDateString(undefined, {
+  return new Date(ms).toLocaleDateString("tr-TR", {
     month: "short",
     day: "numeric",
   });

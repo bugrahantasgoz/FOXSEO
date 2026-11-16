@@ -10,7 +10,6 @@ import { EmptyState } from "@/client/components/EmptyState";
 import { QueryError } from "@/client/components/QueryState";
 import { Button } from "@/client/components/ui/button";
 import { getErrorCode } from "@/client/lib/error-messages";
-import { isHostedClientAuthMode } from "@/lib/auth-mode";
 import {
   generateKeywordSuggestions,
   getKeywordSuggestions,
@@ -22,8 +21,8 @@ type Suggestion = KeywordSuggestionsData["suggestions"][number];
 
 // Most suggestions are the site's own topics, so only Search Console's are named.
 const REASON_NOTES: Record<KeywordSuggestionReason, string | null> = {
-  [KeywordSuggestionReason.CloseToTopThree]: "Close to top 3",
-  [KeywordSuggestionReason.CloseToPageOne]: "Close to page 1",
+  [KeywordSuggestionReason.CloseToTopThree]: "İlk 3'e yakın",
+  [KeywordSuggestionReason.CloseToPageOne]: "1. sayfaya yakın",
   [KeywordSuggestionReason.FromYourSite]: null,
 };
 
@@ -52,17 +51,17 @@ export function KeywordSuggestions({
 }) {
   return (
     <section
-      aria-label="Suggested searches"
+      aria-label="Önerilen aramalar"
       className={afterRecentSearches ? "space-y-2 pt-6" : "space-y-2 pt-2"}
     >
       <h2 className="flex items-center gap-2 text-sm text-muted-foreground">
         <Lightbulb className="size-4" aria-hidden />
-        Suggested searches
+        Önerilen aramalar
       </h2>
       {query.isError ? (
         <QueryError
           error={query.error}
-          fallback="We couldn't load suggestions."
+          fallback="Öneriler yüklenemedi."
           onRetry={() => void query.refetch()}
           isRetrying={query.isFetching}
           variant="inline"
@@ -133,12 +132,8 @@ function GenerateSuggestions({ projectId }: { projectId: string }) {
       variant="plain"
       size="sm"
       icon={Sparkles}
-      title="Get suggestions from your website"
-      description={
-        isHostedClientAuthMode()
-          ? "We read your site and suggest topics to research. Uses a small amount of credits."
-          : "We read your site and suggest topics to research."
-      }
+      title="Sitene göre öneri al"
+      description={"Siteni okuyup araştırabileceğin konular öneririz."}
       action={
         // *:justify-center centers the error's button under its message.
         <div className="flex flex-col items-center gap-3 *:justify-center">
@@ -147,7 +142,7 @@ function GenerateSuggestions({ projectId }: { projectId: string }) {
             // arrives as a bare validation error, so the copy names it.
             <QueryError
               cause={generate.error}
-              fallback="We couldn't generate suggestions. Check that your website loads, then try again."
+              fallback="Öneri oluşturulamadı. Sitenin açıldığından emin ol, sonra tekrar dene."
               variant="inline"
             />
           ) : null}
@@ -159,7 +154,7 @@ function GenerateSuggestions({ projectId }: { projectId: string }) {
               pending={generate.isPending}
               onClick={() => generate.mutate()}
             >
-              Generate suggestions
+              Öneri oluştur
             </Button>
           )}
         </div>

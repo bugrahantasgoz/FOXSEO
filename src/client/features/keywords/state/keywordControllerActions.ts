@@ -18,12 +18,12 @@ import { formatLocationLabel } from "@/shared/keyword-locations";
 function keywordResearchHeaders(locationName?: string) {
   const scope = locationName ? ` (${formatLocationLabel(locationName)})` : "";
   return [
-    "Keyword",
-    `Volume${scope}`,
+    "Anahtar kelime",
+    `Hacim${scope}`,
     `CPC${scope}`,
-    `Competition${scope}`,
-    "Score",
-    "Intent",
+    `Rekabet${scope}`,
+    "Zorluk",
+    "Arama amacı",
   ];
 }
 
@@ -147,7 +147,7 @@ export function useSaveAndExportActions(params: SaveExportActionParams) {
             source_feature: "keyword_research",
             keyword_count: count,
           });
-          toast.success(`Saved ${count} keywords`);
+          toast.success(`${count} kelime kaydedildi`);
           setShowSaveDialog(false);
         },
       },
