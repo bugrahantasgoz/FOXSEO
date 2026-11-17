@@ -22,7 +22,10 @@ export type SortField =
   | "searchVolume"
   | "cpc"
   | "competition"
-  | "keywordDifficulty";
+  | "keywordDifficulty"
+  | "gscImpressions"
+  | "gscClicks"
+  | "gscPosition";
 export type SortDir = "asc" | "desc";
 
 export function AreaTrendChart({

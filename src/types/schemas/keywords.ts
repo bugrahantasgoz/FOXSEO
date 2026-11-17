@@ -238,6 +238,9 @@ const keywordSortFields = [
   "cpc",
   "competition",
   "keywordDifficulty",
+  "gscImpressions",
+  "gscClicks",
+  "gscPosition",
 ] as const;
 
 const keywordModes = ["auto", "related", "suggestions", "ideas"] as const;

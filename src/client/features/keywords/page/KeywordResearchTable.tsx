@@ -17,7 +17,6 @@ import {
   type SortField,
 } from "@/client/features/keywords/components";
 import { SortableHeader } from "@/client/components/table/SortableHeader";
-import { ScoreBadge } from "@/client/components/table/ScoreBadge";
 import { Spinner } from "@/client/components/ui/spinner";
 import { formatNumber } from "@/client/features/keywords/utils";
 import type { KeywordResearchDisplayRow } from "@/client/features/keywords/groupSharedVolumeRows";
@@ -114,7 +113,8 @@ export function KeywordResearchTable({
         header: () => (
           <SortableHeader
             column={sortColumn("searchVolume")}
-            label="Hacim"
+            label="Hacim (Bing)"
+            helpText="Bing'de son 30 gündeki gösterim sayısı. Türkçe yerel aramalarda çoğu zaman boştur; Google verisi için Gösterim sütununa bak."
             align="right"
           />
         ),
@@ -126,57 +126,62 @@ export function KeywordResearchTable({
             "whitespace-nowrap text-right tabular-nums text-muted-foreground",
         },
       }),
-      keywordColumnHelper.accessor("cpc", {
+      keywordColumnHelper.accessor((row) => row.gsc?.impressions ?? null, {
+        id: "gscImpressions",
         header: () => (
           <SortableHeader
-            column={sortColumn("cpc")}
-            label="CPC"
-            helpText="Tıklama başına maliyet (USD)."
+            column={sortColumn("gscImpressions")}
+            label="Gösterim"
+            helpText="Search Console: son 3 ayda sitenin bu aramada Google'da kaç kez göründüğü. Boşsa siten bu aramada henüz çıkmamış."
             align="right"
           />
         ),
-        cell: ({ row, getValue }) => {
-          if (row.original.parentKeyword) return null;
-          const value = getValue();
-          return value == null ? "-" : value.toFixed(2);
-        },
+        cell: ({ row, getValue }) =>
+          row.original.parentKeyword ? null : formatNumber(getValue()),
         meta: {
           headerClassName: "text-right",
           cellClassName:
             "whitespace-nowrap text-right tabular-nums text-muted-foreground",
         },
       }),
-      keywordColumnHelper.accessor("competition", {
+      keywordColumnHelper.accessor((row) => row.gsc?.clicks ?? null, {
+        id: "gscClicks",
         header: () => (
           <SortableHeader
-            column={sortColumn("competition")}
-            label="Rekabet"
-            helpText="Reklam rekabeti (0-1): yüksekse bu kelimeye daha çok reklamveren teklif veriyor demektir."
+            column={sortColumn("gscClicks")}
+            label="Tıklama"
+            helpText="Search Console: son 3 ayda bu aramadan sitene gelen tıklama sayısı."
             align="right"
           />
         ),
-        cell: ({ row, getValue }) => {
-          if (row.original.parentKeyword) return null;
-          const value = getValue();
-          return value == null ? "-" : value.toFixed(2);
-        },
+        cell: ({ row, getValue }) =>
+          row.original.parentKeyword ? null : formatNumber(getValue()),
         meta: {
           headerClassName: "text-right",
           cellClassName:
             "whitespace-nowrap text-right tabular-nums text-muted-foreground",
         },
       }),
-      keywordColumnHelper.accessor("keywordDifficulty", {
+      keywordColumnHelper.accessor((row) => row.gsc?.position ?? null, {
+        id: "gscPosition",
         header: () => (
           <SortableHeader
-            column={sortColumn("keywordDifficulty")}
-            label="Zorluk"
-            helpText="Organik sıralama zorluğu (0-100): yüksekse Google'da ilk 10'a girmek daha zor demektir."
+            column={sortColumn("gscPosition")}
+            label="Pozisyon"
+            helpText="Search Console: sitenin bu aramada Google'daki ortalama sırası. 1-10 ilk sayfa."
             align="right"
           />
         ),
-        cell: ({ getValue }) => <ScoreBadge value={getValue()} />,
-        meta: { headerClassName: "text-right", cellClassName: "text-right" },
+        cell: ({ row, getValue }) => {
+          if (row.original.parentKeyword) return null;
+          const value = getValue();
+          return value == null ? "-" : value.toLocaleString("tr-TR");
+        },
+        meta: {
+          headerClassName: "text-right",
+          cellClassName:
+            "whitespace-nowrap text-right tabular-nums text-muted-foreground",
+        },
       }),
       keywordColumnHelper.accessor("intent", {
         header: "Arama amacı",

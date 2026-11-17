@@ -23,6 +23,7 @@ import {
   normalizeKeyword,
   type EnrichedKeyword,
 } from "./helpers";
+import { fetchGscQueryMetrics } from "./research-gsc";
 import {
   assertLocalResearchLocation,
   localizeResearchRows,
@@ -303,7 +304,29 @@ function persistRows(
   );
 }
 
+/**
+ * Keyword research plus the project's own Search Console numbers for each
+ * keyword. The Search Console part is never cached with the research, so it
+ * stays current, and a missing or failed connection just leaves it empty.
+ */
 export async function research(
+  input: ResolvedResearchKeywordsInput,
+  billingCustomer: BillingCustomerContext,
+  creditFeature?: CreditFeature,
+): Promise<ResearchResult> {
+  const result = await researchRows(input, billingCustomer, creditFeature);
+  const gsc = await fetchGscQueryMetrics(input);
+  if (gsc.size === 0) return result;
+  return {
+    ...result,
+    rows: result.rows.map((row) => ({
+      ...row,
+      gsc: gsc.get(normalizeKeyword(row.keyword)) ?? null,
+    })),
+  };
+}
+
+async function researchRows(
   input: ResolvedResearchKeywordsInput,
   billingCustomer: BillingCustomerContext,
   creditFeature?: CreditFeature,
@@ -410,7 +433,7 @@ async function researchLocal(
 ): Promise<ResearchResult> {
   await assertLocalResearchLocation(input.locationCode, locationName);
   const nationalInput = { ...input, locationName: undefined };
-  const national = await research(
+  const national = await researchRows(
     nationalInput,
     billingCustomer,
     creditFeature,

@@ -93,6 +93,9 @@ export function normalizeSortField(value: string): SortField {
   if (value === "cpc") return "cpc";
   if (value === "competition") return "competition";
   if (value === "keywordDifficulty") return "keywordDifficulty";
+  if (value === "gscImpressions") return "gscImpressions";
+  if (value === "gscClicks") return "gscClicks";
+  if (value === "gscPosition") return "gscPosition";
   return "searchVolume";
 }
 

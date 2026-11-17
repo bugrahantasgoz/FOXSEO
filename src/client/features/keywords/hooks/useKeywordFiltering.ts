@@ -61,6 +61,24 @@ export function applyKeywordFiltersAndSort(params: {
   if (params.sortField === "cpc") {
     return sortBy(filtered, [(row) => row.cpc ?? -1, params.sortDir]);
   }
+  if (params.sortField === "gscImpressions") {
+    return sortBy(filtered, [
+      (row) => row.gsc?.impressions ?? -1,
+      params.sortDir,
+    ]);
+  }
+  if (params.sortField === "gscClicks") {
+    return sortBy(filtered, [(row) => row.gsc?.clicks ?? -1, params.sortDir]);
+  }
+  if (params.sortField === "gscPosition") {
+    // A missing position sorts last in both directions.
+    return sortBy(filtered, [
+      (row) =>
+        row.gsc?.position ??
+        (params.sortDir === "asc" ? Number.MAX_SAFE_INTEGER : -1),
+      params.sortDir,
+    ]);
+  }
   if (params.sortField === "competition") {
     return sortBy(filtered, [(row) => row.competition ?? -1, params.sortDir]);
   }

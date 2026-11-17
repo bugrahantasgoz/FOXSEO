@@ -19,6 +19,9 @@ export type KeywordResearchRow = {
   cpc: number | null;
   competition: number | null;
   intent: KeywordIntent;
+  /** The project's own Google Search Console numbers for this query (last 3
+   * months), when Search Console is connected and the site appeared for it. */
+  gsc?: { impressions: number; clicks: number; position: number } | null;
 };
 
 export type SavedKeywordRow = {
